@@ -1,42 +1,68 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
-import { Item } from '../../utils/Item.type';
+import { DealerProduct } from '../../utils/DealerProduct.interface';
 import {
   TEST_MARKETING_DEALERPRICE,
   TEST_MARKETING_DEALER,
   TEST_MARKETING_PRODUCTS
 } from '../../utils/constants';
+import { Product } from '../../utils/Product.interface';
 
 export default function MarkingPage() {
   const [matchCount, setMatchCount] = useState(2);
-  const [chosenItem, setChosenItem] = useState<Item>({
-    name: '',
-    price: '',
-    url: ''
+  const [currentProduct, setCurrentProduct] = useState<DealerProduct>({
+    id: 0,
+    product_key: '',
+    price: 0,
+    product_url: '',
+    product_name: '',
+    date: '',
+    dealer_id: 0
   });
+  const [chosenItem, setChosenItem] = useState<Product>({
+    FIELD1: 0,
+    id: 0,
+    article: '',
+    ean_13: 0,
+    name: '',
+    cost: 0,
+    recommended_price: 0,
+    category_id: null,
+    ozon_name: '',
+    name_1c: '',
+    wb_name: '',
+    ozon_article: null,
+    wb_article: null,
+    ym_article: '',
+    wb_article_td: ''
+  });
+
   const navigate = useNavigate();
 
   //Временно получаю данные из констант
   const matchList = TEST_MARKETING_PRODUCTS.slice(0, 19);
   const fullList = [...TEST_MARKETING_PRODUCTS];
 
-  const getCurrentProduct = (): any => {
-    const { product_id } = useParams();
-    const productName = TEST_MARKETING_DEALERPRICE.find(
+  const { product_id } = useParams();
+
+  useEffect(() => {
+    const curProduct = TEST_MARKETING_DEALERPRICE.find(
       (product) => product.product_key === product_id
     );
-    const dealerName = TEST_MARKETING_DEALER.find((dealer) => dealer.id === productName?.dealer_id)
-      ?.name;
-    return { ...productName, dealerName };
-  };
+    if (curProduct) {
+      curProduct.dealerName =
+        TEST_MARKETING_DEALER.find((dealer) => dealer.id === curProduct?.dealer_id)?.name || '';
+      setCurrentProduct(curProduct);
+    }
+  }, []);
 
-  const getMatchList = (count: number, list: any[]) => {
+  const getMatchList = (count: number, list: Product[]) => {
     const resultList: JSX.Element[] = [];
     for (let i = 0; i < (list.length >= count ? count : list.length); i++) {
       resultList.push(
@@ -54,7 +80,7 @@ export default function MarkingPage() {
     <div className="marking">
       <div className="marking__header">
         <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-        <h1 className="marking__product-name">{getCurrentProduct()?.dealerName}</h1>
+        <h1 className="marking__product-name">{currentProduct?.dealerName}</h1>
       </div>
       <div className="marking__container">
         <div className="marking__matchList-container">
@@ -65,7 +91,7 @@ export default function MarkingPage() {
           )}
         </div>
         <div className="marking__match-container">
-          <SelectedProduct product={getCurrentProduct()}></SelectedProduct>
+          <SelectedProduct product={currentProduct}></SelectedProduct>
         </div>
       </div>
       <div className="marking__footer">

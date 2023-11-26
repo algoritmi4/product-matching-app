@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './Match.css';
+import { Product } from '../../utils/Product.interface';
 
 export function Match({
   product,
   setChosenItem,
   chosenItem
 }: {
-  product: any;
-  setChosenItem: any;
-  chosenItem: any;
+  product: Product;
+  setChosenItem: Dispatch<SetStateAction<Product>>;
+  chosenItem: Product;
 }) {
   const [isChosen, setIsChosen] = useState(false);
 
@@ -20,7 +21,23 @@ export function Match({
     if (chosenItem.id !== product.id) {
       setChosenItem(product);
     } else {
-      setChosenItem({});
+      setChosenItem({
+        FIELD1: 0,
+        id: 0,
+        article: '',
+        ean_13: 0,
+        name: '',
+        cost: 0,
+        recommended_price: 0,
+        category_id: null,
+        ozon_name: '',
+        name_1c: '',
+        wb_name: '',
+        ozon_article: null,
+        wb_article: null,
+        ym_article: '',
+        wb_article_td: ''
+      });
     }
   };
 
