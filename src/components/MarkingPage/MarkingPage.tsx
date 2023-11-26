@@ -1,5 +1,5 @@
 import './MarkingPage.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';

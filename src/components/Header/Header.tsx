@@ -4,9 +4,9 @@ import './Header.css';
 function Header() {
   return (
     <header className="header">
-      <a className="header__logo-link" rel="noreferrer" target="_blank" href="https://prosept.ru/">
-        <img className="logo" />
-      </a>
+      <Link to="/" className="header__logo-link">
+        <img src="https://prosept.ru/images/prosept-logo.svg" className="logo" alt="Логотип" />
+      </Link>
       <nav className="header__nav">
         <Link to="/statistics" className="header__button">
           Статистика

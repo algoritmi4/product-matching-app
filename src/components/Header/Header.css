@@ -12,11 +12,8 @@
 }
 
 .logo {
-  background-image: url(https://prosept.ru/images/prosept-logo.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
   height: 88px;
-  width: 144px;
+  width: 138px;
   box-sizing: border-box;
 }
 
