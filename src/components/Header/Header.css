@@ -1,0 +1,35 @@
+.header {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__logo-link {
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 3px 0 3px 5px;
+}
+
+.logo {
+  background-image: url(https://prosept.ru/images/prosept-logo.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 88px;
+  width: 144px;
+  box-sizing: border-box;
+}
+
+.header__nav {
+  display: flex;
+}
+
+.header__button {
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}

@@ -1,8 +1,7 @@
-.main-page {
-
+.main__marked {
+  color: green;
 }
 
-.main-page__text {
-  font-size: 50px;
+.main__need-marking {
   color: red;
 }
