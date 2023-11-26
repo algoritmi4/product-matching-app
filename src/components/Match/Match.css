@@ -1,0 +1,17 @@
+.match {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #000;
+  border-radius: 7px;
+}
+
+.match__product-name {
+  max-width: calc(100% - 3px);
+  display: block;
+  margin: 0;
+  margin-left: 3px;
+  padding: 0;
+  word-break: break-all;
+}
