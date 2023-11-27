@@ -1,6 +1,6 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
@@ -14,11 +14,14 @@ import {
 } from '../../utils/constants';
 import { Product } from '../../utils/Product.interface';
 import { apiMarking } from '../../utils/test.api';
+import { Dealer } from '../../utils/Dealer.interface';
+import { Preloader } from '../Preloader/Preloader';
 
 export default function MarkingPage() {
   const [matchCount, setMatchCount] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [dealers, setDealers] = useState(TEST_MARKETING_DEALER);
+  const [currentDealer, setCurrentDealer] = useState('');
   const [currentProduct, setCurrentProduct] = useState<DealerProduct>({
     id: 0,
     product_key: '',
@@ -55,22 +58,21 @@ export default function MarkingPage() {
   const { product_id } = useParams();
 
   useEffect(() => {
+    //start preloader
+    setIsLoading(true);
     const curProduct = TEST_MARKETING_DEALERPRICE.find(
       (product) => product.product_key === product_id
     );
     if (curProduct) {
-      curProduct.dealerName =
-        TEST_MARKETING_DEALER.find((dealer) => dealer.id === curProduct?.dealer_id)?.name || '';
       setCurrentProduct(curProduct);
     }
-  }, []);
-
-  useEffect(() => {
-    setIsLoading(true);
     apiMarking
       .getDealers()
-      .then((allDealers) => {
-        console.log(allDealers);
+      .then((data) => {
+        const allDealers: Dealer[] = data.data;
+        const curDealer =
+          allDealers?.find((dealer) => dealer.id === curProduct?.dealer_id)?.name || '';
+        setCurrentDealer(curDealer);
         setDealers(allDealers);
       })
       .catch((err) => console.log(err.message))
@@ -91,46 +93,50 @@ export default function MarkingPage() {
     navigate('/');
   };
 
-  return (
-    <div className="marking">
-      <div className="marking__header">
-        <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-        <h1 className="marking__product-name">{currentProduct?.dealerName}</h1>
-      </div>
-      <div className="marking__container">
-        <div className="marking__matchList-container">
-          {matchCount === 999 ? (
-            <SearchInFullList fullList={fullList} getMatchList={getMatchList} />
-          ) : (
-            getMatchList(matchCount, matchList)
-          )}
+  if (isLoading) {
+    return <Preloader />;
+  } else {
+    return (
+      <div className="marking">
+        <div className="marking__header">
+          <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
+          <h1 className="marking__product-name">{currentDealer}</h1>
         </div>
-        <div className="marking__match-container">
-          <SelectedProduct product={currentProduct}></SelectedProduct>
-        </div>
-      </div>
-      <div className="marking__footer">
-        <div className="marking__btn-footer-background">
-          <button
-            type="button"
-            className="marking__btn marking__btn-footer common-button"
-            onClick={handleToMainBtnClick}>
-            На главную
-          </button>
-        </div>
-        <div className="marking__btn-container">
-          <div className="marking__btn-footer-background marking__btn-footer-background_small">
-            <button type="button" className="marking__btn marking__btn-footer common-button">
-              Да
-            </button>
+        <div className="marking__container">
+          <div className="marking__matchList-container">
+            {matchCount === 999 ? (
+              <SearchInFullList fullList={fullList} getMatchList={getMatchList} />
+            ) : (
+              getMatchList(matchCount, matchList)
+            )}
           </div>
-          <div className="marking__btn-footer-background marking__btn-footer-background_small">
-            <button type="button" className="marking__btn marking__btn-footer common-button">
-              Нет
-            </button>
+          <div className="marking__match-container">
+            <SelectedProduct product={currentProduct}></SelectedProduct>
           </div>
         </div>
+        <div className="marking__footer">
+          <div className="marking__btn-footer-background">
+            <button
+              type="button"
+              className="marking__btn marking__btn-footer common-button"
+              onClick={handleToMainBtnClick}>
+              На главную
+            </button>
+          </div>
+          <div className="marking__btn-container">
+            <div className="marking__btn-footer-background marking__btn-footer-background_small">
+              <button type="button" className="marking__btn marking__btn-footer common-button">
+                Да
+              </button>
+            </div>
+            <div className="marking__btn-footer-background marking__btn-footer-background_small">
+              <button type="button" className="marking__btn marking__btn-footer common-button">
+                Нет
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

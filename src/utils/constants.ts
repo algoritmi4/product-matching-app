@@ -4,6 +4,81 @@ import { Product } from './Product.interface';
 
 export const API_URL = 'http://localhost:8000/api/v1';
 
+export const TEST_MARKETING_DEALER: Dealer[] = [
+  {
+    id: 1,
+    name: 'Moi_vibor_WB'
+  },
+  {
+    id: 2,
+    name: 'Akson'
+  },
+  {
+    id: 3,
+    name: 'Bafus'
+  },
+  {
+    id: 5,
+    name: 'Castorama'
+  },
+  {
+    id: 6,
+    name: 'Cubatora'
+  },
+  {
+    id: 7,
+    name: 'Komus'
+  },
+  {
+    id: 9,
+    name: 'Megastroy'
+  },
+  {
+    id: 10,
+    name: 'OnlineTrade'
+  },
+  {
+    id: 11,
+    name: 'Petrovich'
+  },
+  {
+    id: 12,
+    name: 'sdvor'
+  },
+  {
+    id: 13,
+    name: 'simaLand'
+  },
+  {
+    id: 14,
+    name: 'VegosM'
+  },
+  {
+    id: 15,
+    name: 'Vse_instrumeni'
+  },
+  {
+    id: 16,
+    name: 'Vimos'
+  },
+  {
+    id: 4,
+    name: 'Baucenter'
+  },
+  {
+    id: 8,
+    name: 'Leroy_Merlin'
+  },
+  {
+    id: 18,
+    name: 'Мasterstroy_spb_OZON\n'
+  },
+  {
+    id: 17,
+    name: 'Unicleaner_OZON'
+  }
+];
+
 export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
   {
     id: 2,
@@ -374,81 +449,6 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'Cредство для мытья стекол и зеркал с антистатическим эффектом Prosept Optic Shine, 500мл',
     date: '2023-07-11',
     dealer_id: 2
-  }
-];
-
-export const TEST_MARKETING_DEALER: Dealer[] = [
-  {
-    id: 1,
-    name: 'Moi_vibor_WB'
-  },
-  {
-    id: 2,
-    name: 'Akson'
-  },
-  {
-    id: 3,
-    name: 'Bafus'
-  },
-  {
-    id: 5,
-    name: 'Castorama'
-  },
-  {
-    id: 6,
-    name: 'Cubatora'
-  },
-  {
-    id: 7,
-    name: 'Komus'
-  },
-  {
-    id: 9,
-    name: 'Megastroy'
-  },
-  {
-    id: 10,
-    name: 'OnlineTrade'
-  },
-  {
-    id: 11,
-    name: 'Petrovich'
-  },
-  {
-    id: 12,
-    name: 'sdvor'
-  },
-  {
-    id: 13,
-    name: 'simaLand'
-  },
-  {
-    id: 14,
-    name: 'VegosM'
-  },
-  {
-    id: 15,
-    name: 'Vse_instrumeni'
-  },
-  {
-    id: 16,
-    name: 'Vimos'
-  },
-  {
-    id: 4,
-    name: 'Baucenter'
-  },
-  {
-    id: 8,
-    name: 'Leroy_Merlin'
-  },
-  {
-    id: 18,
-    name: 'Мasterstroy_spb_OZON\n'
-  },
-  {
-    id: 17,
-    name: 'Unicleaner_OZON'
   }
 ];
 
