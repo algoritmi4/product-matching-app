@@ -4,7 +4,7 @@
 
 ## Сведения о команде
 Backend-разработчики:
-1) Рашид Аюпов, https://t.me/valentaine_ra
+1) Аюпов Рашид, https://t.me/valentaine_ra
 2) Калинина Юлия, https://t.me/good_old_user
 
 Frontend-разработчики:
