@@ -1,17 +1,18 @@
 .match {
-  width: calc(100% - 6px);
+  width: calc(100% - 9px);
   margin: 0 3px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border: 1px solid #000;
+  border: 1px solid gray;
   border-radius: 7px;
   cursor: pointer;
   background-color: white;
 }
 
 .match_chosen {
-  background-color: lightblue;
+  color: white;
+  background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -30%, rgba(56, 164, 58, 0.9) 100%);
 }
 
 .match__product-name {
@@ -25,4 +26,11 @@
   font-size: 15px;
   line-height: 30px;
   font-weight: normal;
+}
+
+@media screen and (max-width: 900px) {
+  .match__product-name {
+    font-size: 10px;
+    line-height: 20px;
+  }
 }

@@ -40,11 +40,11 @@ export function SearchInFullList({
           <button
             disabled={!isValid}
             className={`search-form__submit-btn ${
-              !isValid ? 'search-form__submit-btn_diabled' : ''
+              !isValid ? 'search-form__submit-btn_disabled' : ''
             }`}></button>
         </div>
       </form>
-      <div className="marking__matchList-container">
+      <div className="search-form____matchList-container">
         {getMatchList.length > 0 &&
           (resultOfSearchList.length > 0 ? (
             getMatchList(999, resultOfSearchList)

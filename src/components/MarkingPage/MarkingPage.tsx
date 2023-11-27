@@ -95,19 +95,25 @@ export default function MarkingPage() {
         </div>
       </div>
       <div className="marking__footer">
-        <button
-          type="button"
-          className="marking__btn-route-main marking__btn-footer common-button"
-          onClick={handleToMainBtnClick}>
-          На главную
-        </button>
+        <div className="marking__btn-footer-background">
+          <button
+            type="button"
+            className="marking__btn marking__btn-footer common-button"
+            onClick={handleToMainBtnClick}>
+            На главную
+          </button>
+        </div>
         <div className="marking__btn-container">
-          <button type="button" className="marking__btn-confirm marking__btn-footer common-button">
-            Да
-          </button>
-          <button type="button" className="marking__btn-deny marking__btn-footer common-button">
-            Нет
-          </button>
+          <div className="marking__btn-footer-background marking__btn-footer-background_small">
+            <button type="button" className="marking__btn marking__btn-footer common-button">
+              Да
+            </button>
+          </div>
+          <div className="marking__btn-footer-background marking__btn-footer-background_small">
+            <button type="button" className="marking__btn marking__btn-footer common-button">
+              Нет
+            </button>
+          </div>
         </div>
       </div>
     </div>

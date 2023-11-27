@@ -31,3 +31,27 @@
   font-weight: normal;
   cursor: pointer;
 }
+
+@media screen and (max-width: 900px) {
+  .selected-item__product-atribute {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .selected-item__product-link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .selected-item__product-atribute {
+    font-size: 10px;
+    line-height: 15px;
+  }
+
+  .selected-item__product-link {
+    font-size: 10px;
+    line-height: 15px;
+  }
+}

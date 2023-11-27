@@ -14,12 +14,24 @@ export function Selector({
 
   return (
     <select className="select" defaultValue={matchCount} onChange={handleChange}>
-      <option value="2">Вариантов: 2</option>
-      <option value="3">Вариантов: 3</option>
-      <option value="5">Вариантов: 5</option>
-      <option value="10">Вариантов: 10</option>
-      <option value="20">Вариантов: 20</option>
-      <option value="999">Выбрать вручную</option>
+      <option value="2" className="select__option">
+        Вариантов: 2
+      </option>
+      <option value="3" className="select__option">
+        Вариантов: 3
+      </option>
+      <option value="5" className="select__option">
+        Вариантов: 5
+      </option>
+      <option value="10" className="select__option">
+        Вариантов: 10
+      </option>
+      <option value="20" className="select__option">
+        Вариантов: 20
+      </option>
+      <option value="999" className="select__option">
+        Выбрать вручную
+      </option>
     </select>
   );
 }
