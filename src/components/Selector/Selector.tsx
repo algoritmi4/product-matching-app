@@ -1,13 +1,14 @@
 import './Selector.css';
+import { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
 export function Selector({
   matchCount,
   setMatchCount
 }: {
   matchCount: number;
-  setMatchCount: any;
+  setMatchCount: Dispatch<SetStateAction<number>>;
 }) {
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setMatchCount(Number(e.target.value));
   };
 

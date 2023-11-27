@@ -1,6 +1,8 @@
-import { type Data } from './data.interface';
+import { Dealer } from './Dealer.interface';
+import { DealerProduct } from './DealerProduct.interface';
+import { Product } from './Product.interface';
 
-export const TEST_MARKETING_DEALERPRICE: Data[] = [
+export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
   {
     id: 2,
     product_key: '546227',
@@ -373,7 +375,7 @@ export const TEST_MARKETING_DEALERPRICE: Data[] = [
   }
 ];
 
-export const TEST_MARKETING_DEALER = [
+export const TEST_MARKETING_DEALER: Dealer[] = [
   {
     id: 1,
     name: 'Moi_vibor_WB'
@@ -448,7 +450,7 @@ export const TEST_MARKETING_DEALER = [
   }
 ];
 
-export const TEST_MARKETING_PRODUCTS = [
+export const TEST_MARKETING_PRODUCTS: Product[] = [
   {
     FIELD1: 0,
     id: 245,

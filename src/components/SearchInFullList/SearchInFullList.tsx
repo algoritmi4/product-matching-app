@@ -1,27 +1,25 @@
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import './SearchInFullList.css';
-import { spawn } from 'child_process';
+import { Product } from '../../utils/Product.interface';
 
 export function SearchInFullList({
   fullList,
   getMatchList
 }: {
-  fullList: any[];
-  getMatchList: any;
+  fullList: Product[];
+  getMatchList: (count: number, list: Product[]) => JSX.Element[];
 }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { isValid }
   } = useForm({ mode: 'all' });
 
   const [resultOfSearchList, setResultOfSearchList] = useState(fullList);
 
   const onSubmit = (data: FieldValues) => {
     const { pattern } = data;
-    console.log(pattern);
-
     setResultOfSearchList(
       fullList.filter((item) => item.name.toLowerCase().indexOf(pattern.toLowerCase()) >= 0)
     );
@@ -30,18 +28,13 @@ export function SearchInFullList({
   return (
     <>
       <form className="search-form" onSubmit={handleSubmit(onSubmit)}>
-        <p className="search-form__field-header">Поиск по всем продуктам</p>
         <div className="search-form__field-container">
           <input
             type="text"
             {...register('pattern', {
-              required: 'необходимо ввести фразу для поиска',
-              maxLength: {
-                value: 200,
-                message: 'можно вводить не более 200 символов'
-              }
+              required: true
             })}
-            placeholder=""
+            placeholder="Поиск по всем продуктам"
             className="search-form__field"
           />
           <button
@@ -50,9 +43,6 @@ export function SearchInFullList({
               !isValid ? 'search-form__submit-btn_diabled' : ''
             }`}></button>
         </div>
-        {errors?.pattern && (
-          <div className="search-form__field-error">{errors.pattern.message?.toString()}</div>
-        )}
       </form>
       <div className="marking__matchList-container">
         {getMatchList.length > 0 &&
