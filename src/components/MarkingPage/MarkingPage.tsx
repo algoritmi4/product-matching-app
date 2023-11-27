@@ -13,9 +13,12 @@ import {
   TEST_MARKETING_PRODUCTS
 } from '../../utils/constants';
 import { Product } from '../../utils/Product.interface';
+import { apiMarking } from '../../utils/test.api';
 
 export default function MarkingPage() {
   const [matchCount, setMatchCount] = useState(2);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dealers, setDealers] = useState(TEST_MARKETING_DEALER);
   const [currentProduct, setCurrentProduct] = useState<DealerProduct>({
     id: 0,
     product_key: '',
@@ -60,6 +63,18 @@ export default function MarkingPage() {
         TEST_MARKETING_DEALER.find((dealer) => dealer.id === curProduct?.dealer_id)?.name || '';
       setCurrentProduct(curProduct);
     }
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    apiMarking
+      .getDealers()
+      .then((allDealers) => {
+        console.log(allDealers);
+        setDealers(allDealers);
+      })
+      .catch((err) => console.log(err.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const getMatchList = (count: number, list: Product[]) => {

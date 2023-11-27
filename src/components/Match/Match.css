@@ -7,7 +7,7 @@
   border: 1px solid gray;
   border-radius: 7px;
   cursor: pointer;
-  background-color: white;
+  background: rgba(248, 255, 232, 0.5);
 }
 
 .match_chosen {
@@ -25,7 +25,7 @@
   word-break: break-all;
   font-size: 15px;
   line-height: 30px;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 900px) {

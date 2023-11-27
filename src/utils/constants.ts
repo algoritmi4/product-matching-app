@@ -2,6 +2,8 @@ import { Dealer } from './Dealer.interface';
 import { DealerProduct } from './DealerProduct.interface';
 import { Product } from './Product.interface';
 
+export const API_URL = 'http://localhost:8000/api/v1';
+
 export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
   {
     id: 2,

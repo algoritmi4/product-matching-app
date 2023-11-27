@@ -11,7 +11,7 @@
 }
 
 .marking__header {
-  width: calc(90% - 1px);
+  width: calc(98% - 9px);
   margin-top: 20px;
   padding: 10px 0;
   display: grid;
@@ -44,8 +44,8 @@
 }
 
 .marking__container {
-  width: 90%;
-  height: 500px;
+  width: calc(98% - 8px);
+  height: 650px;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 20px;
