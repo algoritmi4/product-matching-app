@@ -1,10 +1,17 @@
 import './MarkingPage.css';
+import '../../utils/common-button.css';
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
-import { Item } from './Item.type';
+import { Item } from '../../utils/Item.type';
+import {
+  TEST_MARKETING_DEALERPRICE,
+  TEST_MARKETING_DEALER,
+  TEST_MARKETING_PRODUCTS
+} from '../../utils/constants';
 
 export default function MarkingPage() {
   const [matchCount, setMatchCount] = useState(2);
@@ -13,139 +20,41 @@ export default function MarkingPage() {
     price: '',
     url: ''
   });
+  const navigate = useNavigate();
 
-  const matchList = [
-    {
-      name: 'Пропитка для дерева 1л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 2л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 3л очень много слов очееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 4л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 5л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 6л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 7л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 8л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 9л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 10л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 11л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    }
-  ];
+  //Временно получаю данные из констант
+  const matchList = TEST_MARKETING_PRODUCTS.slice(0, 19);
+  const fullList = [...TEST_MARKETING_PRODUCTS];
 
-  const fullList = [
-    {
-      name: 'Пропитка для дерева 1л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 2л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 3л очень много слов очееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 4л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 5л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 6л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 7л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 8л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 9л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 10л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    },
-    {
-      name: 'Пропитка для дерева 11л',
-      price: '2000',
-      url: 'https://www.wildberries.ru/catalog/118093487/detail.aspx'
-    }
-  ];
+  const getCurrentProduct = (): any => {
+    const { product_id } = useParams();
+    const productName = TEST_MARKETING_DEALERPRICE.find(
+      (product) => product.product_key === product_id
+    );
+    const dealerName = TEST_MARKETING_DEALER.find((dealer) => dealer.id === productName?.dealer_id)
+      ?.name;
+    return { ...productName, dealerName };
+  };
 
   const getMatchList = (count: number, list: any[]) => {
     const resultList: JSX.Element[] = [];
     for (let i = 0; i < (list.length >= count ? count : list.length); i++) {
-      resultList.push(<Match product={list[i]} key={i} setChosenItem={setChosenItem} />);
+      resultList.push(
+        <Match product={list[i]} key={i} setChosenItem={setChosenItem} chosenItem={chosenItem} />
+      );
     }
     return resultList;
+  };
+
+  const handleToMainBtnClick = () => {
+    navigate('/');
   };
 
   return (
     <div className="marking">
       <div className="marking__header">
         <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-        <h1 className="marking__product-name">
-          Наименование продукта очень длнное
-          оченьььььььььььььььььььььььььььььььььььььььььььььььььььь
-        </h1>
+        <h1 className="marking__product-name">{getCurrentProduct()?.dealerName}</h1>
       </div>
       <div className="marking__container">
         <div className="marking__matchList-container">
@@ -156,16 +65,24 @@ export default function MarkingPage() {
           )}
         </div>
         <div className="marking__match-container">
-          <SelectedProduct product={chosenItem}></SelectedProduct>
+          <SelectedProduct product={getCurrentProduct()}></SelectedProduct>
         </div>
       </div>
       <div className="marking__footer">
-        <button type="button" className="marking_btn-confirm">
-          Да
+        <button
+          type="button"
+          className="marking__btn-route-main marking__btn-footer common-button"
+          onClick={handleToMainBtnClick}>
+          На главную
         </button>
-        <button type="button" className="marking_btn-deny">
-          Нет
-        </button>
+        <div className="marking__btn-container">
+          <button type="button" className="marking__btn-confirm marking__btn-footer common-button">
+            Да
+          </button>
+          <button type="button" className="marking__btn-deny marking__btn-footer common-button">
+            Нет
+          </button>
+        </div>
       </div>
     </div>
   );

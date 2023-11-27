@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import './SearchInFullList.css';
+import { spawn } from 'child_process';
 
 export function SearchInFullList({
   fullList,
@@ -19,7 +20,11 @@ export function SearchInFullList({
 
   const onSubmit = (data: FieldValues) => {
     const { pattern } = data;
-    setResultOfSearchList(fullList.filter((item) => item.name.indexOf(pattern) > 0));
+    console.log(pattern);
+
+    setResultOfSearchList(
+      fullList.filter((item) => item.name.toLowerCase().indexOf(pattern.toLowerCase()) >= 0)
+    );
   };
 
   return (
@@ -49,7 +54,14 @@ export function SearchInFullList({
           <div className="search-form__field-error">{errors.pattern.message?.toString()}</div>
         )}
       </form>
-      {!!getMatchList.length && getMatchList(999, resultOfSearchList)}
+      <div className="marking__matchList-container">
+        {getMatchList.length > 0 &&
+          (resultOfSearchList.length > 0 ? (
+            getMatchList(999, resultOfSearchList)
+          ) : (
+            <div className="search-form__no-goods">Нет подходящих товаров</div>
+          ))}
+      </div>
     </>
   );
 }

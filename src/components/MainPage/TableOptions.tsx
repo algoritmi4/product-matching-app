@@ -5,14 +5,16 @@ import {
   MRT_RowSelectionState
 } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
-import { data, type Data } from './data';
+import { type Data } from '../../utils/data.interface';
 import { Button } from '@mui/material';
+import { TEST_MARKETING_DEALERPRICE as data } from '../../utils/constants';
+import uploadImage from '../../images/upload-image(main-page).svg';
 
-function TableOptions() {
+function TableOptions(props: any) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
-  const columns = useMemo<MRT_ColumnDef<Data>[]>(
+  const columns: MRT_ColumnDef<Data>[] = useMemo(
     () => [
       {
         header: 'Название',
@@ -50,7 +52,7 @@ function TableOptions() {
       },
       {
         header: 'Статус',
-        accessorFn: (data) => (data.status ? 'true' : 'false'),
+        accessorFn: (data) => (data ? 'true' : 'false'),
         filterVariant: 'checkbox',
         size: 150,
         minSize: 40,
@@ -70,7 +72,7 @@ function TableOptions() {
     columns,
     data,
     enableRowSelection: true,
-    getRowId: (originalRow) => originalRow.id,
+    getRowId: (originalRow) => originalRow.product_key,
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
     enableRowNumbers: true,
@@ -121,9 +123,21 @@ function TableOptions() {
         overflow: 'hidden'
       }
     },
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Button variant="contained" color="primary">
-        Download Selected Rows
+    renderTopToolbarCustomActions: () => (
+      <Button variant="contained" color="inherit">
+        <div className="main-page__input-container">
+          <input
+            type="file"
+            id="csv-input"
+            accept=".csv"
+            onInput={(e) => props.handleSCVLoading(e)}
+            className="main-page__input"
+          />
+          <label className="main-page__input-label" htmlFor="csv-input">
+            <div className="main-page__upload-image"></div>
+            <p className="main-page__button-text">CSV</p>
+          </label>
+        </div>
       </Button>
     )
   });

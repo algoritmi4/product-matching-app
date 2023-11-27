@@ -10,6 +10,14 @@ class Api {
 
     return Promise.reject(res);
   }
+
+  CSVFileLoad(formData) {
+    return fetch(`${this._url}/`, {
+      method: 'POST',
+      headers: this._headers,
+      body: formData
+    }).then((res) => this._getResponseData(res));
+  }
 }
 
 const api = new Api({

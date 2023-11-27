@@ -5,3 +5,29 @@
 .main__need-marking {
   color: red;
 }
+
+.main-page__input-container {
+  border-radius: 5px;
+}
+
+.main-page__input {
+  display: none;
+}
+
+.main-page__input-label {
+  color: black;
+  cursor: pointer;
+  display: flex;
+}
+
+.main-page__upload-image {
+  background-image: url('../../images/upload-image\(main-page\).svg');
+  background-repeat: no-repeat;
+  background-size: 23px 23px;
+  width: 23px;
+  height: 23px;
+}
+
+.main-page__button-text {
+  margin: 0 0 0 5px;
+}

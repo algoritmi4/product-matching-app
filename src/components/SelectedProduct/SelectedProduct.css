@@ -1,0 +1,32 @@
+.selected-item {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.selected-item__product-name {
+  max-width: calc(100% - 10px);
+  display: block;
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  word-break: break-all;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: normal;
+}
+
+.selected-item__price {
+  max-width: calc(100% - 10px);
+  display: block;
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  word-break: break-all;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: normal;
+}
