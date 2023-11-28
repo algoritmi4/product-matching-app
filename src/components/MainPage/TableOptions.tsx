@@ -2,21 +2,31 @@ import { FormEvent, useMemo, useState } from 'react';
 import {
   useMaterialReactTable,
   type MRT_ColumnDef,
-  MRT_RowSelectionState
+  MRT_RowSelectionState,
+  MRT_Updater
 } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { DealerProduct } from '../../utils/DealerProduct.interface';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 
+interface Pagination {
+  pageIndex: number;
+  pageSize: number;
+}
+
 function TableOptions({
   handleSCVLoading,
   data,
-  isButtonLoading
+  isButtonLoading,
+  pagination,
+  setPagination
 }: {
   handleSCVLoading: (e: FormEvent<HTMLInputElement>) => void;
   data: DealerProduct[];
   isButtonLoading: boolean;
+  pagination: Pagination;
+  setPagination: (value: MRT_Updater<Pagination>) => void;
 }) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
@@ -59,7 +69,7 @@ function TableOptions({
       },
       {
         header: 'Статус',
-        accessorFn: (data) => (data ? 'true' : 'false'),
+        accessorFn: (data) => (data.mapped ? 'true' : 'false'),
         filterVariant: 'checkbox',
         size: 150,
         minSize: 40,
@@ -81,7 +91,7 @@ function TableOptions({
     enableRowSelection: true,
     getRowId: (originalRow) => originalRow.product_key,
     onRowSelectionChange: setRowSelection,
-    state: { rowSelection },
+    state: { rowSelection, pagination },
     enableRowNumbers: true,
     enableRowPinning: true,
     enableColumnOrdering: true,
@@ -91,9 +101,9 @@ function TableOptions({
     enableColumnDragging: false,
     initialState: {
       showColumnFilters: true,
-      pagination: { pageIndex: 0, pageSize: 15 },
       expanded: true
     },
+    onPaginationChange: setPagination,
     enableGlobalFilterRankedResults: false,
     enableGrouping: true,
     enablePagination: true,
@@ -102,7 +112,7 @@ function TableOptions({
     layoutMode: 'grid',
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
-        navigate(`/marking/${row.original.product_key}`);
+        navigate(`/marking/${row.original.id}`);
       },
       sx: {
         cursor: 'pointer'
@@ -118,17 +128,16 @@ function TableOptions({
     },
     muiTableHeadCellProps: {
       sx: {
-        fontSize: {
-          xs: '10px',
-          sm: '11px',
-          md: '12px',
-          lg: '13px',
-          xl: '14px'
-        },
+        fontSize: '15px',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         overflow: 'hidden'
       }
+    },
+    muiPaginationProps: {
+      rowsPerPageOptions: [10, 20, 30, 50, 100],
+      showFirstButton: false,
+      showLastButton: false
     },
     renderTopToolbarCustomActions: () => (
       <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>

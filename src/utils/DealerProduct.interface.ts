@@ -7,4 +7,5 @@ export interface DealerProduct {
   date: string;
   dealer_id: number;
   dealerName?: string;
+  mapped: null | object;
 }

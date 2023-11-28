@@ -87,7 +87,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/sredstvo_universalnoe_prosept_universal_spray_500ml/',
     product_name: 'Средство универсальное Prosept Universal Spray, 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 3,
@@ -96,7 +97,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/kontsentrat_prosept_multipower_dlya_mytya_polov_tsitrus_1l/',
     product_name: 'Концентрат Prosept Multipower для мытья полов, цитрус 1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 4,
@@ -106,7 +108,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_dlya_chistki_lyustr_prosept_universal_anti_dust_500ml/',
     product_name: 'Средство для чистки люстр Prosept Universal Anti-dust, 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 5,
@@ -115,7 +118,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/udalitel_rzhavchiny_prosept_rust_remover_0_5l_023_05/',
     product_name: 'Удалитель ржавчины PROSEPT RUST REMOVER 0,5л 023-05',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 6,
@@ -125,7 +129,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_moyushchee_dlya_bani_i_sauny_prosept_multipower_wood_1l/',
     product_name: 'Средство моющее для бани и сауны Prosept Multipower Wood 1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 7,
@@ -134,7 +139,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/propitka_prosept_aquaisol_dlya_kamnya_kontsentrat_1_2_1l/',
     product_name: 'Пропитка PROSEPT Aquaisol для камня, концентрат  1:2  1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 8,
@@ -144,7 +150,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_dlya_mytya_plitki_i_keramogranita_prosept_multipower_kerama_1l/',
     product_name: 'Средство для мытья плитки и керамогранита Prosept Multipower Kerama 1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 9,
@@ -153,7 +160,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/propitka_prosept_aquaisol_dlya_kamnya_kontsentrat_1_2_5l/',
     product_name: 'Пропитка PROSEPT Aquaisol для камня, концентрат  1:2   5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 10,
@@ -163,7 +171,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/shpatlevka_zamazka_proseptn_plastix_dlya_zadelki_glubokih_vyboin_i_treschin_1_4kg/',
     product_name: 'Шпаклевка выравнивающая акриловая PROSEPT Plastix белая, 1 кг.',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 11,
@@ -172,7 +181,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/sol_dlya_posudomoechnykh_mashin_prosept_splash_1_5kg_280_15/',
     product_name: 'Соль для посудомоечных машин PROSEPT Splash 1,5кг 280-15',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 12,
@@ -182,7 +192,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_dlya_mytya_stekol_i_zerkal_prosept_optic_crystal_500ml/',
     product_name: 'Средство для мытья стекол и зеркал Prosept Optic Crystal, 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 13,
@@ -192,7 +203,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_eco_ultra_nevymyvaemyy_korichnevyy_gotovyy_sostav_5l/',
     product_name: 'Антисептик PROSEPT Eco Ultra невымываемый, коричневый, готовый состав 5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 14,
@@ -201,7 +213,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/ochistitel_fasadov_prosept_salt_cleaner_kontsentrat_1_2_1l/',
     product_name: 'Очиститель фасадов  PROSEPT Salt Cleaner, концентрат 1:2  1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 15,
@@ -212,7 +225,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_name:
       'Пропитка-антисептик PROSEPT Eco Ultra невымываемая для ответственных конструкций 10л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 16,
@@ -222,7 +236,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_kontsentrirovannoe_prosept_duty_extra_dlya_uborki_posle_stroitelstva_1l/',
     product_name: 'Средство концентрированное Prosept Duty Extra для уборки после строительства 1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 17,
@@ -231,7 +246,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/udalitel_tsementa_prosept_cement_cleaner_kontsentrat_1_2_5l/',
     product_name: 'Удалитель цемента  PROSEPT Cement Cleaner, концентрат 1:2  5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 18,
@@ -241,7 +257,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_ultra_nevymyvaemyy_korichnevyy_kontsentrat_1_10_5l/',
     product_name: 'Антисептик PROSEPT Ultra невымываемый , коричневый концентрат 1:10  5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 19,
@@ -251,7 +268,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/ognebiozaschita_prosept_prof_1_gruppa_dlya_naruzhnyh_i_vnutrennih_rabot_10l/',
     product_name: 'Огнебиозащита PROSEPT prof 1 группа для наружных и внутренних работ 10л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 20,
@@ -261,7 +279,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_interior_dlya_vnutrennih_rabot_kontsentrat_1_10_1l/',
     product_name: 'Антисептик PROSEPT Interior для внутренних работ, концентрат 1:10  1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 21,
@@ -270,7 +289,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/shpatlevka_dlya_plit_osb_proplast_1_3_kg/',
     product_name: 'Шпаклевка для OSB-плит акриловая PROSEPT Proplast белая, 1 кг.',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 22,
@@ -279,7 +299,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/antiseptik_grunt_prosept_osb_base_dlya_osb_1l/',
     product_name: 'Антисептик-грунт PROSEPT ОSB BASE для OSB 1л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 23,
@@ -288,7 +309,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/ochistitel_fasadov_prosept_salt_cleaner_kontsentrat_1_2_5l/',
     product_name: 'Очиститель фасадов  PROSEPT Salt Cleaner, концентрат 1:2  5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 24,
@@ -298,7 +320,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/sredstvo_dlya_izdeliy_iz_kozhi_prosept_duty_leather_ochistka_i_ukhod_400ml/',
     product_name: 'Средство для изделий из кожи Prosept Duty Leather очистка и уход, 400мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 25,
@@ -308,7 +331,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/cprey_dlya_ochistki_polkov_v_banyakh_i_saunakh_prosept_universal_wood_500ml/',
     product_name: 'Cпрей для очистки полков в банях и саунах Prosept Universal Wood 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 26,
@@ -318,7 +342,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_interior_dlya_vnutrennih_rabot_kontsentrat_1_10_5l/',
     product_name: 'Антисептик PROSEPT Interior для внутренних работ , концентрат 1:10 5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 27,
@@ -328,7 +353,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_eco_ultra_nevymyvaemyy_korichnevyy_gotovyy_sostav_10l/',
     product_name: 'Антисептик PROSEPT Eco Ultra невымываемый, коричневый, готовый состав 10л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 28,
@@ -338,7 +364,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
     product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 29,
@@ -348,7 +375,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/maslo_dlya_zashchity_polkov_prosept_sauna_oil_250ml_gotovyy_sostav/',
     product_name: 'Масло для защиты полков Prosept Sauna Oil, 250мл  готовый состав',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 30,
@@ -358,7 +386,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_ultra_nevymyvaemyy_korichnevyy_gotovyy_sostav_1_l/',
     product_name: 'Антисептик PROSEPT Ultra невымываемый, коричневый, готовый состав 1 л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 31,
@@ -367,7 +396,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/shpatlevka_dlya_plit_osb_proplast_7_0_kg/',
     product_name: 'Шпаклевка для OSB-плит акриловая PROSEPT Proplast белая, 7 кг.',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 32,
@@ -377,7 +407,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/antiseptik_prosept_eco_exterior_trudnovymyvaemyy_dlya_naruzhnyh_rabot_5l/',
     product_name: 'Пропитка-антисептик PROSEPT Eco Exterior трудновымываемая для наружных работ 5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 33,
@@ -387,7 +418,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/otbelivatel_dlya_drevesiny_prosept_eco_50_gotovyy_sostav_1_kg/',
     product_name: 'Отбеливатель для древесины PROSEPT ECO 50 готовый  состав / 1 кг',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 1561,
@@ -396,7 +428,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://www.wildberries.ru/catalog/44231946',
     product_name: 'ОSB BASE',
     date: '2023-07-11',
-    dealer_id: 1
+    dealer_id: 1,
+    mapped: null
   },
   {
     id: 34,
@@ -405,7 +438,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_url: 'https://akson.ru//p/antiseptik_grunt_prosept_osb_base_dlya_osb_5l/',
     product_name: 'Антисептик-грунт PROSEPT ОSB BASE для OSB 5л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 35,
@@ -415,7 +449,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
       'https://akson.ru//p/ochistitel_epoksidnogo_naleta_prosept_epoxy_cleaner_gotovyy_sostav_0_5_l/',
     product_name: 'Очиститель эпоксидного налета PROSEPT EPOXY CLEANER, готовый состав / 0,5 л',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 36,
@@ -426,7 +461,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_name:
       'Средство для чистки гриля и духовых шкафов Prosept Cooky Grill, 550мл концентрат',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 37,
@@ -437,7 +473,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_name:
       'Спрей Prosept Cooky Spray для столешниц и раковин из искусственного камня и гранита, 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   },
   {
     id: 38,
@@ -448,7 +485,8 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
     product_name:
       'Cредство для мытья стекол и зеркал с антистатическим эффектом Prosept Optic Shine, 500мл',
     date: '2023-07-11',
-    dealer_id: 2
+    dealer_id: 2,
+    mapped: null
   }
 ];
 

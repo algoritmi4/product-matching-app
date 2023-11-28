@@ -5,20 +5,22 @@ import api from '../../utils/api';
 import { FormEvent, useEffect, useState } from 'react';
 import { DealerProduct } from '../../utils/DealerProduct.interface';
 
+interface Pagination {
+  pageIndex: number;
+  pageSize: number;
+}
+
 function MainPage() {
-  const [data, setData] = useState<DealerProduct[]>([
-    {
-      id: 2,
-      product_key: '546227',
-      price: 233,
-      product_url: 'https://akson.ru//p/sredstvo_universalnoe_prosept_universal_spray_500ml/',
-      product_name: 'Средство универсальное Prosept Universal Spray, 500мл',
-      date: '2023-07-11',
-      dealer_id: 2
-    }
-  ]);
+  const [data, setData] = useState<DealerProduct[]>([]);
+  const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const { table } = TableOptions({ handleSCVLoading, data, isButtonLoading });
+  const { table } = TableOptions({
+    handleSCVLoading,
+    data,
+    isButtonLoading,
+    pagination,
+    setPagination
+  });
 
   useEffect(() => {
     api

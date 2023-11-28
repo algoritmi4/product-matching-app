@@ -29,7 +29,8 @@ export default function MarkingPage() {
     product_url: '',
     product_name: '',
     date: '',
-    dealer_id: 0
+    dealer_id: 0,
+    mapped: null
   });
   const [chosenItem, setChosenItem] = useState<Product>({
     FIELD1: 0,
