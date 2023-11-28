@@ -12,25 +12,20 @@ export function Selector({
     setMatchCount(Number(e.target.value));
   };
 
+  // get option list
+  const getOptions = (valueList: string[]) => {
+    return valueList.map((item, index) => (
+      <option value={item} className="select__option" key={index}>
+        {`Вариантов: ${item}`}
+      </option>
+    ));
+  };
+
   return (
     <select className="select" defaultValue={matchCount} onChange={handleChange}>
-      <option value="2" className="select__option">
-        Вариантов: 2
-      </option>
-      <option value="3" className="select__option">
-        Вариантов: 3
-      </option>
-      <option value="5" className="select__option">
-        Вариантов: 5
-      </option>
-      <option value="10" className="select__option">
-        Вариантов: 10
-      </option>
-      <option value="20" className="select__option">
-        Вариантов: 20
-      </option>
+      {getOptions(['2', '3', '4', '5', '10', '20', '25'])}
       <option value="999" className="select__option">
-        Выбрать вручную
+        {'Поиск по всем вариантам'}
       </option>
     </select>
   );

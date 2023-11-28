@@ -1,4 +1,4 @@
-export interface Product {
+export interface IProduct {
   id: number;
   FIELD1: number | null;
   article: string;

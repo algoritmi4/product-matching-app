@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import './SearchInFullList.css';
-import { Product } from '../../utils/Product.interface';
+import { IProduct } from '../../utils/IProduct.interface';
 
 export function SearchInFullList({
   fullList,
   getMatchList
 }: {
-  fullList: Product[];
-  getMatchList: (count: number, list: Product[]) => JSX.Element[];
+  fullList: IProduct[];
+  getMatchList: (count: number, list: IProduct[]) => JSX.Element[];
 }) {
   const {
     register,

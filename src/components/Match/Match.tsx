@@ -1,15 +1,15 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './Match.css';
-import { Product } from '../../utils/Product.interface';
+import { IProduct } from '../../utils/IProduct.interface';
 
 export function Match({
   product,
   setChosenItem,
   chosenItem
 }: {
-  product: Product;
-  setChosenItem: Dispatch<SetStateAction<Product>>;
-  chosenItem: Product;
+  product: IProduct;
+  setChosenItem: Dispatch<SetStateAction<IProduct>>;
+  chosenItem: IProduct;
 }) {
   const [isChosen, setIsChosen] = useState(false);
 
