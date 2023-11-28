@@ -1,20 +1,27 @@
-import { useMemo, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import {
   useMaterialReactTable,
   type MRT_ColumnDef,
   MRT_RowSelectionState
 } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
-import { type Data } from '../../utils/data.interface';
-import { Button } from '@mui/material';
-import { TEST_MARKETING_DEALERPRICE as data } from '../../utils/constants';
-import uploadImage from '../../images/upload-image(main-page).svg';
+import { Box, Button } from '@mui/material';
+import { DealerProduct } from '../../utils/DealerProduct.interface';
+import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 
-function TableOptions(props: any) {
+function TableOptions({
+  handleSCVLoading,
+  data,
+  isButtonLoading
+}: {
+  handleSCVLoading: (e: FormEvent<HTMLInputElement>) => void;
+  data: DealerProduct[];
+  isButtonLoading: boolean;
+}) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
-  const columns: MRT_ColumnDef<Data>[] = useMemo(
+  const columns: MRT_ColumnDef<DealerProduct>[] = useMemo(
     () => [
       {
         header: 'Название',
@@ -33,7 +40,7 @@ function TableOptions(props: any) {
         maxSize: 350,
         muiFilterSliderProps: {
           marks: true,
-          max: 2000,
+          max: 4000,
           min: 0,
           step: 10,
           valueLabelFormat: (value) =>
@@ -84,7 +91,7 @@ function TableOptions(props: any) {
     enableColumnDragging: false,
     initialState: {
       showColumnFilters: true,
-      pagination: { pageIndex: 0, pageSize: 5 },
+      pagination: { pageIndex: 0, pageSize: 15 },
       expanded: true
     },
     enableGlobalFilterRankedResults: false,
@@ -124,21 +131,30 @@ function TableOptions(props: any) {
       }
     },
     renderTopToolbarCustomActions: () => (
-      <Button variant="contained" color="inherit">
-        <div className="main-page__input-container">
-          <input
-            type="file"
-            id="csv-input"
-            accept=".csv"
-            onInput={(e) => props.handleSCVLoading(e)}
-            className="main-page__input"
-          />
-          <label className="main-page__input-label" htmlFor="csv-input">
-            <div className="main-page__upload-image"></div>
-            <p className="main-page__button-text">CSV</p>
-          </label>
-        </div>
-      </Button>
+      <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>
+        <Button variant="contained" color="inherit">
+          {isButtonLoading ? (
+            <ButtonPreloader />
+          ) : (
+            <div className="main-page__input-container">
+              <input
+                type="file"
+                id="csv-input"
+                accept=".csv"
+                onInput={(e) => handleSCVLoading(e)}
+                className="main-page__input"
+              />
+              <label className="main-page__input-label" htmlFor="csv-input">
+                <div className="main-page__upload-image"></div>
+                <p className="main-page__button-text">CSV</p>
+              </label>
+            </div>
+          )}
+        </Button>
+        <Button variant="contained" color="inherit" onClick={() => navigate('/statistics')}>
+          Статистика
+        </Button>
+      </Box>
     )
   });
 
