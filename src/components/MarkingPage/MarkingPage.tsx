@@ -96,7 +96,9 @@ export default function MarkingPage({
         <div className="marking">
           <div className="marking__header">
             <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-            <h1 className="marking__product-name">{currentDealerName}</h1>
+            <div className="marking__dealer-name-container">
+              <h1 className="marking__dealer-name">{currentDealerName}</h1>
+            </div>
           </div>
           <div className="marking__container">
             <div className="marking__matchList-container">
@@ -107,7 +109,9 @@ export default function MarkingPage({
               )}
             </div>
             <div className="marking__match-container">
-              <SelectedProduct product={chosenDealerProduct}></SelectedProduct>
+              <SelectedProduct
+                product={chosenDealerProduct}
+                chosenItem={chosenItem}></SelectedProduct>
             </div>
           </div>
           <div className="marking__footer">
