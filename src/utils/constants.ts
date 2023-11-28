@@ -79,6 +79,13 @@ export const TEST_MARKETING_DEALER: Dealer[] = [
   }
 ];
 
+export const MARKETING_DEALER: Dealer[] = [
+  {
+    id: 0,
+    name: 'Список диллеров не загружен'
+  }
+];
+
 export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
   {
     id: 2,

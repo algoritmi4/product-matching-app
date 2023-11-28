@@ -1,6 +1,8 @@
+import { API_URL } from './constants';
+
 class Api {
   private _headers: HeadersInit;
-  private _url: string;
+  private _url: RequestInfo;
 
   constructor(baseURL: string, headers: HeadersInit) {
     (this._headers = headers), (this._url = baseURL);
@@ -27,9 +29,23 @@ class Api {
       headers: this._headers
     }).then((res) => this._getResponseData(res));
   }
+
+  getDealerPrice(id: string) {
+    return fetch(`${this._url}/dealers/price/${id}`, {
+      method: 'GET',
+      headers: this._headers
+    }).then((res) => this._getResponseData(res));
+  }
+
+  getDealers() {
+    return fetch(`${this._url}/dealers?page=1&size=100`, {
+      method: 'GET',
+      headers: this._headers
+    }).then((res) => this._getResponseData(res));
+  }
 }
 
-const api = new Api('http://localhost:8000/api/v1', {
+const api = new Api(API_URL, {
   Accept: 'application/json',
   'Content-Type': 'application/json'
 });
