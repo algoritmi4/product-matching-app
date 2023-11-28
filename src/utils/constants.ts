@@ -1,10 +1,49 @@
-import { Dealer } from './Dealer.interface';
-import { DealerProduct } from './DealerProduct.interface';
-import { Product } from './Product.interface';
+import { IDealer } from './IDealer.interface';
+import { IDealerProduct } from './IDealerProduct.interface';
+import { IProduct } from './IProduct.interface';
 
 export const API_URL = 'http://localhost:8000/api/v1';
 
-export const TEST_MARKETING_DEALER: Dealer[] = [
+export const INITIAL_MARKETING_DEALER: IDealer[] = [
+  {
+    id: 0,
+    name: 'Список диллеров не загружен'
+  }
+];
+
+export const INITIAL_MARKETING_DEALERPRICE: IDealerProduct[] = [
+  {
+    id: 0,
+    product_key: '',
+    price: 0,
+    product_url: '',
+    product_name: '',
+    date: '',
+    dealer_id: 0
+  }
+];
+
+export const INIRIAL_MARKETING_PRODUCTS: IProduct[] = [
+  {
+    FIELD1: 0,
+    id: 0,
+    article: '',
+    ean_13: 0,
+    name: '',
+    cost: 0,
+    recommended_price: 0,
+    category_id: null,
+    ozon_name: '',
+    name_1c: '',
+    wb_name: '',
+    ozon_article: null,
+    wb_article: null,
+    ym_article: '',
+    wb_article_td: ''
+  }
+];
+
+export const TEST_MARKETING_DEALER: IDealer[] = [
   {
     id: 1,
     name: 'Moi_vibor_WB'
@@ -79,14 +118,7 @@ export const TEST_MARKETING_DEALER: Dealer[] = [
   }
 ];
 
-export const MARKETING_DEALER: Dealer[] = [
-  {
-    id: 0,
-    name: 'Список диллеров не загружен'
-  }
-];
-
-export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
+export const TEST_MARKETING_DEALERPRICE: IDealerProduct[] = [
   {
     id: 2,
     product_key: '546227',
@@ -459,7 +491,7 @@ export const TEST_MARKETING_DEALERPRICE: DealerProduct[] = [
   }
 ];
 
-export const TEST_MARKETING_PRODUCTS: Product[] = [
+export const TEST_MARKETING_PRODUCTS: IProduct[] = [
   {
     FIELD1: 0,
     id: 245,

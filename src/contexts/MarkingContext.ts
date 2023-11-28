@@ -1,9 +1,9 @@
 import { createContext } from 'react';
-import { Dealer } from '../utils/Dealer.interface';
-import { MARKETING_DEALER } from '../utils/constants';
+import { IDealer } from '../utils/IDealer.interface';
+import { INITIAL_MARKETING_DEALER } from '../utils/constants';
 interface IMarkingContext {
-  dealerList: Dealer[];
+  dealerList: IDealer[];
 }
 export const MarkingContext = createContext<IMarkingContext>({
-  dealerList: MARKETING_DEALER
+  dealerList: INITIAL_MARKETING_DEALER
 });

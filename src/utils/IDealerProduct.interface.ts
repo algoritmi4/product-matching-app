@@ -1,4 +1,4 @@
-export interface DealerProduct {
+export interface IDealerProduct {
   id: number;
   product_key: string;
   price: number;

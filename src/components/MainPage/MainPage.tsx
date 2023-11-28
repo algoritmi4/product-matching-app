@@ -3,10 +3,10 @@ import { MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
 import api from '../../utils/api';
 import { FormEvent, useEffect, useState } from 'react';
-import { DealerProduct } from '../../utils/DealerProduct.interface';
+import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 
 function MainPage() {
-  const [data, setData] = useState<DealerProduct[]>([
+  const [data, setData] = useState<IDealerProduct[]>([
     {
       id: 2,
       product_key: '546227',

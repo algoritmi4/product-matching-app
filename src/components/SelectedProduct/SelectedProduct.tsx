@@ -1,8 +1,8 @@
 import './SelectedProduct.css';
-import { DealerProduct } from '../../utils/DealerProduct.interface';
+import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import { Link } from 'react-router-dom';
 
-export function SelectedProduct({ product }: { product: DealerProduct }) {
+export function SelectedProduct({ product }: { product: IDealerProduct }) {
   return (
     <div className="selected-item">
       <p className="selected-item__product-atribute">

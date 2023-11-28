@@ -6,7 +6,7 @@ import {
 } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
-import { DealerProduct } from '../../utils/DealerProduct.interface';
+import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 
 function TableOptions({
@@ -15,13 +15,13 @@ function TableOptions({
   isButtonLoading
 }: {
   handleSCVLoading: (e: FormEvent<HTMLInputElement>) => void;
-  data: DealerProduct[];
+  data: IDealerProduct[];
   isButtonLoading: boolean;
 }) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
-  const columns: MRT_ColumnDef<DealerProduct>[] = useMemo(
+  const columns: MRT_ColumnDef<IDealerProduct>[] = useMemo(
     () => [
       {
         header: 'Название',

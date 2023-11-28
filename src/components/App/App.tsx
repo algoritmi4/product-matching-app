@@ -7,26 +7,27 @@ import StatisticsPage from '../StatisticsPage/StatisticsPage';
 import { MarkingContext } from '../../contexts/MarkingContext';
 import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
-import { MARKETING_DEALER } from '../../utils/constants';
-import { Dealer } from '../../utils/Dealer.interface';
+import { INITIAL_MARKETING_DEALER } from '../../utils/constants';
+import { IDealer } from '../../utils/IDealer.interface';
 
 function App() {
-  const [dealerList, setDealerList] = useState<Dealer[]>(MARKETING_DEALER);
-  // For Preloader
-  const [isLoading, setIsLoading] = useState(false);
+  // make states
+  const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
+  // for preloader
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Request common data for all routes
+    // request common data for all routes
     // launch preloader
     setIsLoading(true);
-    // Get Dealer List
+    // get Dealer List
     api
       .getDealers()
       .then((data) => {
-        setDealerList(data.data);
+        setDealerList(data?.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err?.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -37,14 +38,12 @@ function App() {
     <div className="page">
       <div className="page__content">
         <MarkingContext.Provider value={{ dealerList }}>
-          {isLoading && <Preloader />}
-          {!isLoading && (
+          {isLoading ? (
+            <Preloader />
+          ) : (
             <Routes>
               <Route path="/" element={<MainPage />} />
-              <Route
-                path="/marking/:product_id"
-                element={<MarkingPage setIsLoading={setIsLoading} />}
-              />
+              <Route path="/marking/:product_id" element={<MarkingPage />} />
               <Route path="/statistics" element={<StatisticsPage />} />
             </Routes>
           )}
