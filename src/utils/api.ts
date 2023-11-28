@@ -24,7 +24,7 @@ class Api {
   }
 
   getDealerProducts() {
-    return fetch(`${this._url}/dealers/price`, {
+    return fetch(`${this._url}/dealers/price?size=20&page=1`, {
       method: 'GET',
       headers: this._headers
     }).then((res) => this._getResponseData(res));
