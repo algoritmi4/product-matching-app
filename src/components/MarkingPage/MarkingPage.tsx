@@ -42,21 +42,25 @@ export default function MarkingPage({
   const { dealerList } = useContext(MarkingContext);
 
   // get id of chosen dealer product from url
-  const { product_id } = useParams();
-
-  //Временно получаю данные из констант
-  const matchList = TEST_MARKETING_PRODUCTS.slice(0, 19);
-  const fullList = [...TEST_MARKETING_PRODUCTS];
+  //const { product_id } = useParams();
+  const product_id = '3';
 
   // request data and initialize states
   useEffect(() => {
     // launch preloader
     setIsLoading(true);
-    // get chosen dealer product from db by it's id
     if (product_id) {
-      api
-        .getDealerPrice('3')
+      // get list of matches
+      // get chosen dealer product from db by it's id
+      Promise.all([api.getMatchList(product_id, '25'), api.getDealerPrice(product_id)])
+        .then((result) => {
+          const data: IProduct[] = result[0];
+          console.log('result[0].data =>>>>', data);
+          setMathProductList(data);
+          return Promise.resolve(result[1]);
+        })
         .then((data) => {
+          console.log('data =>>>>', data);
           setChosenDealerProduct(data);
           // get dealer name for current dealer product
           const curDealer = dealerList?.find((dealer) => dealer.id === data?.dealer_id)?.name || '';
@@ -103,9 +107,9 @@ export default function MarkingPage({
           <div className="marking__container">
             <div className="marking__matchList-container">
               {matchCount === 999 ? (
-                <SearchInFullList fullList={fullList} getMatchList={getMatchList} />
+                <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
               ) : (
-                getMatchList(matchCount, matchList)
+                getMatchList(matchCount, mathProductList)
               )}
             </div>
             <div className="marking__match-container">

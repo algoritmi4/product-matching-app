@@ -2,7 +2,7 @@ import { IDealer } from './IDealer.interface';
 import { IDealerProduct } from './IDealerProduct.interface';
 import { IProduct } from './IProduct.interface';
 
-export const API_URL = 'http://localhost:8000/api/v1';
+export const API_URL = 'http://localhost:8001/api/v1';
 
 export const INITIAL_MARKETING_DEALER: IDealer[] = [
   {
