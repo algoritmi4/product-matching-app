@@ -3,7 +3,7 @@ import { MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
 import api from '../../utils/api';
 import { FormEvent, useEffect, useState } from 'react';
-import { DealerProduct } from '../../utils/DealerProduct.interface';
+import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 
 interface Pagination {
   pageIndex: number;
@@ -11,7 +11,7 @@ interface Pagination {
 }
 
 function MainPage() {
-  const [data, setData] = useState<DealerProduct[]>([]);
+  const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const { table } = TableOptions({

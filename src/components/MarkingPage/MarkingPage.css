@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   border: 2px solid rgba(56, 164, 58, 0.9);
   border-radius: 10px;
 }
@@ -54,7 +54,7 @@
 
 .marking__container {
   width: calc(98% - 8px);
-  height: 650px;
+  height: 800px;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 20px;
@@ -107,6 +107,20 @@
   gap: 30px;
 }
 
+.marking__btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.marking__btn-small-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
 .marking__btn-footer-background {
   background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -60%, rgba(56, 164, 58, 0.9) 100%);
   border-radius: 15px;
@@ -114,11 +128,6 @@
   display: flex;
   align-items: center;
   width: calc(70% - 6px);
-}
-
-.marking__btn-footer-background_small {
-  width: calc(20% - 6px);
-  min-width: 40px;
 }
 
 .marking__btn-footer {
@@ -133,6 +142,9 @@
   color: black;
   border: none;
   outline: 2px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .marking__btn {
@@ -140,15 +152,19 @@
   word-break: break-all;
 }
 
-.marking__btn-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
+.marking__btn-footer-background_small {
+  width: calc(20% - 6px);
+  min-width: 40px;
+}
+
+.marking__btn-footer-background_middle {
+  width: calc(30% - 6px);
+  min-width: 50px;
 }
 
 @media screen and (max-width: 900px) {
   .marking__btn-footer {
-    font-size: 15px;
+    font-size: 12px;
     line-height: 30px;
   }
 
@@ -164,7 +180,11 @@
 
   .marking__btn-footer {
     font-size: 10px;
-    line-height: 20px;
+    line-height: 14px;
+  }
+
+  .marking__btn-footer-background {
+    min-height: 20px;
   }
 
   .marking__product-name {
@@ -177,14 +197,14 @@
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 420px) {
   .marking__btn-footer {
     font-size: 6px;
-    line-height: 10px;
+    line-height: 14px;
   }
 
   .marking__btn-footer-background {
-    min-height: 16px;
+    min-height: 20px;
   }
 
   .marking__container {
