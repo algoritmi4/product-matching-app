@@ -13,6 +13,8 @@ import { IDealer } from '../../utils/IDealer.interface';
 function App() {
   // make states
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
+  // for memorizing count of options
+  const [matchCount, setMatchCount] = useState(2);
   // for preloader
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,7 +45,10 @@ function App() {
           ) : (
             <Routes>
               <Route path="/" element={<MainPage />} />
-              <Route path="/marking/:product_id" element={<MarkingPage />} />
+              <Route
+                path="/marking/:product_id"
+                element={<MarkingPage matchCount={matchCount} setMatchCount={setMatchCount} />}
+              />
               <Route path="/statistics" element={<StatisticsPage />} />
             </Routes>
           )}

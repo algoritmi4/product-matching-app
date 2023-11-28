@@ -1,6 +1,6 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, SetStateAction, Dispatch } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
@@ -17,12 +17,17 @@ import { IProduct } from '../../utils/IProduct.interface';
 import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
 
-export default function MarkingPage() {
+export default function MarkingPage({
+  matchCount,
+  setMatchCount
+}: {
+  matchCount: number;
+  setMatchCount: Dispatch<SetStateAction<number>>;
+}) {
   // For Preloader, launch it then open window
   const [isLoading, setIsLoading] = useState(true);
 
   // create states
-  const [matchCount, setMatchCount] = useState(2);
   const [currentDealerName, setCurrentDealerName] = useState('');
   const [mathProductList, setMathProductList] = useState<IProduct[]>(INIRIAL_MARKETING_PRODUCTS);
   const [chosenDealerProduct, setChosenDealerProduct] = useState<IDealerProduct>(
