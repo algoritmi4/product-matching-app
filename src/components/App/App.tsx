@@ -9,6 +9,7 @@ import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
 import { INITIAL_MARKETING_DEALER } from '../../utils/constants';
 import { IDealer } from '../../utils/IDealer.interface';
+import { LogInPopupForm } from '../LogInPopupForm/LogInPopupForm';
 
 function App() {
   // make states
@@ -17,6 +18,8 @@ function App() {
   const [matchCount, setMatchCount] = useState(2);
   // for preloader
   const [isLoading, setIsLoading] = useState(true);
+  // for login popup
+  const [isLoginPopupVisible, setIsLoginPopupVisible] = useState(false);
 
   useEffect(() => {
     // request common data for all routes
@@ -51,6 +54,9 @@ function App() {
               />
               <Route path="/statistics" element={<StatisticsPage />} />
             </Routes>
+          )}
+          {isLoginPopupVisible && (
+            <LogInPopupForm setIsLoginPopupVisible={setIsLoginPopupVisible} />
           )}
         </MarkingContext.Provider>
       </div>
