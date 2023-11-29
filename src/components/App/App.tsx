@@ -12,20 +12,13 @@ import { IDealer } from '../../utils/IDealer.interface';
 import { LogInPopupForm } from '../LogInPopupForm/LogInPopupForm';
 
 function App() {
-  // make states
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
-  // for memorizing count of options
   const [matchCount, setMatchCount] = useState(2);
-  // for preloader
   const [isLoading, setIsLoading] = useState(true);
-  // for login popup
   const [isLoginPopupVisible, setIsLoginPopupVisible] = useState(false);
 
   useEffect(() => {
-    // request common data for all routes
-    // launch preloader
     setIsLoading(true);
-    // get Dealer List
     api
       .getDealers()
       .then((data) => {

@@ -12,7 +12,6 @@ export function Selector({
     setMatchCount(Number(e.target.value));
   };
 
-  // get option list
   const getOptions = (valueList: string[]) => {
     return valueList.map((item, index) => (
       <option value={item} className="select__option" key={index}>

@@ -24,10 +24,8 @@ export default function MarkingPage({
   matchCount: number;
   setMatchCount: Dispatch<SetStateAction<number>>;
 }) {
-  // For Preloader, launch it then open window
   const [isLoading, setIsLoading] = useState(true);
 
-  // create states
   const [productId, setProductId] = useState('');
   const [currentDealerName, setCurrentDealerName] = useState('');
   const [mathProductList, setMathProductList] = useState<IProduct[]>(INIRIAL_MARKETING_PRODUCTS);
@@ -38,40 +36,30 @@ export default function MarkingPage({
   const [mappedProduct, setMappedProduct] = useState<IProduct>(TEST_MARKETING_PRODUCTS[0]);
   const [isMapped, setIsMapped] = useState(false);
 
-  // get navigate object
   const navigate = useNavigate();
-  // get dealers from context
+
   const { dealerList } = useContext(MarkingContext);
 
-  // get id of chosen dealer product from url
   const { product_id } = useParams();
 
-  // put product_id into state
   useLayoutEffect(() => {
     setProductId(product_id || '');
 
-    // check if dealer prodauct is mapped
     if (mappedProduct.id !== 0) {
       setIsMapped(true);
     }
   }, []);
 
-  // reset chosen item
   const resetChosenItem = () => {
     setChosenItem(INIRIAL_MARKETING_PRODUCTS[0]);
   };
 
-  // request data and initialize states
   useEffect(() => {
-    // launch preloader
     setIsLoading(true);
 
-    // reset chosen item
     resetChosenItem();
 
     if (productId) {
-      // get list of matches
-      // get chosen dealer product from db by it's id
       Promise.all([api.getMatchList(productId, '25'), api.getDealerPrice(productId)])
         .then((result) => {
           const data: IProduct[] = result[0];
@@ -110,12 +98,10 @@ export default function MarkingPage({
     }
   };
 
-  // handle for button forwarding to main page
   const handleBtnToMainClick = () => {
     navigate('/');
   };
 
-  // handle Deny button, do reset chosen item
   const handleBtnDenyClick = () => {
     resetChosenItem();
   };
