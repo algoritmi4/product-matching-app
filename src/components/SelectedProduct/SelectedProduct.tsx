@@ -6,13 +6,13 @@ import arrowImg from '../../images/selectedProduct/arrows.png';
 import { SetStateAction, Dispatch } from 'react';
 
 export function SelectedProduct({
-  product,
+  dealerProduct,
   chosenItem,
   mappedProduct,
   setIsMapped,
   isMapped
 }: {
-  product: IDealerProduct;
+  dealerProduct: IDealerProduct;
   chosenItem: IProduct;
   mappedProduct: IProduct;
   setIsMapped: Dispatch<SetStateAction<boolean>>;
@@ -25,24 +25,27 @@ export function SelectedProduct({
         <p className="selected-item__product-atribute">
           Наименование:{' '}
           <span className="selected-item__product-atribute-span">
-            {product?.product_name || 'Не удалось получить наименование продукта'}
+            {dealerProduct?.product_name || 'Не удалось получить наименование продукта'}
           </span>
         </p>
         <p className="selected-item__product-atribute">
           Цена:{' '}
           <span className="selected-item__product-atribute-span">
-            {product?.price || 'Не удалось получить цену продукта'}
+            {dealerProduct?.price || 'Не удалось получить цену продукта'}
           </span>{' '}
           руб.
         </p>
         <p className="selected-item__product-atribute">
           Дата получения данных:{' '}
           <span className="selected-item__product-atribute-span">
-            {product?.date || 'Не удалось получить артикль продукта'}
+            {dealerProduct?.date || 'Не удалось получить артикль продукта'}
           </span>
         </p>
-        {product?.product_url && (
-          <Link to={product?.product_url} target="_blank" className="selected-item__product-link">
+        {dealerProduct?.product_url && (
+          <Link
+            to={dealerProduct?.product_url}
+            target="_blank"
+            className="selected-item__product-link">
             Открыть страницу с товаром
           </Link>
         )}
@@ -69,6 +72,37 @@ export function SelectedProduct({
               Артикль:{' '}
               <span className="selected-item__product-atribute-span">
                 {chosenItem?.article || 'Не удалось получить артикль продукта'}
+              </span>
+            </p>
+          </div>
+        </>
+      )}
+
+      {isMapped && (
+        <>
+          <p className="selected-item__source selected-item__source_mapped">
+            Продукт сопоставлен с
+          </p>
+          <div className="selected-item__container selected-item__container_mapped">
+            <p className="selected-item__product-atribute">
+              Наименование 1C:{' '}
+              <span className="selected-item__product-atribute-span">
+                {mappedProduct?.name_1c ||
+                  'Не удалось получить наименование сопоставленного продукта'}
+              </span>
+            </p>
+            <p className="selected-item__product-atribute">
+              Рекомендованная цена:{' '}
+              <span className="selected-item__product-atribute-span">
+                {mappedProduct?.recommended_price ||
+                  'Не удалось получить цену сопоставленного продукта'}
+              </span>{' '}
+              руб.
+            </p>
+            <p className="selected-item__product-atribute">
+              Артикль:{' '}
+              <span className="selected-item__product-atribute-span">
+                {mappedProduct?.article || 'Не удалось получить артикль сопоставленного продукта'}
               </span>
             </p>
           </div>
