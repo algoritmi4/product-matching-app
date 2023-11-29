@@ -31,6 +31,8 @@ export default function MarkingPage({
     INITIAL_MARKETING_DEALERPRICE[0]
   );
   const [chosenItem, setChosenItem] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
+  const [mappedProduct, setMappedProduct] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
+  const [isMapped, setIsMapped] = useState(false);
 
   // get navigate object
   const navigate = useNavigate();
@@ -43,6 +45,11 @@ export default function MarkingPage({
   // put product_id into state
   useLayoutEffect(() => {
     setProductId(product_id || '');
+
+    // check if dealer prodauct is mapped
+    if (mappedProduct.id !== 0) {
+      setIsMapped(true);
+    }
   }, []);
 
   // reset chosen item
@@ -109,6 +116,17 @@ export default function MarkingPage({
     resetChosenItem();
   };
 
+  const handleBtnAdmit = () => {
+    api
+      .postMatching(chosenItem.id.toString(), chosenDealerProduct.id.toString())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   // render
   return (
     <>
@@ -123,17 +141,22 @@ export default function MarkingPage({
             </div>
           </div>
           <div className="marking__container">
-            <div className="marking__matchList-container">
-              {matchCount === 999 ? (
-                <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
-              ) : (
-                getMatchList(matchCount, mathProductList)
-              )}
-            </div>
+            {!isMapped && (
+              <div className="marking__matchList-container">
+                {matchCount === 999 ? (
+                  <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
+                ) : (
+                  getMatchList(matchCount, mathProductList)
+                )}
+              </div>
+            )}
             <div className="marking__match-container">
               <SelectedProduct
                 product={chosenDealerProduct}
-                chosenItem={chosenItem}></SelectedProduct>
+                chosenItem={chosenItem}
+                setIsMapped={setIsMapped}
+                isMapped={isMapped}
+                mappedProduct={mappedProduct}></SelectedProduct>
             </div>
           </div>
           <div className="marking__footer">
@@ -148,7 +171,10 @@ export default function MarkingPage({
             <div className="marking__btn-container">
               <div className="marking__btn-small-container">
                 <div className="marking__btn-footer-background marking__btn-footer-background_small">
-                  <button type="button" className="marking__btn marking__btn-footer common-button">
+                  <button
+                    type="button"
+                    className="marking__btn marking__btn-footer common-button"
+                    onClick={handleBtnAdmit}>
                     Да
                   </button>
                 </div>

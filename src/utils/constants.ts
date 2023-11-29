@@ -161,7 +161,25 @@ export const TEST_MARKETING_DEALERPRICE: IDealerProduct[] = [
     product_name: 'Концентрат Prosept Multipower для мытья полов, цитрус 1л',
     date: '2023-07-11',
     dealer_id: 2,
-    mapped: null
+    mapped: {
+      FIELD1: 2,
+      id: 443,
+      article: '0024-06 с',
+      ean_13: 4680008145208,
+      name: 'Герметик акриловый цвет сосна, ф/п 600мл',
+      cost: 307,
+      recommended_price: 644,
+      category_id: 25,
+      ozon_name:
+        'Герметик акриловый для швов для деревянных домов, конструкций, изделий PROSEPT цвет сосна, ф/п 600мл',
+      name_1c: 'Герметик акриловый цвет сосна, ф/п 600мл',
+      wb_name:
+        'Герметик акриловый для швов для деревянных домов, конструкций, изделий PROSEPT цвет сосна, ф/п 600мл',
+      ozon_article: 189522735,
+      wb_article: 150126217,
+      ym_article: '0024-06-с',
+      wb_article_td: ''
+    }
   },
   {
     id: 4,

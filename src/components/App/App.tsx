@@ -29,7 +29,7 @@ function App() {
     api
       .getDealers()
       .then((data) => {
-        setDealerList(data?.data);
+        setDealerList(data?.items);
       })
       .catch((err) => {
         console.log(err?.message);

@@ -38,16 +38,27 @@ class Api {
   }
 
   getDealers() {
-    return fetch(`${this._url}/dealers?page=1&size=100`, {
+    return fetch(`${this._url}/dealers?limit=100&offset=0`, {
       method: 'GET',
       headers: this._headers
     }).then((res) => this._getResponseData(res));
   }
 
   getMatchList(id: string, count: string) {
-    return fetch(`${this._url}/match/${id}/?count=${count}`, {
+    return fetch(`${this._url}/matching/${id}/?count=${count}`, {
       method: 'GET',
       headers: this._headers
+    }).then((res) => this._getResponseData(res));
+  }
+
+  postMatching(id: string, productId: string) {
+    return fetch(`${this._url}/matching`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        key: id,
+        product_id: productId
+      })
     }).then((res) => this._getResponseData(res));
   }
 }
