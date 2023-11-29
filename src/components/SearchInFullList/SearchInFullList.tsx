@@ -34,7 +34,7 @@ export function SearchInFullList({
             {...register('pattern', {
               required: true
             })}
-            placeholder="Поиск по всем продуктам"
+            placeholder="Поиск по вариантам"
             className="search-form__field"
           />
           <button
