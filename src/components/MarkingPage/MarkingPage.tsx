@@ -8,11 +8,7 @@ import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import { MarkingContext } from '../../contexts/MarkingContext';
-import {
-  INIRIAL_MARKETING_PRODUCTS,
-  INITIAL_MARKETING_DEALERPRICE,
-  TEST_MARKETING_PRODUCTS
-} from '../../utils/constants';
+import { INIRIAL_MARKETING_PRODUCTS, INITIAL_MARKETING_DEALERPRICE } from '../../utils/constants';
 import { IProduct } from '../../utils/IProduct.interface';
 import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
@@ -49,13 +45,18 @@ export default function MarkingPage({
     setProductId(product_id || '');
   }, []);
 
+  // reset chosen item
+  const resetChosenItem = () => {
+    setChosenItem(INIRIAL_MARKETING_PRODUCTS[0]);
+  };
+
   // request data and initialize states
   useEffect(() => {
     // launch preloader
     setIsLoading(true);
 
     // reset chosen item
-    setChosenItem(INIRIAL_MARKETING_PRODUCTS[0]);
+    resetChosenItem();
 
     if (productId) {
       // get list of matches
@@ -103,6 +104,11 @@ export default function MarkingPage({
     navigate('/');
   };
 
+  // handle Deny button, do reset chosen item
+  const handleBtnDenyClick = () => {
+    resetChosenItem();
+  };
+
   // render
   return (
     <>
@@ -147,7 +153,10 @@ export default function MarkingPage({
                   </button>
                 </div>
                 <div className="marking__btn-footer-background marking__btn-footer-background_small">
-                  <button type="button" className="marking__btn marking__btn-footer common-button">
+                  <button
+                    type="button"
+                    className="marking__btn marking__btn-footer common-button"
+                    onClick={handleBtnDenyClick}>
                     Нет
                   </button>
                 </div>
