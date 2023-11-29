@@ -6,6 +6,5 @@ export interface IDealerProduct {
   product_name: string;
   date: string;
   dealer_id: number;
-  dealerName?: string;
-  mapped: null | object;
+  mapped?: null | object;
 }

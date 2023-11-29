@@ -43,6 +43,13 @@ class Api {
       headers: this._headers
     }).then((res) => this._getResponseData(res));
   }
+
+  getMatchList(id: string, count: string) {
+    return fetch(`${this._url}/match/${id}/?count=${count}`, {
+      method: 'GET',
+      headers: this._headers
+    }).then((res) => this._getResponseData(res));
+  }
 }
 
 const api = new Api(API_URL, {

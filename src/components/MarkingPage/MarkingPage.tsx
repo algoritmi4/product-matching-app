@@ -1,6 +1,6 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
-import { useState, useEffect, useContext, SetStateAction, Dispatch } from 'react';
+import { useState, useEffect, useContext, SetStateAction, Dispatch, useLayoutEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
@@ -28,6 +28,7 @@ export default function MarkingPage({
   const [isLoading, setIsLoading] = useState(true);
 
   // create states
+  const [productId, setProductId] = useState('');
   const [currentDealerName, setCurrentDealerName] = useState('');
   const [mathProductList, setMathProductList] = useState<IProduct[]>(INIRIAL_MARKETING_PRODUCTS);
   const [chosenDealerProduct, setChosenDealerProduct] = useState<IDealerProduct>(
@@ -37,25 +38,34 @@ export default function MarkingPage({
 
   // get navigate object
   const navigate = useNavigate();
-
   // get dealers from context
   const { dealerList } = useContext(MarkingContext);
 
   // get id of chosen dealer product from url
   const { product_id } = useParams();
 
-  //Временно получаю данные из констант
-  const matchList = TEST_MARKETING_PRODUCTS.slice(0, 19);
-  const fullList = [...TEST_MARKETING_PRODUCTS];
+  // put product_id into state
+  useLayoutEffect(() => {
+    setProductId(product_id || '');
+  }, []);
 
   // request data and initialize states
   useEffect(() => {
     // launch preloader
     setIsLoading(true);
-    // get chosen dealer product from db by it's id
-    if (product_id) {
-      api
-        .getDealerPrice('3')
+
+    // reset chosen item
+    setChosenItem(INIRIAL_MARKETING_PRODUCTS[0]);
+
+    if (productId) {
+      // get list of matches
+      // get chosen dealer product from db by it's id
+      Promise.all([api.getMatchList(productId, '25'), api.getDealerPrice(productId)])
+        .then((result) => {
+          const data: IProduct[] = result[0];
+          setMathProductList(data);
+          return Promise.resolve(result[1]);
+        })
         .then((data) => {
           setChosenDealerProduct(data);
           // get dealer name for current dealer product
@@ -69,7 +79,7 @@ export default function MarkingPage({
           setIsLoading(false);
         });
     }
-  }, []);
+  }, [productId]);
 
   // get list of products for matching
   const getMatchList = (count: number, list: IProduct[]) => {
@@ -80,6 +90,12 @@ export default function MarkingPage({
       );
     }
     return resultList;
+  };
+
+  const handleBtnNextClick = () => {
+    if (productId) {
+      setProductId((+productId + 1).toString());
+    }
   };
 
   // handle for button forwarding to main page
@@ -103,9 +119,9 @@ export default function MarkingPage({
           <div className="marking__container">
             <div className="marking__matchList-container">
               {matchCount === 999 ? (
-                <SearchInFullList fullList={fullList} getMatchList={getMatchList} />
+                <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
               ) : (
-                getMatchList(matchCount, matchList)
+                getMatchList(matchCount, mathProductList)
               )}
             </div>
             <div className="marking__match-container">
@@ -124,14 +140,24 @@ export default function MarkingPage({
               </button>
             </div>
             <div className="marking__btn-container">
-              <div className="marking__btn-footer-background marking__btn-footer-background_small">
-                <button type="button" className="marking__btn marking__btn-footer common-button">
-                  Да
-                </button>
+              <div className="marking__btn-small-container">
+                <div className="marking__btn-footer-background marking__btn-footer-background_small">
+                  <button type="button" className="marking__btn marking__btn-footer common-button">
+                    Да
+                  </button>
+                </div>
+                <div className="marking__btn-footer-background marking__btn-footer-background_small">
+                  <button type="button" className="marking__btn marking__btn-footer common-button">
+                    Нет
+                  </button>
+                </div>
               </div>
-              <div className="marking__btn-footer-background marking__btn-footer-background_small">
-                <button type="button" className="marking__btn marking__btn-footer common-button">
-                  Нет
+              <div className="marking__btn-footer-background marking__btn-footer-background_middle">
+                <button
+                  type="button"
+                  className="marking__btn marking__btn-footer common-button"
+                  onClick={handleBtnNextClick}>
+                  Далее
                 </button>
               </div>
             </div>
