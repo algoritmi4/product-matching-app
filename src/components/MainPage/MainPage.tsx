@@ -40,6 +40,14 @@ function MainPage() {
       .getDealerProducts(pageSize, pageNumber)
       .then((res) => {
         setData((state) => [...state, ...res.data]);
+        return res;
+      })
+      .then((res) => {
+        if (pagination.pageIndex > 1) {
+          setTimeout(() => {
+            setPagination((state) => ({ ...state, pageIndex: res.pagination.page - 2 }));
+          }, 500);
+        }
       })
       .catch((err) => console.log(err));
   }
