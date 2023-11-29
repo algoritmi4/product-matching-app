@@ -8,7 +8,11 @@ import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import { MarkingContext } from '../../contexts/MarkingContext';
-import { INIRIAL_MARKETING_PRODUCTS, INITIAL_MARKETING_DEALERPRICE } from '../../utils/constants';
+import {
+  INIRIAL_MARKETING_PRODUCTS,
+  INITIAL_MARKETING_DEALERPRICE,
+  TEST_MARKETING_PRODUCTS
+} from '../../utils/constants';
 import { IProduct } from '../../utils/IProduct.interface';
 import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
@@ -31,7 +35,7 @@ export default function MarkingPage({
     INITIAL_MARKETING_DEALERPRICE[0]
   );
   const [chosenItem, setChosenItem] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
-  const [mappedProduct, setMappedProduct] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
+  const [mappedProduct, setMappedProduct] = useState<IProduct>(TEST_MARKETING_PRODUCTS[0]);
   const [isMapped, setIsMapped] = useState(false);
 
   // get navigate object
@@ -121,13 +125,15 @@ export default function MarkingPage({
       .postMatching(chosenItem.id.toString(), chosenDealerProduct.id.toString())
       .then((data) => {
         console.log(data);
+        setMappedProduct(chosenItem);
+        setIsMapped(true);
+        resetChosenItem();
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  // render
   return (
     <>
       {isLoading ? (
@@ -141,18 +147,16 @@ export default function MarkingPage({
             </div>
           </div>
           <div className="marking__container">
-            {!isMapped && (
-              <div className="marking__matchList-container">
-                {matchCount === 999 ? (
-                  <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
-                ) : (
-                  getMatchList(matchCount, mathProductList)
-                )}
-              </div>
-            )}
+            <div className="marking__matchList-container">
+              {matchCount === 999 ? (
+                <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
+              ) : (
+                getMatchList(matchCount, mathProductList)
+              )}
+            </div>
             <div className="marking__match-container">
               <SelectedProduct
-                product={chosenDealerProduct}
+                dealerProduct={chosenDealerProduct}
                 chosenItem={chosenItem}
                 setIsMapped={setIsMapped}
                 isMapped={isMapped}
