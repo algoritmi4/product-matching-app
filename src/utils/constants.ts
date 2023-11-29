@@ -44,6 +44,29 @@ export const INIRIAL_MARKETING_PRODUCTS: IProduct[] = [
   }
 ];
 
+export const REQUIRED_ERROR_MESSAGE = 'Поле не может быть пустым.';
+
+export const NAME_REGEXP = /^[a-zA-Zа-яА-Я-\s]*$/;
+export const NAME_VALIDATION_ERROR_MESSAGE =
+  'В имени допускается использовать только буквы, тире и пробел.';
+
+export const PASSWORD_REGEXP = /^(?=.*[A-Z].*)(?=.*[!@#$&*])(?=.*[0-9].*)(?=.*[a-z].*).*$/;
+export const PASSWORD_HINT =
+  'Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*';
+
+export const PASSWORD_VALIDATION_ERROR_MESSAGE =
+  'Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*';
+
+export const PASSWORD_MIN_LENGTH = 8;
+
+export const PASSWORD_MIN_LENGTH_ERROR_MESSAGE = 'Длинна должна быть от 8 символов.';
+
+export const NAME_MIN_LENGTH = 2;
+export const NAME_MIN_LENGTH_ERROR_MESSAGE = 'Длинна должна быть от 2 символов.';
+
+export const NAME_MAX_LENGTH = 30;
+export const NAME_MAX_LENGTH_ERROR_MESSAGE = 'Длинна должна до 30 символов.';
+
 export const TEST_MARKETING_DEALER: IDealer[] = [
   {
     id: 1,
