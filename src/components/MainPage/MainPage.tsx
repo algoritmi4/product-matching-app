@@ -15,18 +15,20 @@ function MainPage() {
   const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+  const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const { table } = TableOptions({
     handleSCVLoading,
     data,
     isButtonLoading,
     pagination,
-    setPagination
+    setPagination,
+    isTableLoading
   });
 
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
   useDidMountEffect(() => {
-    handleDataLoad(100, 1);
+    handleDataLoad(30, 1);
   }, []);
 
   useEffect(() => {
@@ -36,6 +38,7 @@ function MainPage() {
   }, [pagination]);
 
   function handleDataLoad(pageSize: number, pageNumber: number) {
+    setIsTableLoading(true);
     api
       .getDealerProducts(pageSize, pageNumber)
       .then((res) => {
@@ -46,10 +49,11 @@ function MainPage() {
         if (pagination.pageIndex > 1) {
           setTimeout(() => {
             setPagination((state) => ({ ...state, pageIndex: res.pagination.page - 2 }));
-          }, 500);
+          }, 0);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsTableLoading(false));
   }
 
   function handleSCVLoading(e: FormEvent<HTMLInputElement>) {

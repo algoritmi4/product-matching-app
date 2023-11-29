@@ -59,6 +59,8 @@
   font-size: 18px;
   font-weight: 400;
   align-self: flex-end;
+  text-decoration: none;
+  color: green;
 }
 
 .match-items-cont__arrow-image {

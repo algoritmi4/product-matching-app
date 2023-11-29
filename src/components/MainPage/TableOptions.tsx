@@ -20,13 +20,15 @@ function TableOptions({
   data,
   isButtonLoading,
   pagination,
-  setPagination
+  setPagination,
+  isTableLoading
 }: {
   handleSCVLoading: (e: FormEvent<HTMLInputElement>) => void;
   data: IDealerProduct[];
   isButtonLoading: boolean;
   pagination: Pagination;
   setPagination: (value: MRT_Updater<Pagination>) => void;
+  isTableLoading: boolean;
 }) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
@@ -91,7 +93,7 @@ function TableOptions({
     enableRowSelection: true,
     getRowId: (originalRow) => originalRow.product_key,
     onRowSelectionChange: setRowSelection,
-    state: { rowSelection, pagination },
+    state: { rowSelection, pagination, isLoading: isTableLoading },
     enableRowNumbers: true,
     enableRowPinning: true,
     enableColumnOrdering: true,
@@ -135,11 +137,10 @@ function TableOptions({
       }
     },
     muiPaginationProps: {
-      rowsPerPageOptions: [10],
+      rowsPerPageOptions: [10, 20, 30, 50, 100],
       showFirstButton: false,
       showLastButton: false
     },
-    paginationDisplayMode: 'pages',
     renderTopToolbarCustomActions: () => (
       <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>
         <Button variant="contained" color="inherit">
