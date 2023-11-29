@@ -135,10 +135,11 @@ function TableOptions({
       }
     },
     muiPaginationProps: {
-      rowsPerPageOptions: [10, 20, 30, 50, 100],
+      rowsPerPageOptions: [10],
       showFirstButton: false,
       showLastButton: false
     },
+    paginationDisplayMode: 'pages',
     renderTopToolbarCustomActions: () => (
       <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>
         <Button variant="contained" color="inherit">
