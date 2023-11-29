@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
+import api from '../../utils/api';
 
 interface Pagination {
   pageIndex: number;
@@ -21,14 +22,16 @@ function TableOptions({
   isButtonLoading,
   pagination,
   setPagination,
-  isTableLoading
+  isTableLoading,
+  handleSignOut
 }: {
-  handleSCVLoading: (e: FormEvent<HTMLInputElement>) => void;
+  handleSCVLoading: (e: FormEvent<HTMLInputElement>, func: (arg: FormData) => Promise<any>) => void;
   data: IDealerProduct[];
   isButtonLoading: boolean;
   pagination: Pagination;
   setPagination: (value: MRT_Updater<Pagination>) => void;
   isTableLoading: boolean;
+  handleSignOut: () => void;
 }) {
   const navigate = useNavigate();
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
@@ -143,6 +146,13 @@ function TableOptions({
     },
     renderTopToolbarCustomActions: () => (
       <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>
+        <Button
+          variant="contained"
+          color="error"
+          sx={{ margin: '0 0 0 auto' }}
+          onClick={() => handleSignOut()}>
+          Выйти
+        </Button>
         <Button variant="contained" color="inherit">
           {isButtonLoading ? (
             <ButtonPreloader />
@@ -152,12 +162,50 @@ function TableOptions({
                 type="file"
                 id="csv-input"
                 accept=".csv"
-                onInput={(e) => handleSCVLoading(e)}
+                onInput={(e) => handleSCVLoading(e, (formData) => api.addProducts(formData))}
                 className="main-page__input"
               />
               <label className="main-page__input-label" htmlFor="csv-input">
                 <div className="main-page__upload-image"></div>
-                <p className="main-page__button-text">CSV</p>
+                <p className="main-page__button-text">Товары заказчика</p>
+              </label>
+            </div>
+          )}
+        </Button>
+        <Button variant="contained" color="inherit">
+          {isButtonLoading ? (
+            <ButtonPreloader />
+          ) : (
+            <div className="main-page__input-container">
+              <input
+                type="file"
+                id="csv-input"
+                accept=".csv"
+                onInput={(e) => handleSCVLoading(e, (formData) => api.addDealerPrices(formData))}
+                className="main-page__input"
+              />
+              <label className="main-page__input-label" htmlFor="csv-input">
+                <div className="main-page__upload-image"></div>
+                <p className="main-page__button-text">Товары дилеров</p>
+              </label>
+            </div>
+          )}
+        </Button>
+        <Button variant="contained" color="inherit">
+          {isButtonLoading ? (
+            <ButtonPreloader />
+          ) : (
+            <div className="main-page__input-container">
+              <input
+                type="file"
+                id="csv-input"
+                accept=".csv"
+                onInput={(e) => handleSCVLoading(e, (formData) => api.addDealers(formData))}
+                className="main-page__input"
+              />
+              <label className="main-page__input-label" htmlFor="csv-input">
+                <div className="main-page__upload-image"></div>
+                <p className="main-page__button-text">Список дилеров</p>
               </label>
             </div>
           )}

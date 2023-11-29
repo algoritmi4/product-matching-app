@@ -61,6 +61,11 @@
   align-self: flex-end;
   text-decoration: none;
   color: green;
+  transition: opacity .1s linear;
+}
+
+.match-items-cont__product-link:hover {
+  opacity: 0.7;
 }
 
 .match-items-cont__arrow-image {

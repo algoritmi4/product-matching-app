@@ -22,7 +22,8 @@ function MainPage() {
     isButtonLoading,
     pagination,
     setPagination,
-    isTableLoading
+    isTableLoading,
+    handleSignOut
   });
 
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
@@ -40,6 +41,10 @@ function MainPage() {
     }
   }, [pagination]);
 
+  function handleSignOut() {
+    console.log('До связи');
+  }
+
   function handleDataLoad(pageSize: number, offset: number, pageIndex: number) {
     setIsTableLoading(true);
     api
@@ -54,7 +59,7 @@ function MainPage() {
       .finally(() => setIsTableLoading(false));
   }
 
-  function handleSCVLoading(e: FormEvent<HTMLInputElement>) {
+  function handleSCVLoading(e: FormEvent<HTMLInputElement>, func: (arg: FormData) => Promise<any>) {
     const eventTarget = e.target as HTMLInputElement;
     const files = eventTarget.files;
 
@@ -69,11 +74,7 @@ function MainPage() {
 
         setIsButtonLoading(true);
 
-        api
-          .CSVFileLoad(formData)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err))
-          .finally(() => setIsButtonLoading(false));
+        func(formData).finally(() => setIsButtonLoading(false));
       };
     }
   }

@@ -41,7 +41,7 @@
   width: 70vw;
   display: flex;
   flex-direction: column;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .stat-page__info {
@@ -88,4 +88,10 @@
 
 .stat-page__matched-quant_type_red {
   color: red;
+}
+
+.stat-page__err-message {
+  font-size: 30px;
+  font-weight: 500;
+  align-self: center;
 }

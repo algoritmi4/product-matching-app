@@ -16,8 +16,22 @@ class Api {
     return Promise.reject(res);
   }
 
-  CSVFileLoad(formData: BodyInit) {
+  addProducts(formData: BodyInit) {
+    return fetch(`${this._url}/products/import-csv/`, {
+      method: 'POST',
+      body: formData
+    }).then((res) => this._getResponseData(res));
+  }
+
+  addDealerPrices(formData: BodyInit) {
     return fetch(`${this._url}/dealers/import-csv/dealerprices`, {
+      method: 'POST',
+      body: formData
+    }).then((res) => this._getResponseData(res));
+  }
+
+  addDealers(formData: BodyInit) {
+    return fetch(`${this._url}/dealers/import-csv/dealers`, {
       method: 'POST',
       body: formData
     }).then((res) => this._getResponseData(res));
@@ -25,6 +39,13 @@ class Api {
 
   getDealerProducts(pageSize: number, offset: number) {
     return fetch(`${this._url}/dealers/price?limit=${pageSize}&offset=${offset}`, {
+      method: 'GET',
+      headers: this._headers
+    }).then((res) => this._getResponseData(res));
+  }
+
+  getMatchedProducts() {
+    return fetch(`${this._url}/matching/all`, {
       method: 'GET',
       headers: this._headers
     }).then((res) => this._getResponseData(res));
