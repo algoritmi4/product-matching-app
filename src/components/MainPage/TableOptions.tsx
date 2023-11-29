@@ -137,7 +137,7 @@ function TableOptions({
       }
     },
     muiPaginationProps: {
-      rowsPerPageOptions: [10, 20, 30, 50, 100],
+      rowsPerPageOptions: [10, 20, 30, 50],
       showFirstButton: false,
       showLastButton: false
     },
