@@ -3,13 +3,20 @@ import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import { Link } from 'react-router-dom';
 import { IProduct } from '../../utils/IProduct.interface';
 import arrowImg from '../../images/selectedProduct/arrows.png';
+import { SetStateAction, Dispatch } from 'react';
 
 export function SelectedProduct({
   product,
-  chosenItem
+  chosenItem,
+  mappedProduct,
+  setIsMapped,
+  isMapped
 }: {
   product: IDealerProduct;
   chosenItem: IProduct;
+  mappedProduct: IProduct;
+  setIsMapped: Dispatch<SetStateAction<boolean>>;
+  isMapped: boolean;
 }) {
   return (
     <div className="selected-item">

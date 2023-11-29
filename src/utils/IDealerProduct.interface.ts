@@ -1,3 +1,5 @@
+import { IProduct } from './IProduct.interface';
+
 export interface IDealerProduct {
   id: number;
   product_key: string;
@@ -6,5 +8,5 @@ export interface IDealerProduct {
   product_name: string;
   date: string;
   dealer_id: number;
-  mapped?: null | object;
+  mapped?: null | IProduct;
 }
