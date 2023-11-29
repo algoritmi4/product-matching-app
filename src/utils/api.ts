@@ -23,8 +23,8 @@ class Api {
     }).then((res) => this._getResponseData(res));
   }
 
-  getDealerProducts(pageSize: number, pageNumber: number) {
-    return fetch(`${this._url}/dealers/price?size=${pageSize}&page=${pageNumber}`, {
+  getDealerProducts(pageSize: number, offset: number) {
+    return fetch(`${this._url}/dealers/price?limit=${pageSize}&offset=${offset}`, {
       method: 'GET',
       headers: this._headers
     }).then((res) => this._getResponseData(res));

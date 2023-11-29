@@ -16,6 +16,7 @@ function MainPage() {
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
+  const [pageIndex, setPageIndex] = useState<number>(0);
   const { table } = TableOptions({
     handleSCVLoading,
     data,
@@ -28,12 +29,13 @@ function MainPage() {
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
   useDidMountEffect(() => {
-    handleDataLoad(30, 1);
+    handleDataLoad(30, 0);
   }, []);
 
   useEffect(() => {
-    if (pagination.pageIndex > 0 && paginationSize >= data.length) {
-      handleDataLoad(10, pagination.pageIndex + 2);
+    if (paginationSize > 10 && paginationSize >= data.length) {
+      setPageIndex(pagination.pageIndex + 1);
+      handleDataLoad(pagination.pageSize + paginationSize - data.length, data.length);
     }
   }, [pagination]);
 
@@ -42,15 +44,13 @@ function MainPage() {
     api
       .getDealerProducts(pageSize, pageNumber)
       .then((res) => {
-        setData((state) => [...state, ...res.data]);
-        return res;
+        setData((state) => [...state, ...res.items]);
       })
-      .then((res) => {
-        if (pagination.pageIndex > 1) {
-          setTimeout(() => {
-            setPagination((state) => ({ ...state, pageIndex: res.pagination.page - 2 }));
-          }, 0);
-        }
+      .then(() => {
+        setTimeout(() => {
+          setPagination((state) => ({ ...state, pageIndex: pageIndex }));
+          console.log(pageIndex);
+        }, 0);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsTableLoading(false));
