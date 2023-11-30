@@ -9,6 +9,7 @@
 
 .login-popup {
   position: fixed;
+  min-width: 200px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -85,7 +86,7 @@
 
 .login-popup__submit-btn-background {
   min-height: 38px;
-  width: calc(30% - 6px);
+  width: calc(80% - 6px);
   margin-top: 20px;
   background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -60%, rgba(56, 164, 58, 0.9) 100%);
   border-radius: 15px;
@@ -113,4 +114,10 @@
 
 .login-popup__submit-btn_diabled {
   opacity: 0.3;
+}
+
+.login-popup__btn-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 }

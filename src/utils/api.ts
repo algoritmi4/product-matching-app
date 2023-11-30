@@ -82,6 +82,15 @@ class Api {
       })
     }).then((res) => this._getResponseData(res));
   }
+
+  login(password: string, name: string) {
+    // заглушка
+    return Promise.resolve(true);
+  }
+
+  logout() {
+    return Promise.resolve(true);
+  }
 }
 
 const api = new Api(API_URL, {

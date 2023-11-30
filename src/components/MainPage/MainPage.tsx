@@ -2,16 +2,17 @@ import './MainPage.css';
 import { MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
 import api from '../../utils/api';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import useDidMountEffect from '../../customHooks/useDidMountEffect';
+import { useNavigate } from 'react-router-dom';
 
 interface Pagination {
   pageIndex: number;
   pageSize: number;
 }
 
-function MainPage() {
+function MainPage({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolean>> }) {
   const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
@@ -41,8 +42,10 @@ function MainPage() {
     }
   }, [pagination]);
 
+  const navigate = useNavigate();
+
   function handleSignOut() {
-    console.log('До связи');
+    navigate('/auth');
   }
 
   function handleDataLoad(pageSize: number, offset: number, pageIndex: number) {
