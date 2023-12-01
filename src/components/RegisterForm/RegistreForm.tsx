@@ -14,7 +14,7 @@ import {
 } from '../../utils/constants';
 import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolean>> }) {
   const {
@@ -22,6 +22,8 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
     handleSubmit,
     formState: { errors, isValid }
   } = useForm({ mode: 'all' });
+
+  const [errorText, setErrorText] = useState('');
 
   const navigate = useNavigate();
 
@@ -33,7 +35,8 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
         navigate('/auth');
       })
       .catch((err) => {
-        console.log(err.message);
+        setErrorText('Ошибка при регистрации');
+        console.log(err.message, err);
       });
   }
 
@@ -120,6 +123,7 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
               </button>
             </div>
           </div>
+          <p className="login-popup__error-text">{errorText}</p>
         </form>
       </div>
     </div>
