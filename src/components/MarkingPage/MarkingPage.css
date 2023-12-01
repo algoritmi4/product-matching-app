@@ -100,25 +100,25 @@
 }
 
 .marking__footer {
-  width: 90%;
+  width: 96%;
   display: grid;
   grid-template-columns: 1fr 2fr;
   justify-content: flex-start;
-  gap: 30px;
+  gap: 5px;
 }
 
 .marking__btn-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 5px;
 }
 
 .marking__btn-small-container {
-  width: 100%;
+  width: 80%;
   display: flex;
-  justify-content: flex-start;
-  gap: 20px;
+  justify-content: center;
+  gap: 5px;
 }
 
 .marking__btn-footer-background {
@@ -153,8 +153,14 @@
 }
 
 .marking__btn-footer-background_small {
-  width: calc(20% - 6px);
+  width: calc(15% - 6px);
   min-width: 40px;
+}
+
+.marking__btn-footer-background_cancel {
+  width: calc(25% - 6px);
+  min-width: 40px;
+  margin-left: 5px;
 }
 
 .marking__btn-footer-background_middle {
@@ -162,7 +168,7 @@
   min-width: 50px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1100px) {
   .marking__btn-footer {
     font-size: 12px;
     line-height: 30px;
@@ -179,7 +185,7 @@
   }
 
   .marking__btn-footer {
-    font-size: 10px;
+    font-size: 8px;
     line-height: 14px;
   }
 

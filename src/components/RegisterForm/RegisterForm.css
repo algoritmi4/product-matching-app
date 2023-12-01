@@ -124,8 +124,11 @@
 
 .login-popup__error-text {
   color: red;
-  width: 100%;
+  max-width: 250px;
   margin: 0 3px;
   font-size: 20px;
   line-height: 30px;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

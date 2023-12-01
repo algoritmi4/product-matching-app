@@ -108,7 +108,7 @@ export default function MarkingPage({
 
   const handleBtnAdmit = () => {
     api
-      .postMatching(chosenItem.id.toString(), chosenDealerProduct.id.toString())
+      .postMatchingAccepted(chosenItem.id.toString(), chosenDealerProduct.id.toString())
       .then((data) => {
         console.log(data);
         setMappedProduct(chosenItem);
@@ -159,6 +159,14 @@ export default function MarkingPage({
               </button>
             </div>
             <div className="marking__btn-container">
+              <div className="marking__btn-footer-background marking__btn-footer-background_middle">
+                <button
+                  type="button"
+                  className="marking__btn marking__btn-footer common-button"
+                  onClick={handleBtnNextClick}>
+                  Предыдущий
+                </button>
+              </div>
               <div className="marking__btn-small-container">
                 <div className="marking__btn-footer-background marking__btn-footer-background_small">
                   <button
@@ -176,13 +184,21 @@ export default function MarkingPage({
                     Нет
                   </button>
                 </div>
+                <div className="marking__btn-footer-background marking__btn-footer-background_cancel">
+                  <button
+                    type="button"
+                    className="marking__btn marking__btn-footer common-button"
+                    onClick={handleBtnDenyClick}>
+                    Отложить
+                  </button>
+                </div>
               </div>
               <div className="marking__btn-footer-background marking__btn-footer-background_middle">
                 <button
                   type="button"
                   className="marking__btn marking__btn-footer common-button"
                   onClick={handleBtnNextClick}>
-                  Далее
+                  Следующий
                 </button>
               </div>
             </div>

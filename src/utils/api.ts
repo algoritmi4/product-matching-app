@@ -73,15 +73,15 @@ class Api {
   }
 
   getMatchList(id: string, count: string) {
-    return fetch(`${this._url}/api/v1/matching/${id}/?count=${count}`, {
+    return fetch(`${this._url}/api/v1/matching/{dealerprice_id}/${id}/?count=${count}`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
     }).then((res) => this._getResponseData(res));
   }
 
-  postMatching(id: string, productId: string) {
-    return fetch(`${this._url}/api/v1/matching`, {
+  postMatchingAccepted(id: string, productId: string) {
+    return fetch(`${this._url}/api/v1/matching/accepted`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -90,6 +90,35 @@ class Api {
       })
     }).then((res) => this._getResponseData(res));
   }
+
+  postMatchingNotAccepted(id: string) {
+    return fetch(`${this._url}/api/v1/matching/not-accepted`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        key: id
+      })
+    }).then((res) => this._getResponseData(res));
+  }
+
+  postMatchingAcceptedLater(id: string) {
+    return fetch(`${this._url}/api/v1/matching/accepted-later`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        key: id
+      })
+    }).then((res) => this._getResponseData(res));
+  }
+
+  async _getResponseDataAuth(res: Response) {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(await res.json());
+  }
+
   _encode(parm: string): string {
     return encodeURIComponent(parm);
   }
@@ -102,9 +131,7 @@ class Api {
       body: `grant_type=&username=${this._encode(email)}&password=${this._encode(
         password
       )}&scope=&client_id=&client_secret=`
-    }).then(() => {
-      return Promise.resolve(email);
-    });
+    }).then((res) => this._getResponseDataAuth(res));
   }
 
   logout() {
@@ -127,7 +154,7 @@ class Api {
         email,
         password
       })
-    }).then((res) => this._getResponseData(res));
+    }).then((res) => this._getResponseDataAuth(res));
   }
 }
 

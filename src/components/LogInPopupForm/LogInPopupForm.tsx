@@ -44,7 +44,7 @@ export function LogInPopupForm({
       })
       .catch((err) => {
         setErrorText('Ошибка авторизации');
-        console.log(err.message);
+        console.log(err);
       });
   }
 

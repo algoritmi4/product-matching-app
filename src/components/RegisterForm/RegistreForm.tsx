@@ -35,8 +35,9 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
         navigate('/auth');
       })
       .catch((err) => {
-        setErrorText('Ошибка при регистрации');
-        console.log(err.message, err);
+        setErrorText(`Ошибка при регистрации:
+        ${err.detail}`);
+        console.log(err);
       });
   }
 
