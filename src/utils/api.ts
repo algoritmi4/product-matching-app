@@ -131,7 +131,7 @@ class Api {
       body: `grant_type=&username=${this._encode(email)}&password=${this._encode(
         password
       )}&scope=&client_id=&client_secret=`
-    }).then((res) => this._getResponseDataAuth(res));
+    }).then(() => Promise.resolve());
   }
 
   logout() {

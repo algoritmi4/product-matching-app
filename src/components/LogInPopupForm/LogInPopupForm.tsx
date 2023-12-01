@@ -37,7 +37,7 @@ export function LogInPopupForm({
   function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
     api
       .login(password, email)
-      .then((email) => {
+      .then(() => {
         setLoggedIn(true);
         setUser(email);
         navigate('/');
