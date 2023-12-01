@@ -4,8 +4,10 @@ import { INITIAL_MARKETING_DEALER } from '../utils/constants';
 interface IMarkingContext {
   dealerList: IDealer[];
   loggedIn: boolean;
+  user: string;
 }
 export const MarkingContext = createContext<IMarkingContext>({
   dealerList: INITIAL_MARKETING_DEALER,
-  loggedIn: false
+  loggedIn: false,
+  user: ''
 });

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from '../MainPage/MainPage';
 import MarkingPage from '../MarkingPage/MarkingPage';
@@ -11,19 +11,22 @@ import { INITIAL_MARKETING_DEALER } from '../../utils/constants';
 import { IDealer } from '../../utils/IDealer.interface';
 import { LogInPopupForm } from '../LogInPopupForm/LogInPopupForm';
 import { ProtectedRoute } from '../ProtectedRout/ProtectedRout';
+import { RegisterForm } from '../RegisterForm/RegistreForm';
 
 function App() {
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
   const [matchCount, setMatchCount] = useState(2);
   const [isLoading, setIsLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState('');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsLoading(true);
     api
       .getDealers()
       .then((data) => {
         setDealerList(data?.items);
+        setLoggedIn(true);
       })
       .catch((err) => {
         console.log(err?.message);
@@ -36,7 +39,7 @@ function App() {
   return (
     <div className="page">
       <div className="page__content">
-        <MarkingContext.Provider value={{ dealerList, loggedIn }}>
+        <MarkingContext.Provider value={{ dealerList, loggedIn, user }}>
           {isLoading ? (
             <Preloader />
           ) : (
@@ -45,7 +48,6 @@ function App() {
                 path="/"
                 element={<ProtectedRoute element={<MainPage setLoggedIn={setLoggedIn} />} />}
               />
-
               <Route
                 path="/marking/:product_id"
                 element={
@@ -54,10 +56,13 @@ function App() {
                   />
                 }
               />
-
               <Route path="/statistics" element={<ProtectedRoute element={<StatisticsPage />} />} />
 
-              <Route path="/auth" element={<LogInPopupForm setLoggedIn={setLoggedIn} />} />
+              <Route
+                path="/auth"
+                element={<LogInPopupForm setLoggedIn={setLoggedIn} setUser={setUser} />}
+              />
+              <Route path="/register" element={<RegisterForm setLoggedIn={setLoggedIn} />} />
             </Routes>
           )}
         </MarkingContext.Provider>

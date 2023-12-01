@@ -2,7 +2,15 @@ import { IDealer } from './IDealer.interface';
 import { IDealerProduct } from './IDealerProduct.interface';
 import { IProduct } from './IProduct.interface';
 
-export const API_URL = 'http://localhost:8001/api/v1';
+export const API_URL = 'http://localhost:8001';
+export const HEADER = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json'
+};
+export const HEADER_AUTH = {
+  Accept: 'application/json',
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
 
 export const INITIAL_MARKETING_DEALER: IDealer[] = [
   {
@@ -49,6 +57,9 @@ export const REQUIRED_ERROR_MESSAGE = 'Поле не может быть пус�
 export const NAME_REGEXP = /^[a-zA-Zа-яА-Я-\s]*$/;
 export const NAME_VALIDATION_ERROR_MESSAGE =
   'В имени допускается использовать только буквы, тире и пробел.';
+
+export const EMAIL_REGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
+export const WRONG_EMAIL_MESSAGE = 'Введено не корректное значение E-mail.';
 
 export const PASSWORD_REGEXP = /^(?=.*[A-Z].*)(?=.*[!@#$&*])(?=.*[0-9].*)(?=.*[a-z].*).*$/;
 export const PASSWORD_HINT =

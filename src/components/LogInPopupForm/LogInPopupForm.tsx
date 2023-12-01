@@ -1,18 +1,14 @@
 import './LogInPopupForm.css';
 import { useForm, FieldValues } from 'react-hook-form';
 import {
-  NAME_MAX_LENGTH,
-  NAME_MAX_LENGTH_ERROR_MESSAGE,
-  NAME_MIN_LENGTH,
-  NAME_MIN_LENGTH_ERROR_MESSAGE,
-  NAME_REGEXP,
-  NAME_VALIDATION_ERROR_MESSAGE,
+  EMAIL_REGEXP,
   PASSWORD_HINT,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MIN_LENGTH_ERROR_MESSAGE,
   PASSWORD_REGEXP,
   PASSWORD_VALIDATION_ERROR_MESSAGE,
-  REQUIRED_ERROR_MESSAGE
+  REQUIRED_ERROR_MESSAGE,
+  WRONG_EMAIL_MESSAGE
 } from '../../utils/constants';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import api from '../../utils/api';
@@ -20,9 +16,11 @@ import { useNavigate } from 'react-router-dom';
 import { MarkingContext } from '../../contexts/MarkingContext';
 
 export function LogInPopupForm({
-  setLoggedIn
+  setLoggedIn,
+  setUser
 }: {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
+  setUser: Dispatch<SetStateAction<string>>;
 }) {
   const {
     register,
@@ -32,33 +30,34 @@ export function LogInPopupForm({
 
   const navigate = useNavigate();
 
-  const { loggedIn } = useContext(MarkingContext);
+  const { loggedIn, user } = useContext(MarkingContext);
 
-  function logIn(password: string, name: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
+  function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
     api
-      .login(password, name)
-      .then(() => {
+      .login(password, email)
+      .then((email) => {
         setLoggedIn(true);
+        setUser(email);
         navigate('/');
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
-  function logout(setLoggedIn: Dispatch<SetStateAction<boolean>>) {
+  const onSubmit = (data: FieldValues) => {
+    logIn(data.password, data.email, setLoggedIn);
+  };
+
+  const handleLogoutBtnClick = () => {
     api
       .logout()
       .then(() => {
         setLoggedIn(false);
       })
-      .catch((err) => console.log(err.message));
-  }
-
-  const onSubmit = (data: FieldValues) => {
-    logIn(data.password, data.name, setLoggedIn);
-  };
-
-  const handleLogoutBtnClick = () => {
-    logout(setLoggedIn);
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleCancelBtnClick = () => {
@@ -70,29 +69,21 @@ export function LogInPopupForm({
       <div className="login-popup">
         {!loggedIn ? (
           <form onSubmit={handleSubmit(onSubmit)} className="login-popup__form">
-            <p className="login-popup__field-text">Имя пользователя</p>
+            <p className="login-popup__field-text">Email</p>
             <input
               type="text"
-              {...register('name', {
+              {...register('email', {
                 required: REQUIRED_ERROR_MESSAGE,
-                minLength: {
-                  value: NAME_MIN_LENGTH,
-                  message: NAME_MIN_LENGTH_ERROR_MESSAGE
-                },
-                maxLength: {
-                  value: NAME_MAX_LENGTH,
-                  message: NAME_MAX_LENGTH_ERROR_MESSAGE
-                },
                 pattern: {
-                  value: NAME_REGEXP,
-                  message: NAME_VALIDATION_ERROR_MESSAGE
+                  value: EMAIL_REGEXP,
+                  message: WRONG_EMAIL_MESSAGE
                 }
               })}
               className="login-popup__field"
-              placeholder="Имя пользователя"
+              placeholder="Email"
             />
-            {errors?.name && (
-              <div className="login-popup__field-error">{errors.name.message?.toString()}</div>
+            {errors?.email && (
+              <div className="login-popup__field-error">{errors.email.message?.toString()}</div>
             )}
 
             <p className="login-popup__field-text">Пароль</p>
@@ -129,7 +120,7 @@ export function LogInPopupForm({
           </form>
         ) : (
           <>
-            <div>Выйти из программы?</div>
+            <div>{`Текущий пользователь: ${user}`}</div>
             <div className="login-popup__btn-container">
               <div className="login-popup__submit-btn-background">
                 <button
