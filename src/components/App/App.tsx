@@ -44,10 +44,7 @@ function App() {
             <Preloader />
           ) : (
             <Routes>
-              <Route
-                path="/"
-                element={<ProtectedRoute element={<MainPage setLoggedIn={setLoggedIn} />} />}
-              />
+              <Route path="/" element={<ProtectedRoute element={<MainPage />} />} />
               <Route
                 path="/marking/:product_id"
                 element={

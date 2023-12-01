@@ -2,7 +2,7 @@ import './MainPage.css';
 import { MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
 import api from '../../utils/api';
-import { FormEvent, useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
 import useDidMountEffect from '../../customHooks/useDidMountEffect';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,8 @@ interface Pagination {
   pageSize: number;
 }
 
-function MainPage({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolean>> }) {
+function MainPage() {
+  const navigate = useNavigate();
   const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
@@ -41,12 +42,6 @@ function MainPage({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolea
       handleDataLoad(pagination.pageSize + paginationSize - data.length, data.length, pageIndex);
     }
   }, [pagination]);
-
-  const navigate = useNavigate();
-
-  function handleSignOut() {
-    navigate('/auth');
-  }
 
   function handleDataLoad(pageSize: number, offset: number, pageIndex: number) {
     setIsTableLoading(true);
@@ -80,6 +75,10 @@ function MainPage({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolea
         func(formData).finally(() => setIsButtonLoading(false));
       };
     }
+  }
+
+  function handleSignOut() {
+    navigate('/auth');
   }
 
   return <MaterialReactTable table={table} />;

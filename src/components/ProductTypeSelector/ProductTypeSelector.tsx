@@ -2,11 +2,13 @@ import './ProductTypeSelector.css';
 
 function ProductTypeSelector() {
   return (
-    <select className="product-type-selector">
-      <option className="product-type-selector__option" selected>
+    <select className="product-type-selector" defaultValue="matched">
+      <option value="matched" className="product-type-selector__option">
         Сопоставленный
       </option>
-      <option className="product-type-selector__option">Отложенный</option>
+      <option value="not-matched" className="product-type-selector__option">
+        Отложенный
+      </option>
     </select>
   );
 }

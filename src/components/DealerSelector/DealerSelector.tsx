@@ -3,8 +3,8 @@ import { TEST_MARKETING_DEALER } from '../../utils/constants';
 
 function DealerSelector() {
   return (
-    <select className="dealer-selector">
-      <option className="dealer-selector__option" selected>
+    <select defaultValue="all" className="dealer-selector">
+      <option value="all" className="dealer-selector__option">
         Все товары(выберите дилера)
       </option>
       {TEST_MARKETING_DEALER.map((dealer) => (

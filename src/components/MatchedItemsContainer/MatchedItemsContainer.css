@@ -2,17 +2,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0 0;
+  margin: 15px 0 0;
+}
+
+.match-items-cont__container:first-of-type {
+  margin: 0;
 }
 
 .match-items-cont__box {
-  border: 3px solid black;
-  width: 40%;
+  width: 47%;
   min-height: 120px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding: 12px 8px 5px;
+  padding: 12px 10px 8px;
+  box-sizing: border-box;
+  background-color: #ebe2dd;
 }
 
 .match-items-cont__box-title {
@@ -23,7 +28,7 @@
 }
 
 .match-items-cont__product-name {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,12 +65,13 @@
   font-weight: 400;
   align-self: flex-end;
   text-decoration: none;
-  color: green;
+  color: #7a7a7a;
   transition: opacity .1s linear;
 }
 
 .match-items-cont__product-link:hover {
   opacity: 0.7;
+  text-decoration: underline;
 }
 
 .match-items-cont__arrow-image {

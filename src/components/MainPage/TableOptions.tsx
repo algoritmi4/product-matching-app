@@ -66,6 +66,13 @@ function TableOptions({
         }
       },
       {
+        header: 'Дилер',
+        accessorFn: (data) => data.dealer.name,
+        size: 250,
+        minSize: 40,
+        maxSize: 350
+      },
+      {
         header: 'Дата',
         accessorKey: 'date',
         size: 150,
@@ -93,9 +100,6 @@ function TableOptions({
   const table = useMaterialReactTable({
     columns,
     data,
-    enableRowSelection: true,
-    getRowId: (originalRow) => originalRow.product_key,
-    onRowSelectionChange: setRowSelection,
     state: { rowSelection, pagination, isLoading: isTableLoading },
     enableRowNumbers: true,
     enableRowPinning: true,
@@ -115,6 +119,7 @@ function TableOptions({
     enableStickyHeader: true,
     enableStickyFooter: true,
     layoutMode: 'grid',
+    enableFullScreenToggle: false,
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
         navigate(`/marking/${row.original.id}`);
@@ -140,9 +145,7 @@ function TableOptions({
       }
     },
     muiPaginationProps: {
-      rowsPerPageOptions: [10, 20, 30, 50],
-      showFirstButton: false,
-      showLastButton: false
+      rowsPerPageOptions: [10, 20, 30, 50]
     },
     renderTopToolbarCustomActions: () => (
       <Box sx={{ display: 'flex', gap: '8px', flexWrap: 'nowrap' }}>
@@ -160,14 +163,14 @@ function TableOptions({
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="csv-input"
+                id="dealers-input"
                 accept=".csv"
-                onInput={(e) => handleSCVLoading(e, (formData) => api.addProducts(formData))}
+                onInput={(e) => handleSCVLoading(e, (formData) => api.addDealers(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="csv-input">
+              <label className="main-page__input-label" htmlFor="dealers-input">
                 <div className="main-page__upload-image"></div>
-                <p className="main-page__button-text">Товары заказчика</p>
+                <p className="main-page__button-text">Список дилеров</p>
               </label>
             </div>
           )}
@@ -179,12 +182,12 @@ function TableOptions({
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="csv-input"
+                id="dealerprices-input"
                 accept=".csv"
                 onInput={(e) => handleSCVLoading(e, (formData) => api.addDealerPrices(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="csv-input">
+              <label className="main-page__input-label" htmlFor="dealerprices-input">
                 <div className="main-page__upload-image"></div>
                 <p className="main-page__button-text">Товары дилеров</p>
               </label>
@@ -198,14 +201,14 @@ function TableOptions({
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="csv-input"
+                id="products-input"
                 accept=".csv"
-                onInput={(e) => handleSCVLoading(e, (formData) => api.addDealers(formData))}
+                onInput={(e) => handleSCVLoading(e, (formData) => api.addProducts(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="csv-input">
+              <label className="main-page__input-label" htmlFor="products-input">
                 <div className="main-page__upload-image"></div>
-                <p className="main-page__button-text">Список дилеров</p>
+                <p className="main-page__button-text">Товары заказчика</p>
               </label>
             </div>
           )}

@@ -1,7 +1,8 @@
 .page {
   min-width: 600px;
   min-height: 100vh;
-  font-family: 'Inter', 'Arial', sans-serif;
+  font-family: 'Ubuntu', 'Arial', sans-serif;
+  background-color: #7a7a7a;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -12,6 +13,7 @@
 
 .page__content {
   max-width: 1920px;
+  width: 100%;
   display: grid;
   justify-items: center;
   margin: 0 auto;

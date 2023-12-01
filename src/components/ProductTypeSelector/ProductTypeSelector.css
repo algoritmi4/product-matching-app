@@ -1,13 +1,18 @@
 .product-type-selector {
-  align-self: flex-end;
+  align-self: flex-start;
   border: none;
-  background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -30%, rgba(56, 164, 58, 0.9) 100%);
-  color: white;
+  background: #ebe2dd;
+  color: black;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
   outline: none;
   border-radius: 5px;
   cursor: pointer;
   padding: 5px;
+  transition: opacity .1s linear;
+}
+
+.product-type-selector:hover {
+  opacity: 0.7;
 }
 
 .product-type-selector__option {
