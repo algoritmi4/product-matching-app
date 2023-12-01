@@ -10,7 +10,7 @@ import {
   REQUIRED_ERROR_MESSAGE,
   WRONG_EMAIL_MESSAGE
 } from '../../utils/constants';
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { MarkingContext } from '../../contexts/MarkingContext';
@@ -28,6 +28,8 @@ export function LogInPopupForm({
     formState: { errors, isValid }
   } = useForm({ mode: 'all' });
 
+  const [errorText, setErrorText] = useState('');
+
   const navigate = useNavigate();
 
   const { loggedIn, user } = useContext(MarkingContext);
@@ -41,6 +43,7 @@ export function LogInPopupForm({
         navigate('/');
       })
       .catch((err) => {
+        setErrorText('Ошибка авторизации');
         console.log(err.message);
       });
   }
@@ -62,6 +65,10 @@ export function LogInPopupForm({
 
   const handleCancelBtnClick = () => {
     navigate('/');
+  };
+
+  const handleRegistrBtn = () => {
+    navigate('/register');
   };
 
   return (
@@ -109,14 +116,25 @@ export function LogInPopupForm({
                 {errors.password.message?.toString()}
               </span>
             )}
-            <div
-              className={`login-popup__submit-btn-background ${
-                !isValid ? 'login-popup__submit-btn_diabled' : ''
-              } `}>
-              <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
-                Вход
-              </button>
+            <div className="login-popup__btn-container">
+              <div
+                className={`login-popup__submit-btn-background ${
+                  !isValid ? 'login-popup__submit-btn_diabled' : ''
+                } `}>
+                <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
+                  Вход
+                </button>
+              </div>
+              <div className={`login-popup__submit-btn-background`}>
+                <button
+                  type="button"
+                  className={`login-popup__submit-btn common-button`}
+                  onClick={handleRegistrBtn}>
+                  Регистрация
+                </button>
+              </div>
             </div>
+            <p className="login-popup__error-text">{errorText}</p>
           </form>
         ) : (
           <>
