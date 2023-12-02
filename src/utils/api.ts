@@ -73,7 +73,7 @@ class Api {
   }
 
   getMatchList(id: string, count: string) {
-    return fetch(`${this._url}/api/v1/matching/{dealerprice_id}/${id}/?count=${count}`, {
+    return fetch(`${this._url}/api/v1/matching/{dealerprice_id}/?count=${count}&product_id=${id}`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
@@ -87,7 +87,8 @@ class Api {
       body: JSON.stringify({
         key: id,
         product_id: productId
-      })
+      }),
+      credentials: 'include'
     }).then((res) => this._getResponseData(res));
   }
 
@@ -97,7 +98,8 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         key: id
-      })
+      }),
+      credentials: 'include'
     }).then((res) => this._getResponseData(res));
   }
 
@@ -107,11 +109,14 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         key: id
-      })
+      }),
+      credentials: 'include'
     }).then((res) => this._getResponseData(res));
   }
 
   async _getResponseDataAuth(res: Response) {
+    console.log(res);
+
     if (res.ok) {
       return res.json();
     }

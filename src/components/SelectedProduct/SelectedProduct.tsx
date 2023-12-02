@@ -10,13 +10,17 @@ export function SelectedProduct({
   chosenItem,
   mappedProduct,
   setIsMapped,
-  isMapped
+  isMapped,
+  isDenyed,
+  isDelayed
 }: {
   dealerProduct: IDealerProduct;
   chosenItem: IProduct;
   mappedProduct: IProduct;
   setIsMapped: Dispatch<SetStateAction<boolean>>;
   isMapped: boolean;
+  isDenyed: boolean;
+  isDelayed: boolean;
 }) {
   return (
     <div className="selected-item">
@@ -56,9 +60,11 @@ export function SelectedProduct({
           <p className="selected-item__source">Просепт</p>
           <div className="selected-item__container">
             <p className="selected-item__product-atribute">
-              Наименование 1C:{' '}
+              {chosenItem?.name_1c ? 'Наименование 1C: ' : 'Наименование: '}
               <span className="selected-item__product-atribute-span">
-                {chosenItem?.name_1c || 'Не удалось получить наименование продукта'}
+                {chosenItem?.name_1c ||
+                  chosenItem?.name ||
+                  'Не удалось получить наименование продукта'}
               </span>
             </p>
             <p className="selected-item__product-atribute">
@@ -85,10 +91,11 @@ export function SelectedProduct({
           </p>
           <div className="selected-item__container selected-item__container_mapped">
             <p className="selected-item__product-atribute">
-              Наименование 1C:{' '}
+              {mappedProduct?.name_1c ? 'Наименование 1C: ' : 'Наименование: '}
               <span className="selected-item__product-atribute-span">
                 {mappedProduct?.name_1c ||
-                  'Не удалось получить наименование сопоставленного продукта'}
+                  mappedProduct?.name ||
+                  'Не удалось получить наименование продукта'}
               </span>
             </p>
             <p className="selected-item__product-atribute">
@@ -108,6 +115,8 @@ export function SelectedProduct({
           </div>
         </>
       )}
+      {isDenyed && <p>Продукт не сопоставлен</p>}
+      {isDelayed && <p>Продукт отложен</p>}
     </div>
   );
 }

@@ -1,18 +1,13 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
-import { useState, useEffect, useContext, SetStateAction, Dispatch, useLayoutEffect } from 'react';
+import { useState, useEffect, SetStateAction, Dispatch, useLayoutEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
-import { MarkingContext } from '../../contexts/MarkingContext';
-import {
-  INIRIAL_MARKETING_PRODUCTS,
-  INITIAL_MARKETING_DEALERPRICE,
-  TEST_MARKETING_PRODUCTS
-} from '../../utils/constants';
+import { INIRIAL_MARKETING_PRODUCTS, INITIAL_MARKETING_DEALERPRICE } from '../../utils/constants';
 import { IProduct } from '../../utils/IProduct.interface';
 import api from '../../utils/api';
 import { Preloader } from '../Preloader/Preloader';
@@ -33,44 +28,58 @@ export default function MarkingPage({
     INITIAL_MARKETING_DEALERPRICE[0]
   );
   const [chosenItem, setChosenItem] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
-  const [mappedProduct, setMappedProduct] = useState<IProduct>(TEST_MARKETING_PRODUCTS[0]);
+  const [mappedProduct, setMappedProduct] = useState<IProduct>(INIRIAL_MARKETING_PRODUCTS[0]);
   const [isMapped, setIsMapped] = useState(false);
+  const [isDenyed, setIsDenyed] = useState(false);
+  const [isDelayed, setIsDelayed] = useState(false);
 
   const navigate = useNavigate();
-
-  const { dealerList } = useContext(MarkingContext);
 
   const { product_id } = useParams();
 
   useLayoutEffect(() => {
     setProductId(product_id || '');
-
-    if (mappedProduct.id !== 0) {
-      setIsMapped(true);
-    }
   }, []);
 
   const resetChosenItem = () => {
     setChosenItem(INIRIAL_MARKETING_PRODUCTS[0]);
   };
 
+  const reset = () => {
+    resetChosenItem();
+    setIsDenyed(false);
+    setIsMapped(false);
+    setMappedProduct(INIRIAL_MARKETING_PRODUCTS[0]);
+    setIsDelayed(false);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-
-    resetChosenItem();
+    reset();
 
     if (productId) {
       Promise.all([api.getMatchList(productId, '25'), api.getDealerPrice(productId)])
         .then((result) => {
           const data: IProduct[] = result[0];
           setMathProductList(data);
-          return Promise.resolve(result[1]);
+          if (data) return Promise.resolve(result[1]);
         })
         .then((data) => {
           setChosenDealerProduct(data);
+          if (data.productdealer) {
+            if (data.productdealer.status === 'matched') {
+              setMappedProduct(data.productdealer.product);
+              setIsMapped(true);
+            }
+            if (data.productdealer.status === 'not matched') {
+              setIsDenyed(true);
+            }
+            if (data.productdealer.status === 'deferred') {
+              setIsDelayed(true);
+            }
+          }
           // get dealer name for current dealer product
-          const curDealer = dealerList?.find((dealer) => dealer.id === data?.dealer_id)?.name || '';
-          setCurrentDealerName(curDealer);
+          setCurrentDealerName(data.dealer?.name);
         })
         .catch((err) => {
           console.log(err?.message);
@@ -94,7 +103,15 @@ export default function MarkingPage({
 
   const handleBtnNextClick = () => {
     if (productId) {
+      reset();
       setProductId((+productId + 1).toString());
+    }
+  };
+
+  const handleBtnPrevClick = () => {
+    if (productId) {
+      reset();
+      setProductId((+productId - 1).toString());
     }
   };
 
@@ -104,16 +121,36 @@ export default function MarkingPage({
 
   const handleBtnDenyClick = () => {
     resetChosenItem();
+    api
+      .postMatchingNotAccepted(chosenDealerProduct.id.toString())
+      .then((data) => {
+        reset();
+        setIsDenyed(true);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   const handleBtnAdmit = () => {
     api
-      .postMatchingAccepted(chosenItem.id.toString(), chosenDealerProduct.id.toString())
+      .postMatchingAccepted(chosenDealerProduct.id.toString(), chosenItem.id.toString())
       .then((data) => {
-        console.log(data);
+        reset();
         setMappedProduct(chosenItem);
         setIsMapped(true);
-        resetChosenItem();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const handleBtnDelayClick = () => {
+    api
+      .postMatchingAcceptedLater(chosenDealerProduct.id.toString())
+      .then((data) => {
+        reset();
+        setIsDelayed(true);
       })
       .catch((err) => {
         console.log(err.message);
@@ -146,7 +183,9 @@ export default function MarkingPage({
                 chosenItem={chosenItem}
                 setIsMapped={setIsMapped}
                 isMapped={isMapped}
-                mappedProduct={mappedProduct}></SelectedProduct>
+                mappedProduct={mappedProduct}
+                isDenyed={isDenyed}
+                isDelayed={isDelayed}></SelectedProduct>
             </div>
           </div>
           <div className="marking__footer">
@@ -163,7 +202,7 @@ export default function MarkingPage({
                 <button
                   type="button"
                   className="marking__btn marking__btn-footer common-button"
-                  onClick={handleBtnNextClick}>
+                  onClick={handleBtnPrevClick}>
                   Предыдущий
                 </button>
               </div>
@@ -188,7 +227,7 @@ export default function MarkingPage({
                   <button
                     type="button"
                     className="marking__btn marking__btn-footer common-button"
-                    onClick={handleBtnDenyClick}>
+                    onClick={handleBtnDelayClick}>
                     Отложить
                   </button>
                 </div>
