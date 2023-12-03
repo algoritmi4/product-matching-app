@@ -162,87 +162,77 @@ export default function MarkingPage({
       {isLoading ? (
         <Preloader />
       ) : (
-        <div className="marking">
-          <div className="marking__header">
-            <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-            <div className="marking__dealer-name-container">
-              <h1 className="marking__dealer-name">{currentDealerName}</h1>
-            </div>
-          </div>
-          <div className="marking__container">
-            <div className="marking__matchList-container">
-              {matchCount === 999 ? (
-                <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
-              ) : (
-                getMatchList(matchCount, mathProductList)
-              )}
-            </div>
-            <div className="marking__match-container">
-              <SelectedProduct
-                dealerProduct={chosenDealerProduct}
-                chosenItem={chosenItem}
-                setIsMapped={setIsMapped}
-                isMapped={isMapped}
-                mappedProduct={mappedProduct}
-                isDenyed={isDenyed}
-                isDelayed={isDelayed}></SelectedProduct>
-            </div>
-          </div>
-          <div className="marking__footer">
-            <div className="marking__btn-footer-background">
-              <button
-                type="button"
-                className="marking__btn marking__btn-footer common-button"
-                onClick={handleBtnToMainClick}>
-                На главную
-              </button>
-            </div>
-            <div className="marking__btn-container">
-              <div className="marking__btn-footer-background marking__btn-footer-background_middle">
+        <>
+          <div className="marking">
+            <div className="marking__header">
+              <div className="marking__header-btn-container">
                 <button
                   type="button"
-                  className="marking__btn marking__btn-footer common-button"
-                  onClick={handleBtnPrevClick}>
-                  Предыдущий
+                  className="marking__header-btn common-button"
+                  onClick={handleBtnToMainClick}>
+                  На главную
                 </button>
+                <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
               </div>
-              <div className="marking__btn-small-container">
-                <div className="marking__btn-footer-background marking__btn-footer-background_small">
+              <h1 className="marking__dealer-name">{currentDealerName}</h1>
+            </div>
+            <div className="marking__container">
+              <div className="marking__matchList-container">
+                {matchCount === 999 ? (
+                  <SearchInFullList fullList={mathProductList} getMatchList={getMatchList} />
+                ) : (
+                  getMatchList(matchCount, mathProductList)
+                )}
+              </div>
+              <div className="marking__matching-container">
+                <div className="marking__match-container">
+                  <SelectedProduct
+                    dealerProduct={chosenDealerProduct}
+                    chosenItem={chosenItem}
+                    setIsMapped={setIsMapped}
+                    isMapped={isMapped}
+                    mappedProduct={mappedProduct}
+                    isDenyed={isDenyed}
+                    isDelayed={isDelayed}></SelectedProduct>
+                </div>
+                <div className="marking__btn-small-container">
                   <button
                     type="button"
-                    className="marking__btn marking__btn-footer common-button"
+                    className="marking__btn common-button"
                     onClick={handleBtnAdmit}>
                     Да
                   </button>
-                </div>
-                <div className="marking__btn-footer-background marking__btn-footer-background_small">
                   <button
                     type="button"
-                    className="marking__btn marking__btn-footer common-button"
+                    className="marking__btn common-button"
                     onClick={handleBtnDenyClick}>
                     Нет
                   </button>
-                </div>
-                <div className="marking__btn-footer-background marking__btn-footer-background_cancel">
                   <button
                     type="button"
-                    className="marking__btn marking__btn-footer common-button"
+                    className="marking__btn common-button"
                     onClick={handleBtnDelayClick}>
                     Отложить
                   </button>
                 </div>
               </div>
-              <div className="marking__btn-footer-background marking__btn-footer-background_middle">
-                <button
-                  type="button"
-                  className="marking__btn marking__btn-footer common-button"
-                  onClick={handleBtnNextClick}>
-                  Следующий
-                </button>
-              </div>
             </div>
           </div>
-        </div>
+          <div className="marking__footer">
+            <button
+              type="button"
+              className="marking__btn-footer common-button"
+              onClick={handleBtnPrevClick}>
+              Предыдущий
+            </button>
+            <button
+              type="button"
+              className="marking__btn-footer common-button"
+              onClick={handleBtnNextClick}>
+              Следующий
+            </button>
+          </div>
+        </>
       )}
     </>
   );

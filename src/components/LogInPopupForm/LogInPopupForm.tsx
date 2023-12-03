@@ -150,7 +150,7 @@ export function LogInPopupForm({
           </form>
         ) : (
           <>
-            <div>{`Текущий пользователь: ${user?.email}`}</div>
+            <div className="login-popup__username">{`Текущий пользователь: ${user?.email}`}</div>
             <div className="login-popup__btn-container">
               <div className="login-popup__submit-btn-background">
                 <button
