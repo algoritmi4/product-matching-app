@@ -1,4 +1,4 @@
-import './RegisterForm.css';
+import '../LogInPopupForm/LogInPopupForm.css';
 import { useForm, FieldValues } from 'react-hook-form';
 import {
   EMAIL_REGEXP,
@@ -108,21 +108,14 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
           )}
 
           <div className="login-popup__btn-container">
-            <div
-              className={`login-popup__submit-btn-background ${
-                !isValid ? 'login-popup__submit-btn_diabled' : ''
-              } `}>
-              <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
-                Регистрация
-              </button>
-            </div>
-            <div className="login-popup__submit-btn-background">
-              <button
-                className="login-popup__submit-btn common-button"
-                onClick={handleCancelBtnClick}>
-                Отмена
-              </button>
-            </div>
+            <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
+              Регистрация
+            </button>
+            <button
+              className="login-popup__submit-btn common-button"
+              onClick={handleCancelBtnClick}>
+              Отмена
+            </button>
           </div>
           <p className="login-popup__error-text">{errorText}</p>
         </form>
