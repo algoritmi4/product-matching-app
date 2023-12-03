@@ -39,7 +39,16 @@
   overflow-y: auto;
   margin: 10px 0 0;
   display: flex;
+}
+
+.stat-page__infinite-scroll_type_matched {
   flex-direction: column;
+}
+
+.stat-page__infinite-scroll_type_deferred {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 
 .stat-page__info {
@@ -57,30 +66,35 @@
   font-size: 28px;
   font-weight: 600;
   margin: 0;
+  color: #364037;
 }
 
 .stat-page__total-matched {
   margin: 15px 0 0;
   font-size: 20px;
   font-weight: 400;
+  color: #364037;
 }
 
 .stat-page__dealer-info-title {
   font-size: 18px;
   font-weight: 600;
   margin: 50px 0 0;
+  color: #364037;
 }
 
 .stat-page__dealer-matched {
   font-size: 18px;
   font-weight: 400;
   margin: 15px 0 0;
+  color: #364037;
 }
 
 .stat-page__matched-quant {
   font-size: 25px;
   font-weight: 500;
   margin: 0;
+  color: #364037;
 }
 
 .stat-page__matched-quant_type_green {
@@ -95,4 +109,5 @@
   font-size: 30px;
   font-weight: 500;
   align-self: center;
+  color: #364037;
 }

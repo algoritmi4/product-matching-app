@@ -6,6 +6,9 @@ import ProductTypeSelector from '../ProductTypeSelector/ProductTypeSelector';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
+import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
+import useDidMountEffect from '../../customHooks/useDidMountEffect';
+import api from '../../utils/api';
 
 interface Product {
   id: number;
@@ -31,310 +34,85 @@ interface Items {
   status: string;
 }
 
-const someItems: Items[] = [
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  }
-];
-
-const moreItems: Items[] = [
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  },
-  {
-    product: {
-      id: 0,
-      name: 'Огнебиозащита ОГНЕБИО PROF 2 группа бесцветный готовый состав / 10 л',
-      article: '006-10',
-      recommended_price: 0,
-      cost: 0
-    },
-    dealerprice: {
-      id: 0,
-      product_key: 0,
-      price: 0,
-      product_url:
-        'https://akson.ru//p/antiseptik_prosept_eco_interior_dlya_vnutrennih_rabot_gotovyy_sostav_5l/',
-      product_name: 'Антисептик PROSEPT Eco Interior для внутренних работ, готовый состав  5л',
-      date: '2023-12-01'
-    },
-    created_at: '2023-12-01T15:35:40.812Z',
-    status: 'string'
-  }
-];
+interface matchedCount {
+  matched: number;
+  not_matched: number;
+  deferred: number;
+  total_matching: number;
+  accuracy: number;
+}
 
 function StatisticsPage() {
   const navigate = useNavigate();
   const [items, setItems] = useState<Items[]>([]);
+  const [statistics, setStatistics] = useState<matchedCount>({
+    matched: 0,
+    not_matched: 0,
+    deferred: 0,
+    total_matching: 0,
+    accuracy: 0
+  });
+  const [productType, setProductType] = useState<string>('matched');
+  const [selectedDealer, setSelectedDealer] = useState<string>('all');
+  const [offset, setOffset] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
-  useEffect(() => {
-    setItems(someItems);
-  }, []);
+  useDidMountEffect(() => {
+    if (selectedDealer === 'all') {
+      api
+        .getMatchedUserProducts(productType, offset)
+        .then((res) => {
+          setItems(res.items);
+          setOffset((state) => state + 20);
+          if (items.length + res.limit >= res.total) {
+            setHasMore(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .getMatchedDealerProducts(selectedDealer, productType, offset)
+        .then((res) => {
+          setItems(res.items);
+          setOffset((state) => state + 20);
+          if (items.length + res.limit >= res.total) {
+            setHasMore(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selectedDealer, productType]);
 
   function handleNext() {
-    setTimeout(() => {
-      setItems((state) => state.concat(moreItems));
-    }, 1000);
+    if (selectedDealer === 'all') {
+      api
+        .getMatchedUserProducts(productType, offset)
+        .then((res) => {
+          setItems(res.items);
+          setOffset((state) => state + 20);
+          if (items.length + res.limit >= res.total) {
+            setHasMore(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .getMatchedDealerProducts(selectedDealer, productType, offset)
+        .then((res) => {
+          setItems(res.items);
+          setOffset((state) => state + 20);
+          if (items.length + res.limit >= res.total) {
+            setHasMore(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   return (
     <section className="stat-page">
       <div className="stat-page__header">
-        <DealerSelector />
+        <DealerSelector setSelectedDealer={setSelectedDealer} />
         <button
           onClick={() => navigate('/')}
           type="button"
@@ -343,35 +121,46 @@ function StatisticsPage() {
         </button>
       </div>
       <div className="stat-page__flex-table">
-        <ProductTypeSelector />
+        <ProductTypeSelector setProductType={setProductType} />
         {items.length === 0 ? (
-          <h4 className="stat-page__err-message">Сопоставленных товаров ещё нет в базе</h4>
-        ) : (
+          <h4 className="stat-page__err-message">{`${
+            productType ? 'Сопоставленных' : 'Отложенных'
+          } товаров ещё нет в базе`}</h4>
+        ) : productType ? (
           <InfiniteScroll
-            className="stat-page__infinite-scroll"
+            className="stat-page__infinite-scroll stat-page__infinite-scroll_type_matched"
             dataLength={items.length}
             next={handleNext}
-            hasMore={true}
+            hasMore={hasMore}
             loader={<ButtonPreloader />}
             height={800}>
             {items.map((el, index) => (
               <MatchedItemsContainer key={index} data={el} />
             ))}
           </InfiniteScroll>
+        ) : (
+          <InfiniteScroll
+            className="stat-page__infinite-scroll stat-page__infinite-scroll_type_deferred"
+            dataLength={items.length}
+            next={handleNext}
+            hasMore={hasMore}
+            loader={<ButtonPreloader />}
+            height={800}>
+            {items.map((el, index) => (
+              <DeferredItemsContainer key={index} data={el} />
+            ))}
+          </InfiniteScroll>
         )}
       </div>
       <div className="stat-page__info">
         <h2 className="stat-page__info-title">Статистика</h2>
-        <p className="stat-page__total-matched">{`Всего сопоставлено: 50`}</p>
+        <p className="stat-page__total-matched">{`Всего сопоставлено: ${statistics.matched}`}</p>
+        <p className="stat-page__total-matched">{`Всего не сопоставлено: ${statistics.not_matched}`}</p>
+        <p className="stat-page__total-matched">{`Всего отложено: ${statistics.deferred}`}</p>
+        <p className="stat-page__total-matched">{`Точность: ${statistics.accuracy}`}</p>
         <h3 className="stat-page__dealer-info-title">Статистика по выбранному дилеру</h3>
-        <p className="stat-page__dealer-matched">
-          {`Кол-во сопоставленных: `}
-          <span className="stat-page__matched-quant stat-page__matched-quant_type_green">10</span>
-        </p>
-        <p className="stat-page__dealer-matched">
-          {`Кол-во несопоставленных: `}
-          <span className="stat-page__matched-quant stat-page__matched-quant_type_red">20</span>
-        </p>
+        <p className="stat-page__dealer-matched">{`Кол-во сопоставленных: `}</p>
+        <p className="stat-page__dealer-matched">{`Кол-во несопоставленных: `}</p>
       </div>
     </section>
   );

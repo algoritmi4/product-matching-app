@@ -12,16 +12,26 @@ interface Pagination {
   pageSize: number;
 }
 
+interface isButtonsLoading {
+  dealers: boolean;
+  dealerPrices: boolean;
+  products: boolean;
+}
+
 function MainPage() {
   const navigate = useNavigate();
   const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
-  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
+  const [isButtonsLoading, setIsButtonsLoading] = useState<isButtonsLoading>({
+    dealers: false,
+    dealerPrices: false,
+    products: false
+  });
   const { table } = TableOptions({
     handleSCVLoading,
     data,
-    isButtonLoading,
+    isButtonsLoading,
     pagination,
     setPagination,
     isTableLoading,
@@ -70,9 +80,17 @@ function MainPage() {
         const formData = new FormData();
         formData.append('file', files[0]);
 
-        setIsButtonLoading(true);
+        const buttonId = eventTarget.name;
 
-        func(formData).finally(() => setIsButtonLoading(false));
+        setIsButtonsLoading((state) => ({ ...state, [buttonId]: true }));
+
+        func(formData).finally(() =>
+          setIsButtonsLoading({
+            dealers: false,
+            dealerPrices: false,
+            products: false
+          })
+        );
       };
     }
   }

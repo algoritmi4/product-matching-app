@@ -48,6 +48,36 @@ class Api {
     }).then((res) => this._getResponseData(res));
   }
 
+  getMatchedUserProducts(status: string, offset: number) {
+    return fetch(
+      `${this._url}/api/v1/matching/user/me/?limit=20&status=${status}&offset=${offset}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then((res) => this._getResponseData(res));
+  }
+
+  getMatchedDealerProducts(dealerId: string, status: string, offset: number) {
+    return fetch(
+      `${this._url}/api/v1/matching/dealer/${dealerId}?limit=20&status=${status}&offset=${offset}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then((res) => this._getResponseData(res));
+  }
+
+  getUserMatchedCount() {
+    return fetch(`${this._url}/api/v1/analytics/matched-count/user/me`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include'
+    }).then((res) => this._getResponseData(res));
+  }
+
   getMatchedProducts() {
     return fetch(`${this._url}/api/v1/matching/all`, {
       method: 'GET',

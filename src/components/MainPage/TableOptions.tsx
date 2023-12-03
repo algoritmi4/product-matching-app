@@ -1,10 +1,5 @@
-import { FormEvent, useMemo, useState } from 'react';
-import {
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-  MRT_RowSelectionState,
-  MRT_Updater
-} from 'material-react-table';
+import { FormEvent, useMemo } from 'react';
+import { useMaterialReactTable, type MRT_ColumnDef, MRT_Updater } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { IDealerProduct } from '../../utils/IDealerProduct.interface';
@@ -16,10 +11,16 @@ interface Pagination {
   pageSize: number;
 }
 
+interface isButtonsLoading {
+  dealers: boolean;
+  dealerPrices: boolean;
+  products: boolean;
+}
+
 function TableOptions({
   handleSCVLoading,
   data,
-  isButtonLoading,
+  isButtonsLoading,
   pagination,
   setPagination,
   isTableLoading,
@@ -27,14 +28,13 @@ function TableOptions({
 }: {
   handleSCVLoading: (e: FormEvent<HTMLInputElement>, func: (arg: FormData) => Promise<any>) => void;
   data: IDealerProduct[];
-  isButtonLoading: boolean;
+  isButtonsLoading: isButtonsLoading;
   pagination: Pagination;
   setPagination: (value: MRT_Updater<Pagination>) => void;
   isTableLoading: boolean;
   handleSignOut: () => void;
 }) {
   const navigate = useNavigate();
-  const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
   const columns: MRT_ColumnDef<IDealerProduct>[] = useMemo(
     () => [
@@ -100,7 +100,7 @@ function TableOptions({
   const table = useMaterialReactTable({
     columns,
     data,
-    state: { rowSelection, pagination, isLoading: isTableLoading },
+    state: { pagination, isLoading: isTableLoading },
     enableRowNumbers: true,
     enableRowPinning: true,
     enableColumnOrdering: true,
@@ -157,18 +157,19 @@ function TableOptions({
           Выйти
         </Button>
         <Button variant="contained" color="inherit">
-          {isButtonLoading ? (
+          {isButtonsLoading.dealers ? (
             <ButtonPreloader />
           ) : (
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="dealers-input"
+                id="dealers"
+                name="dealers"
                 accept=".csv"
                 onInput={(e) => handleSCVLoading(e, (formData) => api.addDealers(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="dealers-input">
+              <label className="main-page__input-label" htmlFor="dealers">
                 <div className="main-page__upload-image"></div>
                 <p className="main-page__button-text">Список дилеров</p>
               </label>
@@ -176,18 +177,19 @@ function TableOptions({
           )}
         </Button>
         <Button variant="contained" color="inherit">
-          {isButtonLoading ? (
+          {isButtonsLoading.dealerPrices ? (
             <ButtonPreloader />
           ) : (
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="dealerprices-input"
+                id="dealerPrices"
+                name="dealerPrices"
                 accept=".csv"
                 onInput={(e) => handleSCVLoading(e, (formData) => api.addDealerPrices(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="dealerprices-input">
+              <label className="main-page__input-label" htmlFor="dealerPrices">
                 <div className="main-page__upload-image"></div>
                 <p className="main-page__button-text">Товары дилеров</p>
               </label>
@@ -195,18 +197,19 @@ function TableOptions({
           )}
         </Button>
         <Button variant="contained" color="inherit">
-          {isButtonLoading ? (
+          {isButtonsLoading.products ? (
             <ButtonPreloader />
           ) : (
             <div className="main-page__input-container">
               <input
                 type="file"
-                id="products-input"
+                id="products"
+                name="products"
                 accept=".csv"
                 onInput={(e) => handleSCVLoading(e, (formData) => api.addProducts(formData))}
                 className="main-page__input"
               />
-              <label className="main-page__input-label" htmlFor="products-input">
+              <label className="main-page__input-label" htmlFor="products">
                 <div className="main-page__upload-image"></div>
                 <p className="main-page__button-text">Товары заказчика</p>
               </label>
