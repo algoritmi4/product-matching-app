@@ -115,10 +115,8 @@ class Api {
   }
 
   async _getResponseDataAuth(res: Response) {
-    console.log(res);
-
-    if (res.ok) {
-      return res.json();
+    if (res.status === 201) {
+      return await res.json();
     }
 
     return Promise.reject(await res.json());
@@ -129,10 +127,11 @@ class Api {
   }
 
   login(password: string, email: string) {
-    return fetch(`${this._url}/auth/jwt/login`, {
+    return fetch(`${this._url}/api/auth/jwt/login`, {
       method: 'POST',
       headers: HEADER_AUTH,
       credentials: 'include',
+      mode: 'no-cors',
       body: `grant_type=&username=${this._encode(email)}&password=${this._encode(
         password
       )}&scope=&client_id=&client_secret=`
@@ -140,7 +139,7 @@ class Api {
   }
 
   logout() {
-    return fetch(`${this._url}/auth/jwt/logout`, {
+    return fetch(`${this._url}/api/auth/jwt/logout`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include'
@@ -148,7 +147,7 @@ class Api {
   }
 
   register(username: string, email: string, password: string) {
-    return fetch(`${this._url}/auth/register`, {
+    return fetch(`${this._url}/api/auth/register`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -160,6 +159,14 @@ class Api {
         password
       })
     }).then((res) => this._getResponseDataAuth(res));
+  }
+
+  getCurrentUser() {
+    return fetch(`${this._url}/api/users/me`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include'
+    }).then((res) => this._getResponseData(res));
   }
 }
 

@@ -14,13 +14,14 @@ import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { MarkingContext } from '../../contexts/MarkingContext';
+import { IUser } from '../../utils/IUser.interface';
 
 export function LogInPopupForm({
   setLoggedIn,
   setUser
 }: {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
-  setUser: Dispatch<SetStateAction<string>>;
+  setUser: Dispatch<SetStateAction<IUser>>;
 }) {
   const {
     register,
@@ -34,12 +35,23 @@ export function LogInPopupForm({
 
   const { loggedIn, user } = useContext(MarkingContext);
 
+  function getUser() {
+    api
+      .getCurrentUser()
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
     api
       .login(password, email)
       .then(() => {
         setLoggedIn(true);
-        setUser(email);
+        getUser();
         navigate('/');
       })
       .catch((err) => {
@@ -138,7 +150,7 @@ export function LogInPopupForm({
           </form>
         ) : (
           <>
-            <div>{`Текущий пользователь: ${user}`}</div>
+            <div>{`Текущий пользователь: ${user?.email}`}</div>
             <div className="login-popup__btn-container">
               <div className="login-popup__submit-btn-background">
                 <button

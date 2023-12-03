@@ -1,6 +1,7 @@
 import { IDealer } from './IDealer.interface';
 import { IDealerProduct } from './IDealerProduct.interface';
 import { IProduct } from './IProduct.interface';
+import { IUser } from './IUser.interface';
 
 export const API_URL = 'http://localhost:8001';
 export const HEADER = {
@@ -51,6 +52,15 @@ export const INIRIAL_MARKETING_PRODUCTS: IProduct[] = [
     wb_article_td: ''
   }
 ];
+
+export const INIRIAL_USER: IUser = {
+  id: 0,
+  email: '',
+  is_active: true,
+  is_superuser: false,
+  is_verified: false,
+  username: ''
+};
 
 export const REQUIRED_ERROR_MESSAGE = 'Поле не может быть пустым.';
 
