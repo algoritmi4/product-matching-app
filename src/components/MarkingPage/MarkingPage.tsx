@@ -1,7 +1,7 @@
 import './MarkingPage.css';
 import '../../utils/common-button.css';
 import { useState, useEffect, SetStateAction, Dispatch, useLayoutEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
@@ -21,7 +21,7 @@ export default function MarkingPage({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [productId, setProductId] = useState('');
+  const [curProductId, setCurProductId] = useState('');
   const [currentDealerName, setCurrentDealerName] = useState('');
   const [mathProductList, setMathProductList] = useState<IProduct[]>(INIRIAL_MARKETING_PRODUCTS);
   const [chosenDealerProduct, setChosenDealerProduct] = useState<IDealerProduct>(
@@ -38,7 +38,7 @@ export default function MarkingPage({
   const { product_id } = useParams();
 
   useLayoutEffect(() => {
-    setProductId(product_id || '');
+    setCurProductId(product_id || '');
   }, []);
 
   const resetChosenItem = () => {
@@ -57,8 +57,8 @@ export default function MarkingPage({
     setIsLoading(true);
     reset();
 
-    if (productId) {
-      Promise.all([api.getMatchList(productId, '25'), api.getDealerPrice(productId)])
+    if (curProductId) {
+      Promise.all([api.getMatchList(curProductId, '25'), api.getDealerPrice(curProductId)])
         .then((result) => {
           const data: IProduct[] = result[0];
           setMathProductList(data);
@@ -88,7 +88,7 @@ export default function MarkingPage({
           setIsLoading(false);
         });
     }
-  }, [productId]);
+  }, [curProductId]);
 
   // get list of products for matching
   const getMatchList = (count: number, list: IProduct[]) => {
@@ -102,16 +102,17 @@ export default function MarkingPage({
   };
 
   const handleBtnNextClick = () => {
-    if (productId) {
+    if (curProductId) {
       reset();
-      setProductId((+productId + 1).toString());
+      setCurProductId((+curProductId + 1).toString());
+      console.log(curProductId);
     }
   };
 
   const handleBtnPrevClick = () => {
-    if (productId) {
+    if (curProductId) {
       reset();
-      setProductId((+productId - 1).toString());
+      setCurProductId((+curProductId - 1).toString());
     }
   };
 
@@ -219,18 +220,30 @@ export default function MarkingPage({
             </div>
           </div>
           <div className="marking__footer">
-            <button
+            {/*             <button
               type="button"
               className="marking__btn-footer common-button"
               onClick={handleBtnPrevClick}>
               Предыдущий
-            </button>
-            <button
+            </button> */}
+            <Link
+              to={`/marking/${+curProductId - 1}`}
+              className="marking__btn-footer common-button"
+              onClick={handleBtnPrevClick}>
+              Предыдущий
+            </Link>
+            {/*             <button
               type="button"
               className="marking__btn-footer common-button"
               onClick={handleBtnNextClick}>
               Следующий
-            </button>
+            </button> */}
+            <Link
+              to={`/marking/${+curProductId + 1}`}
+              className="marking__btn-footer common-button"
+              onClick={handleBtnNextClick}>
+              Следующий
+            </Link>
           </div>
         </>
       )}

@@ -149,8 +149,10 @@
 
 .marking__btn-footer {
   margin: 0 2px;
+  padding: 4px;
+  text-decoration: none;
   font-size: 20px;
-  line-height: 30px;
+  line-height: 44px;
   font-weight: 600;
   cursor: pointer;
   border-radius: 15px;
