@@ -7,7 +7,7 @@
   align-items: space-between;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -60%, rgba(56, 164, 58, 0.9) 100%);
+  background: transparent;
   border: 0px;
   border-radius: 12px;
 }
@@ -38,9 +38,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   border: none;
-  border-bottom: 1px solid gray;
-  border-radius: 4px;
-  border-radius: 4px;
+  border: 3px solid #7a7a7a;
+  border-radius: 10px;
 }
 
 .search-form__field:focus {
@@ -65,7 +64,7 @@
   opacity: 0.2;
 }
 
-.search-form____matchList-container {
+.search-form__matchList-container {
   width: 100%;
   padding-top: 10px;
   display: flex;
@@ -75,19 +74,19 @@
   overflow-x: hidden;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: transparent;
 }
 
-.search-form____matchList-container::-webkit-scrollbar {
+.search-form__matchList-container::-webkit-scrollbar {
   width: 8px;
 }
 
-.search-form____matchList-container::-webkit-scrollbar-thumb {
-  background-color: rgba(56, 164, 58, 0.9);
+.search-form__matchList-container::-webkit-scrollbar-thumb {
+  background-color: #7a7a7a;
   border-radius: 20px;
 }
 
-.search-form____matchList-container::-webkit-scrollbar-track {
+.search-form__matchList-container::-webkit-scrollbar-track {
   background-color: #e5e5e5;
 }
 

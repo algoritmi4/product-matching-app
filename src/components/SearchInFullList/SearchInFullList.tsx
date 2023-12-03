@@ -20,8 +20,10 @@ export function SearchInFullList({
 
   const onSubmit = (data: FieldValues) => {
     const { pattern } = data;
+    console.log(fullList);
+
     setResultOfSearchList(
-      fullList.filter((item) => item.name.toLowerCase().indexOf(pattern.toLowerCase()) >= 0)
+      fullList.filter((item) => item.name?.toLowerCase().indexOf(pattern.toLowerCase()) >= 0)
     );
   };
 
@@ -44,7 +46,7 @@ export function SearchInFullList({
             }`}></button>
         </div>
       </form>
-      <div className="search-form____matchList-container">
+      <div className="search-form__matchList-container">
         {getMatchList.length > 0 &&
           (resultOfSearchList.length > 0 ? (
             getMatchList(999, resultOfSearchList)
