@@ -2,13 +2,11 @@ import './SelectedProduct.css';
 import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import { Link } from 'react-router-dom';
 import { IProduct } from '../../utils/Interfaces/IProduct.interface';
-import { SetStateAction, Dispatch } from 'react';
 
 export function SelectedProduct({
   dealerProduct,
   chosenItem,
   mappedProduct,
-  setIsMapped,
   isMapped,
   isDenyed,
   isDelayed
@@ -16,7 +14,6 @@ export function SelectedProduct({
   dealerProduct: IDealerProduct;
   chosenItem: IProduct;
   mappedProduct: IProduct;
-  setIsMapped: Dispatch<SetStateAction<boolean>>;
   isMapped: boolean;
   isDenyed: boolean;
   isDelayed: boolean;
@@ -24,7 +21,7 @@ export function SelectedProduct({
   return (
     <div className="selected-item">
       <div className="selected-item__cell-container">
-        <p className="selected-item__source">Дилер</p>
+        <p className="selected-item__source">{dealerProduct.dealer?.name}</p>
         <div className="selected-item__container">
           <p className="selected-item__product-atribute">
             Наименование:{' '}

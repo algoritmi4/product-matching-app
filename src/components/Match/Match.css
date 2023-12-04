@@ -12,8 +12,7 @@
 }
 
 .match_chosen {
-  color: white;
-  background: linear-gradient(90deg, rgba(0, 183, 234, 0.9) -30%, rgba(56, 164, 58, 0.9) 100%);
+  background-color: #7a7a7a;
 }
 
 .match__product-name {
@@ -34,6 +33,10 @@
   -khtml-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.match__product-name_chosen {
+  color: #ebe2dd;
 }
 
 @media screen and (max-width: 900px) {
