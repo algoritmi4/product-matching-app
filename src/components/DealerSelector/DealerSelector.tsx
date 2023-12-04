@@ -1,11 +1,27 @@
 import './DealerSelector.css';
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import { MarkingContext } from '../../contexts/MarkingContext';
 
-function DealerSelector({ setSelectedDealer }: { setSelectedDealer: any }) {
+function DealerSelector({
+  setSelectedDealer,
+  setOffset,
+  setIsPreloader,
+  handleDealerStatistics,
+  setHasMore
+}: {
+  setSelectedDealer: (arg: string) => void;
+  setOffset: (arg: number) => void;
+  setIsPreloader: (arg: boolean) => void;
+  handleDealerStatistics: (arg: string) => void;
+  setHasMore: (arg: boolean) => void;
+}) {
   const context = useContext(MarkingContext);
 
-  function onChange(e: any) {
+  function onChange(e: ChangeEvent<HTMLSelectElement>) {
+    setOffset(0);
+    setHasMore(true);
+    setIsPreloader(true);
+    handleDealerStatistics(e.target.value);
     setSelectedDealer(e.target.value);
   }
 

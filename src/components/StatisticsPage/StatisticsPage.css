@@ -33,6 +33,7 @@
   flex-direction: column;
   align-self: flex-start;
   margin: 0 0 0 30px;
+  height: 800px;
 }
 
 .stat-page__infinite-scroll {
@@ -51,63 +52,9 @@
   align-content: flex-start;
 }
 
-.stat-page__info {
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  padding: 33px 20px 33px 35px;
-  margin: 0 30px 0 0;
-  box-sizing: border-box;
-  background-color: #ebe2dd;
-}
-
-.stat-page__info-title {
-  font-size: 28px;
-  font-weight: 600;
-  margin: 0;
-  color: #364037;
-}
-
-.stat-page__total-matched {
-  margin: 15px 0 0;
-  font-size: 20px;
-  font-weight: 400;
-  color: #364037;
-}
-
-.stat-page__dealer-info-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 50px 0 0;
-  color: #364037;
-}
-
-.stat-page__dealer-matched {
-  font-size: 18px;
-  font-weight: 400;
-  margin: 15px 0 0;
-  color: #364037;
-}
-
-.stat-page__matched-quant {
-  font-size: 25px;
-  font-weight: 500;
-  margin: 0;
-  color: #364037;
-}
-
-.stat-page__matched-quant_type_green {
-  color: green;
-}
-
-.stat-page__matched-quant_type_red {
-  color: red;
-}
-
 .stat-page__err-message {
-  font-size: 30px;
-  font-weight: 500;
+  color: black;
+  font-size: 25px;
+  font-weight: 600;
   align-self: center;
-  color: #364037;
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import './SearchInFullList.css';
-import { IProduct } from '../../utils/IProduct.interface';
+import { IProduct } from '../../utils/Interfaces/IProduct.interface';
 
 export function SearchInFullList({
   fullList,

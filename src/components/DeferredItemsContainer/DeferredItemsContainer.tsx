@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import './DeferredItemsContainer.css';
 
 interface Product {
@@ -105,8 +106,13 @@ const dealers: Dealer[] = [
 ];
 
 function DeferredItemsContainer({ data }: { data: Items }) {
+  const navigate = useNavigate();
+
   return (
     <div className="def-items-cont">
+      <div
+        onClick={() => navigate(`/marking/${data.dealerprice.id}`)}
+        className="def-items-cont__marking-link"></div>
       <h2 className="def-items-cont__box-title">Товар дилера</h2>
       <h3 className="def-items-cont__product-name">{`Название: ${data.dealerprice.product_name}`}</h3>
       <p className="def-items-cont__product-price">{`Цена: ${data.dealerprice.price}`}</p>

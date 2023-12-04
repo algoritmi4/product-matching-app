@@ -1,15 +1,15 @@
 import './MarkingPage.css';
-import '../../utils/common-button.css';
+import '../../utils/css-common/common-button.css';
 import { useState, useEffect, SetStateAction, Dispatch, useLayoutEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
-import { IDealerProduct } from '../../utils/IDealerProduct.interface';
+import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import { INIRIAL_MARKETING_PRODUCTS, INITIAL_MARKETING_DEALERPRICE } from '../../utils/constants';
-import { IProduct } from '../../utils/IProduct.interface';
-import api from '../../utils/api';
+import { IProduct } from '../../utils/Interfaces/IProduct.interface';
+import api from '../../utils/Api/api';
 import { Preloader } from '../Preloader/Preloader';
 
 export default function MarkingPage({

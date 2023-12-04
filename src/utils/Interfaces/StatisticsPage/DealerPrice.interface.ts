@@ -1,9 +1,8 @@
-export interface Data {
+export interface DealerPrice {
   id: number;
-  product_key: string;
+  product_key: number;
   price: number;
   product_url: string;
   product_name: string;
   date: string;
-  dealer_id: number;
 }

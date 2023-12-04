@@ -1,35 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import './MatchedItemsContainer.css';
+import { IDealer } from '../../utils/Interfaces/IDealer.interface';
+import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
 
-interface Product {
-  id: number;
-  name: string;
-  article: string;
-  recommended_price: number;
-  cost: number;
-}
-
-interface DealerPrice {
-  id: number;
-  product_key: number;
-  price: number;
-  product_url: string;
-  product_name: string;
-  date: string;
-}
-
-interface Items {
-  product: Product;
-  dealerprice: DealerPrice;
-  created_at: string;
-  status: string;
-}
-
-interface Dealer {
-  id: number;
-  name: string;
-}
-
-const dealers: Dealer[] = [
+const dealers: IDealer[] = [
   {
     id: 1,
     name: 'Moi_vibor_WB'
@@ -105,8 +79,12 @@ const dealers: Dealer[] = [
 ];
 
 function MatchedItemsContainer({ data }: { data: Items }) {
+  const navigate = useNavigate();
   return (
     <div className="match-items-cont__container">
+      <div
+        onClick={() => navigate(`/marking/${data.dealerprice.id}`)}
+        className="match-items-cont__matching-link"></div>
       <div className="match-items-cont__box">
         <h2 className="match-items-cont__box-title">Товар дилера</h2>
         <h3 className="match-items-cont__product-name">{`Название: ${data.dealerprice.product_name}`}</h3>

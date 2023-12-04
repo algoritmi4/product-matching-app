@@ -1,9 +1,9 @@
 import './MainPage.css';
 import { MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
-import api from '../../utils/api';
+import api from '../../utils/Api/api';
 import { FormEvent, useEffect, useState } from 'react';
-import { IDealerProduct } from '../../utils/IDealerProduct.interface';
+import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import useDidMountEffect from '../../customHooks/useDidMountEffect';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,7 +40,6 @@ function MainPage() {
 
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
-  // useDidMountEffect custom hook is used to prevent React from rendering twice, which would cause an extra request to the server.
   useDidMountEffect(() => {
     handleDataLoad(30, 0, 0);
   }, []);
@@ -67,7 +66,10 @@ function MainPage() {
       .finally(() => setIsTableLoading(false));
   }
 
-  function handleSCVLoading(e: FormEvent<HTMLInputElement>, func: (arg: FormData) => Promise<any>) {
+  function handleSCVLoading(
+    e: FormEvent<HTMLInputElement>,
+    func: (arg: FormData) => Promise<void>
+  ) {
     const eventTarget = e.target as HTMLInputElement;
     const files = eventTarget.files;
 

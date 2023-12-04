@@ -1,7 +1,21 @@
+import { ChangeEvent } from 'react';
 import './ProductTypeSelector.css';
 
-function ProductTypeSelector({ setProductType }: { setProductType: any }) {
-  function onChange(e: any) {
+function ProductTypeSelector({
+  setProductType,
+  setOffset,
+  setIsPreloader,
+  setHasMore
+}: {
+  setIsPreloader: any;
+  setProductType: any;
+  setOffset: any;
+  setHasMore: any;
+}) {
+  function onChange(e: ChangeEvent<HTMLSelectElement>) {
+    setOffset(0);
+    setHasMore(true);
+    setIsPreloader(true);
     setProductType(e.target.value);
   }
 
@@ -10,7 +24,7 @@ function ProductTypeSelector({ setProductType }: { setProductType: any }) {
       <option value="matched" className="product-type-selector__option">
         Сопоставленный
       </option>
-      <option value="not matched" className="product-type-selector__option">
+      <option value="deferred" className="product-type-selector__option">
         Отложенный
       </option>
     </select>

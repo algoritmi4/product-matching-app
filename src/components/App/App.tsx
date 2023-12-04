@@ -5,14 +5,14 @@ import MainPage from '../MainPage/MainPage';
 import MarkingPage from '../MarkingPage/MarkingPage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
 import { MarkingContext } from '../../contexts/MarkingContext';
-import api from '../../utils/api';
+import api from '../../utils/Api/api';
 import { Preloader } from '../Preloader/Preloader';
 import { INIRIAL_USER, INITIAL_MARKETING_DEALER } from '../../utils/constants';
-import { IDealer } from '../../utils/IDealer.interface';
+import { IDealer } from '../../utils/Interfaces/IDealer.interface';
 import { LogInPopupForm } from '../LogInPopupForm/LogInPopupForm';
 import { ProtectedRoute } from '../ProtectedRout/ProtectedRout';
 import { RegisterForm } from '../RegisterForm/RegistreForm';
-import { IUser } from '../../utils/IUser.interface';
+import { IUser } from '../../utils/Interfaces/IUser.interface';
 
 function App() {
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);

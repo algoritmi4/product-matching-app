@@ -12,7 +12,7 @@ import {
   REQUIRED_ERROR_MESSAGE,
   WRONG_EMAIL_MESSAGE
 } from '../../utils/constants';
-import api from '../../utils/api';
+import auth from '../../utils/Api/auth';
 import { useNavigate } from 'react-router-dom';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -28,7 +28,7 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
   const navigate = useNavigate();
 
   function registr(username: string, email: string, password: string) {
-    api
+    auth
       .register(username, email, password)
       .then(() => {
         setLoggedIn(false);

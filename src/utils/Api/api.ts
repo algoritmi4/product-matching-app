@@ -1,4 +1,4 @@
-import { API_URL, HEADER, HEADER_AUTH } from './constants';
+import { API_URL, HEADER } from '../constants';
 
 class Api {
   private _headers: HeadersInit;
@@ -70,12 +70,55 @@ class Api {
     ).then((res) => this._getResponseData(res));
   }
 
-  getUserMatchedCount() {
-    return fetch(`${this._url}/api/v1/analytics/matched-count/user/me`, {
-      method: 'GET',
-      headers: this._headers,
-      credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+  getUserMatchedCount(endDate: string, startDate?: string) {
+    return fetch(
+      `${this._url}/api/v1/analytics/matched-count/user/me?start_date=${startDate}&end_date=${endDate}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then((res) => this._getResponseData(res));
+  }
+
+  getUserMatchedCountById({
+    id,
+    endDate,
+    startDate
+  }: {
+    id: string;
+    endDate: string;
+    startDate: string;
+  }) {
+    return fetch(
+      `${this._url}/api/v1/analytics/matched-count/user/${id}?${
+        startDate ? `start_date=${startDate}&` : ''
+      }end_date=${endDate}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then((res) => this._getResponseData(res));
+  }
+
+  getDealerMatchedCount({
+    dealerId,
+    endDate,
+    startDate
+  }: {
+    dealerId: string;
+    endDate: string;
+    startDate: string;
+  }) {
+    return fetch(
+      `${this._url}/api/v1/analytics/matched-count/dealer/${dealerId}?start_date=${startDate}&end_date=${endDate}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then((res) => this._getResponseData(res));
   }
 
   getMatchedProducts() {
@@ -142,53 +185,6 @@ class Api {
       }),
       credentials: 'include'
     }).then((res) => this._getResponseData(res));
-  }
-
-  async _getResponseDataAuth(res: Response) {
-    if (res.status === 201) {
-      return await res.json();
-    }
-
-    return Promise.reject(await res.json());
-  }
-
-  _encode(parm: string): string {
-    return encodeURIComponent(parm);
-  }
-
-  login(password: string, email: string) {
-    return fetch(`${this._url}/api/auth/jwt/login`, {
-      method: 'POST',
-      headers: HEADER_AUTH,
-      credentials: 'include',
-      mode: 'no-cors',
-      body: `grant_type=&username=${this._encode(email)}&password=${this._encode(
-        password
-      )}&scope=&client_id=&client_secret=`
-    }).then(() => Promise.resolve());
-  }
-
-  logout() {
-    return fetch(`${this._url}/api/auth/jwt/logout`, {
-      method: 'POST',
-      headers: this._headers,
-      credentials: 'include'
-    });
-  }
-
-  register(username: string, email: string, password: string) {
-    return fetch(`${this._url}/api/auth/register`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({
-        is_active: true,
-        is_superuser: false,
-        is_verified: false,
-        username,
-        email,
-        password
-      })
-    }).then((res) => this._getResponseDataAuth(res));
   }
 
   getCurrentUser() {

@@ -1,6 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './Match.css';
-import { IProduct } from '../../utils/IProduct.interface';
+import { IProduct } from '../../utils/Interfaces/IProduct.interface';
 
 export function Match({
   product,

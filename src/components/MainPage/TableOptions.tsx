@@ -2,9 +2,9 @@ import { FormEvent, useMemo } from 'react';
 import { useMaterialReactTable, type MRT_ColumnDef, MRT_Updater } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
-import { IDealerProduct } from '../../utils/IDealerProduct.interface';
+import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
-import api from '../../utils/api';
+import api from '../../utils/Api/api';
 
 interface Pagination {
   pageIndex: number;
@@ -26,7 +26,10 @@ function TableOptions({
   isTableLoading,
   handleSignOut
 }: {
-  handleSCVLoading: (e: FormEvent<HTMLInputElement>, func: (arg: FormData) => Promise<any>) => void;
+  handleSCVLoading: (
+    e: FormEvent<HTMLInputElement>,
+    func: (arg: FormData) => Promise<void>
+  ) => void;
   data: IDealerProduct[];
   isButtonsLoading: isButtonsLoading;
   pagination: Pagination;

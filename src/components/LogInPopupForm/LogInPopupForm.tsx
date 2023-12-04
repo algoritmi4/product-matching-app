@@ -11,10 +11,11 @@ import {
   WRONG_EMAIL_MESSAGE
 } from '../../utils/constants';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
-import api from '../../utils/api';
+import api from '../../utils/Api/api';
 import { useNavigate } from 'react-router-dom';
 import { MarkingContext } from '../../contexts/MarkingContext';
-import { IUser } from '../../utils/IUser.interface';
+import { IUser } from '../../utils/Interfaces/IUser.interface';
+import auth from '../../utils/Api/auth';
 
 export function LogInPopupForm({
   setLoggedIn,
@@ -47,7 +48,7 @@ export function LogInPopupForm({
   }
 
   function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
-    api
+    auth
       .login(password, email)
       .then(() => {
         setLoggedIn(true);
@@ -65,7 +66,7 @@ export function LogInPopupForm({
   };
 
   const handleLogoutBtnClick = () => {
-    api
+    auth
       .logout()
       .then(() => {
         setLoggedIn(false);

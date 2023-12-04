@@ -1,7 +1,7 @@
 import './SelectedProduct.css';
-import { IDealerProduct } from '../../utils/IDealerProduct.interface';
+import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import { Link } from 'react-router-dom';
-import { IProduct } from '../../utils/IProduct.interface';
+import { IProduct } from '../../utils/Interfaces/IProduct.interface';
 import { SetStateAction, Dispatch } from 'react';
 
 export function SelectedProduct({

@@ -3,6 +3,20 @@
   align-items: center;
   justify-content: space-between;
   margin: 15px 0 0;
+  position: relative;
+  color: #364037;
+}
+
+.match-items-cont__matching-link {
+  position: absolute;
+  background-image: url('../../images/statisticsPage/link-icon.svg');
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
 
 .match-items-cont__container:first-of-type {
@@ -75,7 +89,7 @@
 }
 
 .match-items-cont__arrow-image {
-  background-image: url('../../images/arrows-icon\(statistics-page\).svg');
+  background-image: url('../../images/statisticsPage/arrows-icon.svg');
   background-repeat: no-repeat;
   background-size: 40px 40px;
   background-position: center;

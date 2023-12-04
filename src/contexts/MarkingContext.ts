@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { IDealer } from '../utils/IDealer.interface';
+import { IDealer } from '../utils/Interfaces/IDealer.interface';
 import { INIRIAL_USER, INITIAL_MARKETING_DEALER } from '../utils/constants';
-import { IUser } from '../utils/IUser.interface';
+import { IUser } from '../utils/Interfaces/IUser.interface';
 interface IMarkingContext {
   dealerList: IDealer[];
   loggedIn: boolean;
