@@ -42,7 +42,7 @@ function StatisticsPage() {
     handleUserStatistics();
   }, []);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (selectedDealer === 'all') {
       getMatchedUserProducts();
     } else {
