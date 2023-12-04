@@ -4,7 +4,7 @@ import MatchedItemsContainer from '../MatchedItemsContainer/MatchedItemsContaine
 import { useNavigate } from 'react-router-dom';
 import ProductTypeSelector from '../ProductTypeSelector/ProductTypeSelector';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
 import useDidMountEffect from '../../customHooks/useDidMountEffect';
@@ -38,7 +38,7 @@ function StatisticsPage() {
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     handleUserStatistics();
   }, []);
 
