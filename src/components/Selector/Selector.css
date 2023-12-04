@@ -1,5 +1,4 @@
 .select {
-  /* width: calc(100% - 3px); */
   margin-left: 3px;
   margin-top: 10px;
   font-size: 20px;
@@ -20,6 +19,13 @@
 .select__option {
   background: #ebe2dd;
   color: #7a7a7a;
+}
+
+@media screen and (max-width: 1100px) {
+  .select {
+    font-size: 15px;
+    line-height: 20px;
+  }
 }
 
 @media screen and (max-width: 650px) {

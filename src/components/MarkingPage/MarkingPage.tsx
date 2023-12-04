@@ -1,7 +1,7 @@
 import './MarkingPage.css';
 import '../../utils/css-common/common-button.css';
 import { useState, useEffect, SetStateAction, Dispatch, useLayoutEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Selector } from '../Selector/Selector';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
@@ -11,6 +11,7 @@ import { INIRIAL_MARKETING_PRODUCTS, INITIAL_MARKETING_DEALERPRICE } from '../..
 import { IProduct } from '../../utils/Interfaces/IProduct.interface';
 import api from '../../utils/Api/api';
 import { Preloader } from '../Preloader/Preloader';
+import { MarkingFooter } from '../MarkingFooter/MarkingFooter';
 
 export default function MarkingPage({
   matchCount,
@@ -101,21 +102,6 @@ export default function MarkingPage({
     return resultList;
   };
 
-  const handleBtnNextClick = () => {
-    if (curProductId) {
-      reset();
-      setCurProductId((+curProductId + 1).toString());
-      console.log(curProductId);
-    }
-  };
-
-  const handleBtnPrevClick = () => {
-    if (curProductId) {
-      reset();
-      setCurProductId((+curProductId - 1).toString());
-    }
-  };
-
   const handleBtnToMainClick = () => {
     navigate('/');
   };
@@ -124,7 +110,7 @@ export default function MarkingPage({
     resetChosenItem();
     api
       .postMatchingNotAccepted(chosenDealerProduct.id.toString())
-      .then((data) => {
+      .then(() => {
         reset();
         setIsDenyed(true);
       })
@@ -136,7 +122,7 @@ export default function MarkingPage({
   const handleBtnAdmit = () => {
     api
       .postMatchingAccepted(chosenDealerProduct.id.toString(), chosenItem.id.toString())
-      .then((data) => {
+      .then(() => {
         reset();
         setMappedProduct(chosenItem);
         setIsMapped(true);
@@ -149,7 +135,7 @@ export default function MarkingPage({
   const handleBtnDelayClick = () => {
     api
       .postMatchingAcceptedLater(chosenDealerProduct.id.toString())
-      .then((data) => {
+      .then(() => {
         reset();
         setIsDelayed(true);
       })
@@ -219,32 +205,11 @@ export default function MarkingPage({
               </div>
             </div>
           </div>
-          <div className="marking__footer">
-            {/*             <button
-              type="button"
-              className="marking__btn-footer common-button"
-              onClick={handleBtnPrevClick}>
-              Предыдущий
-            </button> */}
-            <Link
-              to={`/marking/${+curProductId - 1}`}
-              className="marking__btn-footer common-button"
-              onClick={handleBtnPrevClick}>
-              Предыдущий
-            </Link>
-            {/*             <button
-              type="button"
-              className="marking__btn-footer common-button"
-              onClick={handleBtnNextClick}>
-              Следующий
-            </button> */}
-            <Link
-              to={`/marking/${+curProductId + 1}`}
-              className="marking__btn-footer common-button"
-              onClick={handleBtnNextClick}>
-              Следующий
-            </Link>
-          </div>
+          <MarkingFooter
+            curProductId={curProductId}
+            setCurProductId={setCurProductId}
+            reset={reset}
+          />
         </>
       )}
     </>
