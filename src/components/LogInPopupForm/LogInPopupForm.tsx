@@ -44,6 +44,8 @@ export function LogInPopupForm({
       .getCurrentUser()
       .then((data) => {
         setUser(data);
+        setLoggedIn(true);
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -58,9 +60,7 @@ export function LogInPopupForm({
     auth
       .login(password, email)
       .then(() => {
-        setLoggedIn(true);
         getUser();
-        navigate('/');
       })
       .catch((err) => {
         setErrorText('Ошибка авторизации');
