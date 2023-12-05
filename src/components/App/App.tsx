@@ -70,9 +70,18 @@ function App() {
 
               <Route
                 path="/auth"
-                element={<LogInPopupForm setLoggedIn={setLoggedIn} setUser={setUser} />}
+                element={
+                  <LogInPopupForm
+                    setLoggedIn={setLoggedIn}
+                    setUser={setUser}
+                    setIsLoading={setIsLoading}
+                  />
+                }
               />
-              <Route path="/register" element={<RegisterForm setLoggedIn={setLoggedIn} />} />
+              <Route
+                path="/register"
+                element={<RegisterForm setLoggedIn={setLoggedIn} setIsLoading={setIsLoading} />}
+              />
 
               <Route path="/*" element={<NotFoundPage />} />
             </Routes>

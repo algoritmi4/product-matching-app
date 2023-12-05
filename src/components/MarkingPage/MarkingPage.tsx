@@ -97,7 +97,8 @@ export default function MarkingPage({
   };
 
   const handleBtnDenyClick = () => {
-    resetChosenItem();
+    setIsLoading(true);
+
     api
       .postMatchingNotAccepted(chosenDealerProduct.id.toString())
       .then(() => {
@@ -106,10 +107,14 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleBtnAdmit = () => {
+    setIsLoading(true);
     api
       .postMatchingAccepted(chosenDealerProduct.id.toString(), chosenItem.id.toString())
       .then(() => {
@@ -119,10 +124,15 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleBtnDelayClick = () => {
+    setIsLoading(true);
+
     api
       .postMatchingAcceptedLater(chosenDealerProduct.id.toString())
       .then(() => {
@@ -131,6 +141,9 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

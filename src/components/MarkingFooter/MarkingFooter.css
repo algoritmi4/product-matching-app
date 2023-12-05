@@ -1,6 +1,5 @@
 .marking__footer {
   width: 80%;
-  height: 60px;
   display: flex;
   justify-content: space-between;
   background-color: transparent;
@@ -23,6 +22,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
+}
+
+@media screen and (max-width: 1550px) {
+  .marking__btn-footer {
+    font-size: 15px;
+    line-height: 20px;
+  }
 }
 
 @media screen and (max-width: 650px) {

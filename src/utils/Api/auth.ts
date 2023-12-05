@@ -52,7 +52,7 @@ class Auth {
         email,
         password
       })
-    }).then((res) => this._getResponseDataAuth(res));
+    }).then(this._getResponseDataAuth);
   }
 }
 

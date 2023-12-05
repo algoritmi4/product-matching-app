@@ -16,7 +16,13 @@ import auth from '../../utils/Api/auth';
 import { useNavigate } from 'react-router-dom';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAction<boolean>> }) {
+export function RegisterForm({
+  setLoggedIn,
+  setIsLoading
+}: {
+  setLoggedIn: Dispatch<SetStateAction<boolean>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+}) {
   const {
     register,
     handleSubmit,
@@ -28,6 +34,7 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
   const navigate = useNavigate();
 
   function registr(username: string, email: string, password: string) {
+    setIsLoading(true);
     auth
       .register(username, email, password)
       .then(() => {
@@ -38,6 +45,9 @@ export function RegisterForm({ setLoggedIn }: { setLoggedIn: Dispatch<SetStateAc
         setErrorText(`Ошибка при регистрации:
         ${err.detail}`);
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
