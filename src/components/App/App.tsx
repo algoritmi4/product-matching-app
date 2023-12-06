@@ -13,6 +13,7 @@ import { LogInPopupForm } from '../LogInPopupForm/LogInPopupForm';
 import { ProtectedRoute } from '../ProtectedRout/ProtectedRout';
 import { RegisterForm } from '../RegisterForm/RegistreForm';
 import { IUser } from '../../utils/Interfaces/IUser.interface';
+import { NotFoundPage } from '../NotFoundPage/NotFoundPage';
 
 function App() {
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
@@ -69,9 +70,20 @@ function App() {
 
               <Route
                 path="/auth"
-                element={<LogInPopupForm setLoggedIn={setLoggedIn} setUser={setUser} />}
+                element={
+                  <LogInPopupForm
+                    setLoggedIn={setLoggedIn}
+                    setUser={setUser}
+                    setIsLoading={setIsLoading}
+                  />
+                }
               />
-              <Route path="/register" element={<RegisterForm setLoggedIn={setLoggedIn} />} />
+              <Route
+                path="/register"
+                element={<RegisterForm setLoggedIn={setLoggedIn} setIsLoading={setIsLoading} />}
+              />
+
+              <Route path="/*" element={<NotFoundPage />} />
             </Routes>
           )}
         </MarkingContext.Provider>

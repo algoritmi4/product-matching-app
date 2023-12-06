@@ -21,7 +21,7 @@ class Api {
       method: 'POST',
       body: formData,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   addDealerPrices(formData: BodyInit) {
@@ -29,7 +29,7 @@ class Api {
       method: 'POST',
       body: formData,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   addDealers(formData: BodyInit) {
@@ -37,7 +37,7 @@ class Api {
       method: 'POST',
       body: formData,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   getDealerProducts(pageSize: number, offset: number) {
@@ -45,7 +45,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   getMatchedUserProducts(status: string, offset: number) {
@@ -56,7 +56,7 @@ class Api {
         headers: this._headers,
         credentials: 'include'
       }
-    ).then((res) => this._getResponseData(res));
+    ).then(this._getResponseData);
   }
 
   getMatchedDealerProducts(dealerId: string, status: string, offset: number) {
@@ -67,7 +67,7 @@ class Api {
         headers: this._headers,
         credentials: 'include'
       }
-    ).then((res) => this._getResponseData(res));
+    ).then(this._getResponseData);
   }
 
   getUserMatchedCount(endDate: string, startDate?: string) {
@@ -78,7 +78,7 @@ class Api {
         headers: this._headers,
         credentials: 'include'
       }
-    ).then((res) => this._getResponseData(res));
+    ).then(this._getResponseData);
   }
 
   getUserMatchedCountById({
@@ -99,7 +99,7 @@ class Api {
         headers: this._headers,
         credentials: 'include'
       }
-    ).then((res) => this._getResponseData(res));
+    ).then(this._getResponseData);
   }
 
   getDealerMatchedCount({
@@ -118,7 +118,7 @@ class Api {
         headers: this._headers,
         credentials: 'include'
       }
-    ).then((res) => this._getResponseData(res));
+    ).then(this._getResponseData);
   }
 
   getMatchedProducts() {
@@ -126,7 +126,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   getDealerPrice(id: string) {
@@ -134,7 +134,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   getDealers() {
@@ -142,15 +142,15 @@ class Api {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
-  getMatchList(id: string, count: string) {
-    return fetch(`${this._url}/api/v1/matching/{dealerprice_id}/?count=${count}&product_id=${id}`, {
+  getMatchList(id: string) {
+    return fetch(`${this._url}/api/v1/matching/${id}/?count=25`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   postMatchingAccepted(id: string, productId: string) {
@@ -162,7 +162,7 @@ class Api {
         product_id: productId
       }),
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   postMatchingNotAccepted(id: string) {
@@ -173,7 +173,7 @@ class Api {
         key: id
       }),
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   postMatchingAcceptedLater(id: string) {
@@ -184,7 +184,7 @@ class Api {
         key: id
       }),
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 
   getCurrentUser() {
@@ -192,7 +192,7 @@ class Api {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
-    }).then((res) => this._getResponseData(res));
+    }).then(this._getResponseData);
   }
 }
 

@@ -33,10 +33,8 @@ export function SearchInFullList({
         <div className="search-form__field-container">
           <input
             type="text"
-            {...register('pattern', {
-              required: true
-            })}
-            placeholder="Поиск по вариантам"
+            {...register('pattern')}
+            placeholder="Поиск по предложенным вариантам"
             className="search-form__field"
           />
           <button

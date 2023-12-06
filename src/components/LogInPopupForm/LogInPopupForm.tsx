@@ -19,10 +19,12 @@ import auth from '../../utils/Api/auth';
 
 export function LogInPopupForm({
   setLoggedIn,
-  setUser
+  setUser,
+  setIsLoading
 }: {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
   setUser: Dispatch<SetStateAction<IUser>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }) {
   const {
     register,
@@ -37,27 +39,35 @@ export function LogInPopupForm({
   const { loggedIn, user } = useContext(MarkingContext);
 
   function getUser() {
+    setIsLoading(true);
     api
       .getCurrentUser()
       .then((data) => {
         setUser(data);
+        setLoggedIn(true);
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
+    setIsLoading(true);
     auth
       .login(password, email)
       .then(() => {
-        setLoggedIn(true);
         getUser();
-        navigate('/');
       })
       .catch((err) => {
         setErrorText('Ошибка авторизации');
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -66,6 +76,7 @@ export function LogInPopupForm({
   };
 
   const handleLogoutBtnClick = () => {
+    setIsLoading(true);
     auth
       .logout()
       .then(() => {
@@ -73,6 +84,9 @@ export function LogInPopupForm({
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

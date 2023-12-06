@@ -7,7 +7,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
-import useDidMountEffect from '../../customHooks/useDidMountEffect';
 import api from '../../utils/Api/api';
 import { Preloader } from '../Preloader/Preloader';
 import StatisticsInfo from '../StatisticsInfo/StatisticsInfo';
@@ -42,7 +41,7 @@ function StatisticsPage() {
     handleUserStatistics();
   }, []);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (selectedDealer === 'all') {
       getMatchedUserProducts();
     } else {
@@ -51,6 +50,7 @@ function StatisticsPage() {
   }, [selectedDealer, productType]);
 
   function getMatchedUserProducts() {
+    setIsPreloader(true);
     api
       .getMatchedUserProducts(productType, offset)
       .then((res) => {
@@ -67,6 +67,7 @@ function StatisticsPage() {
   }
 
   function getMatchedDealerProducts() {
+    setIsPreloader(true);
     api
       .getMatchedDealerProducts(selectedDealer, productType, offset)
       .then((res) => {
@@ -91,6 +92,7 @@ function StatisticsPage() {
   }
 
   function handleUserStatistics() {
+    setIsPreloader(true);
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     const endDate = new Date();
@@ -99,10 +101,14 @@ function StatisticsPage() {
       .then((res) => {
         setStatistics(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsPreloader(false);
+      });
   }
 
   function handleSubmitInfoForm(inputValues: InputValues) {
+    setIsPreloader(true);
     const startDate = new Date(inputValues.startDate).toISOString().slice(0, -1);
     const endDate = new Date(inputValues.endDate).toISOString().slice(0, -1);
     api
@@ -110,11 +116,15 @@ function StatisticsPage() {
       .then((res) => {
         setStatistics(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsPreloader(false);
+      });
   }
 
   function handleDealerStatistics(dealerId: string) {
     if (dealerId !== 'all') {
+      setIsPreloader(true);
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - 30);
       const endDate = new Date();
@@ -127,7 +137,10 @@ function StatisticsPage() {
         .then((res) => {
           setDealerStatistics(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsPreloader(false);
+        });
     }
   }
 

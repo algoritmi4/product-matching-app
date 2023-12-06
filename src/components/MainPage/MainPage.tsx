@@ -40,7 +40,7 @@ function MainPage() {
 
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     handleDataLoad(30, 0, 0);
   }, []);
 

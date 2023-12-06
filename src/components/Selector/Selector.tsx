@@ -15,7 +15,7 @@ export function Selector({
   const getOptions = (valueList: string[]) => {
     return valueList.map((item, index) => (
       <option value={item} className="select__option" key={index}>
-        {`${item}`}
+        {`Предложить вариантов: ${item}`}
       </option>
     ));
   };
@@ -30,9 +30,9 @@ export function Selector({
           ? 'Поиск во всех предложенных вариантах'
           : `Показать первые ${matchCount} из предложенных вариантов`
       }>
-      {getOptions(['2', '3', '4', '5', '10', '20', '25'])}
+      {getOptions(['2', '3', '4', '5', '10', '25'])}
       <option value="999" className="select__option" title="Поиск во всех предложенных вариантах">
-        {'Поиск'}
+        {'Искать среди предложенных вариантов'}
       </option>
     </select>
   );

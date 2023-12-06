@@ -43,8 +43,8 @@ export function Match({
 
   return (
     <div className={`match common-button ${isChosen && 'match_chosen'}`} onClick={handleClick}>
-      <p className="match__product-name">
-        {product?.name || 'Не удалось получить наименование продукта'}
+      <p className={`match__product-name  ${isChosen && 'match__product-name_chosen'}`}>
+        {product?.name || 'Не удалось получить наименование товара'}
       </p>
     </div>
   );

@@ -1,6 +1,5 @@
 .marking__footer {
   width: 80%;
-  height: 60px;
   display: flex;
   justify-content: space-between;
   background-color: transparent;
@@ -25,7 +24,14 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1550px) {
+  .marking__btn-footer {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 650px) {
   .marking__footer {
     height: 30px;
   }
@@ -33,19 +39,5 @@
   .marking__btn-footer {
     font-size: 12px;
     line-height: 12px;
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .marking__btn-footer {
-    font-size: 10px;
-    line-height: 10px;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .marking__btn-footer {
-    font-size: 8px;
-    line-height: 8px;
   }
 }

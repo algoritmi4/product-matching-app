@@ -1,8 +1,7 @@
 import './MarkingPage.css';
 import '../../utils/css-common/common-button.css';
 import { useState, useEffect, SetStateAction, Dispatch, useLayoutEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Selector } from '../Selector/Selector';
+import { useParams } from 'react-router-dom';
 import { Match } from '../Match/Match';
 import { SearchInFullList } from '../SearchInFullList/SearchInFullList';
 import { SelectedProduct } from '../SelectedProduct/SelectedProduct';
@@ -12,6 +11,7 @@ import { IProduct } from '../../utils/Interfaces/IProduct.interface';
 import api from '../../utils/Api/api';
 import { Preloader } from '../Preloader/Preloader';
 import { MarkingFooter } from '../MarkingFooter/MarkingFooter';
+import { MarkingHeader } from '../MarkingHeader/MarkingHeader';
 
 export default function MarkingPage({
   matchCount,
@@ -21,9 +21,7 @@ export default function MarkingPage({
   setMatchCount: Dispatch<SetStateAction<number>>;
 }) {
   const [isLoading, setIsLoading] = useState(true);
-
   const [curProductId, setCurProductId] = useState('');
-  const [currentDealerName, setCurrentDealerName] = useState('');
   const [mathProductList, setMathProductList] = useState<IProduct[]>(INIRIAL_MARKETING_PRODUCTS);
   const [chosenDealerProduct, setChosenDealerProduct] = useState<IDealerProduct>(
     INITIAL_MARKETING_DEALERPRICE[0]
@@ -33,8 +31,6 @@ export default function MarkingPage({
   const [isMapped, setIsMapped] = useState(false);
   const [isDenyed, setIsDenyed] = useState(false);
   const [isDelayed, setIsDelayed] = useState(false);
-
-  const navigate = useNavigate();
 
   const { product_id } = useParams();
 
@@ -57,14 +53,9 @@ export default function MarkingPage({
   useEffect(() => {
     setIsLoading(true);
     reset();
-
     if (curProductId) {
-      Promise.all([api.getMatchList(curProductId, '25'), api.getDealerPrice(curProductId)])
-        .then((result) => {
-          const data: IProduct[] = result[0];
-          setMathProductList(data);
-          if (data) return Promise.resolve(result[1]);
-        })
+      api
+        .getDealerPrice(curProductId)
         .then((data) => {
           setChosenDealerProduct(data);
           if (data.productdealer) {
@@ -79,11 +70,19 @@ export default function MarkingPage({
               setIsDelayed(true);
             }
           }
-          // get dealer name for current dealer product
-          setCurrentDealerName(data.dealer?.name);
         })
         .catch((err) => {
-          console.log(err?.message);
+          console.log(err);
+        });
+
+      api
+        .getMatchList(curProductId)
+        .then((result) => {
+          const data: IProduct[] = result;
+          setMathProductList(data);
+        })
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
           setIsLoading(false);
@@ -102,12 +101,9 @@ export default function MarkingPage({
     return resultList;
   };
 
-  const handleBtnToMainClick = () => {
-    navigate('/');
-  };
-
   const handleBtnDenyClick = () => {
-    resetChosenItem();
+    setIsLoading(true);
+
     api
       .postMatchingNotAccepted(chosenDealerProduct.id.toString())
       .then(() => {
@@ -116,10 +112,14 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleBtnAdmit = () => {
+    setIsLoading(true);
     api
       .postMatchingAccepted(chosenDealerProduct.id.toString(), chosenItem.id.toString())
       .then(() => {
@@ -129,10 +129,15 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleBtnDelayClick = () => {
+    setIsLoading(true);
+
     api
       .postMatchingAcceptedLater(chosenDealerProduct.id.toString())
       .then(() => {
@@ -141,6 +146,9 @@ export default function MarkingPage({
       })
       .catch((err) => {
         console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -151,18 +159,7 @@ export default function MarkingPage({
       ) : (
         <>
           <div className="marking">
-            <div className="marking__header">
-              <div className="marking__header-btn-container">
-                <button
-                  type="button"
-                  className="marking__header-btn common-button"
-                  onClick={handleBtnToMainClick}>
-                  На главную
-                </button>
-                <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
-              </div>
-              <h1 className="marking__dealer-name">{currentDealerName}</h1>
-            </div>
+            <MarkingHeader matchCount={matchCount} setMatchCount={setMatchCount}></MarkingHeader>
             <div className="marking__container">
               <div className="marking__matchList-container">
                 {matchCount === 999 ? (
@@ -176,7 +173,6 @@ export default function MarkingPage({
                   <SelectedProduct
                     dealerProduct={chosenDealerProduct}
                     chosenItem={chosenItem}
-                    setIsMapped={setIsMapped}
                     isMapped={isMapped}
                     mappedProduct={mappedProduct}
                     isDenyed={isDenyed}
