@@ -53,14 +53,9 @@ export default function MarkingPage({
   useEffect(() => {
     setIsLoading(true);
     reset();
-
     if (curProductId) {
-      Promise.all([api.getMatchList(curProductId, '25'), api.getDealerPrice(curProductId)])
-        .then((result) => {
-          const data: IProduct[] = result[0];
-          setMathProductList(data);
-          if (data) return Promise.resolve(result[1]);
-        })
+      api
+        .getDealerPrice(curProductId)
         .then((data) => {
           setChosenDealerProduct(data);
           if (data.productdealer) {
@@ -77,7 +72,17 @@ export default function MarkingPage({
           }
         })
         .catch((err) => {
-          console.log(err?.message);
+          console.log(err);
+        });
+
+      api
+        .getMatchList(curProductId)
+        .then((result) => {
+          const data: IProduct[] = result;
+          setMathProductList(data);
+        })
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
           setIsLoading(false);

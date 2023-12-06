@@ -145,8 +145,8 @@ class Api {
     }).then(this._getResponseData);
   }
 
-  getMatchList(id: string, count: string) {
-    return fetch(`${this._url}/api/v1/matching/{dealerprice_id}/?count=${count}&product_id=${id}`, {
+  getMatchList(id: string) {
+    return fetch(`${this._url}/api/v1/matching/${id}/?count=25`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include'
