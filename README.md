@@ -2,10 +2,20 @@
 
 Проект Frontend для приложения "product-matching-app" - онлайн сервис для сопоставления товаров, продаваемых дилерами, с товарами в ассортименте заказчика.
 
+
 ## Сведения о команде
 Frontend-разработчики:
 1) Буторин Иван, https://t.me/algoritmi4
-2) Кирилл Кацнельсон, https://t.me/Kirill_Katsnelson
+2) Кирилл Сергеевич, https://t.me/Kirill_Katsnelson
+
+Backend-разработчики:
+1) Аюпов Рашид, https://t.me/valentaine_ra
+2) Калинина Юлия, https://t.me/good_old_user
+
+DS:
+1) Борисовский Антон, https://t.me/abv001
+2) Поляков Алексей, https://t.me/alekseityler
+3) Курбан Абдурахманов, https://t.me/adam_windu
 
 ## Ссылка на gh-pages
 
@@ -79,11 +89,7 @@ https://hackathon-prosept.ddns.net/
 - TypeScript
 - React
 
-DS:
-(...)
 
+## В проекте использовались
 - шрифт Ubuntu - https://design.ubuntu.com/font
 - таблица Material React Table - https://www.material-react-table.com/
-
-## Ключевые точки для media queries
-(...)
