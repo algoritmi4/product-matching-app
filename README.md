@@ -17,10 +17,6 @@ DS:
 2) Поляков Алексей, https://t.me/alekseityler
 3) Курбан Абдурахманов, https://t.me/adam_windu
 
-## Ссылка на gh-pages
-
-https://github.com/algoritmi4/product-matching-app
-
 ### Ссылка на Backend
 
 https://github.com/deamanda/record_linkage/tree/dev/rash#установка-проекта-из-репозитория
