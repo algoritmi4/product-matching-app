@@ -7,10 +7,10 @@ function ProductTypeSelector({
   setIsPreloader,
   setHasMore
 }: {
-  setIsPreloader: any;
-  setProductType: any;
-  setOffset: any;
-  setHasMore: any;
+  setIsPreloader: (arg: boolean) => void;
+  setProductType: (arg: string) => void;
+  setOffset: (arg: number) => void;
+  setHasMore: (arg: boolean) => void;
 }) {
   function onChange(e: ChangeEvent<HTMLSelectElement>) {
     setOffset(0);

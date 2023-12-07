@@ -1,5 +1,10 @@
 import { FormEvent, useMemo } from 'react';
-import { useMaterialReactTable, type MRT_ColumnDef, MRT_Updater } from 'material-react-table';
+import {
+  useMaterialReactTable,
+  type MRT_ColumnDef,
+  MRT_Updater,
+  MRT_ColumnFiltersState
+} from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
@@ -11,12 +16,6 @@ interface Pagination {
   pageSize: number;
 }
 
-interface isButtonsLoading {
-  dealers: boolean;
-  dealerPrices: boolean;
-  products: boolean;
-}
-
 function TableOptions({
   handleSCVLoading,
   data,
@@ -24,20 +23,35 @@ function TableOptions({
   pagination,
   setPagination,
   isTableLoading,
-  handleSignOut
+  handleSignOut,
+  columnFilters,
+  setColumnFilters
 }: {
   handleSCVLoading: (
     e: FormEvent<HTMLInputElement>,
     func: (arg: FormData) => Promise<void>
   ) => void;
   data: IDealerProduct[];
-  isButtonsLoading: isButtonsLoading;
+  isButtonsLoading: {
+    dealers: boolean;
+    dealerPrices: boolean;
+    products: boolean;
+  };
   pagination: Pagination;
   setPagination: (value: MRT_Updater<Pagination>) => void;
   isTableLoading: boolean;
   handleSignOut: () => void;
+  columnFilters: MRT_ColumnFiltersState;
+  setColumnFilters: (arg: MRT_Updater<MRT_ColumnFiltersState>) => void;
 }) {
   const navigate = useNavigate();
+  const dateAndPriceStateList: string[] = ['Любая', 'По возрастанию', 'По убыванию'];
+  const statusStateList: string[] = [
+    'Все товары',
+    'Сопоставленные',
+    'Не сопоставленные',
+    'Отложенные'
+  ];
 
   const columns: MRT_ColumnDef<IDealerProduct>[] = useMemo(
     () => [
@@ -51,25 +65,15 @@ function TableOptions({
       {
         header: 'Цена, руб',
         accessorKey: 'price',
-        filterVariant: 'range-slider',
-        filterFn: 'betweenInclusive',
+        filterVariant: 'select',
+        filterSelectOptions: dateAndPriceStateList,
         size: 150,
         minSize: 40,
-        maxSize: 350,
-        muiFilterSliderProps: {
-          marks: true,
-          max: 4000,
-          min: 0,
-          step: 10,
-          valueLabelFormat: (value) =>
-            value.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'RUB'
-            })
-        }
+        maxSize: 350
       },
       {
         header: 'Дилер',
+        accessorKey: 'dealer',
         accessorFn: (data) => data.dealer.name,
         size: 250,
         minSize: 40,
@@ -78,23 +82,40 @@ function TableOptions({
       {
         header: 'Дата',
         accessorKey: 'date',
+        filterVariant: 'select',
+        filterSelectOptions: dateAndPriceStateList,
         size: 150,
         minSize: 40,
         maxSize: 350
       },
       {
         header: 'Статус',
-        accessorFn: (data) => (data.mapped ? 'true' : 'false'),
-        filterVariant: 'checkbox',
+        accessorKey: 'status',
+        accessorFn: (data) =>
+          data.productdealer === null ? 'not processed' : data.productdealer?.status,
+        filterVariant: 'select',
+        filterSelectOptions: statusStateList,
         size: 150,
         minSize: 40,
         maxSize: 1000,
-        Cell: ({ cell }) =>
-          cell.getValue() === 'true' ? (
-            <p className="main__marked">Сопоставлен</p>
-          ) : (
-            <p className="main__need-marking">Не сопоставлен</p>
-          )
+        Cell: ({ cell }) => {
+          switch (cell.getValue()) {
+            case 'not processed':
+              return <p className="main__marked">Не тронут</p>;
+              break;
+            case 'matched':
+              return <p className="main__marked">Сопоставлен</p>;
+              break;
+            case 'not matched':
+              return <p className="main__marked">Не сопоставлен</p>;
+              break;
+            case 'deferred':
+              return <p className="main__marked">Отложен</p>;
+              break;
+            default:
+              return <p className="main__marked">Отложен</p>;
+          }
+        }
       }
     ],
     []
@@ -103,9 +124,8 @@ function TableOptions({
   const table = useMaterialReactTable({
     columns,
     data,
-    state: { pagination, isLoading: isTableLoading },
+    state: { pagination, isLoading: isTableLoading, columnFilters },
     enableRowNumbers: true,
-    enableRowPinning: true,
     enableColumnOrdering: true,
     enableClickToCopy: true,
     enableColumnPinning: true,
@@ -117,12 +137,15 @@ function TableOptions({
     },
     onPaginationChange: setPagination,
     enableGlobalFilterRankedResults: false,
-    enableGrouping: true,
     enablePagination: true,
     enableStickyHeader: true,
     enableStickyFooter: true,
     layoutMode: 'grid',
-    enableFullScreenToggle: false,
+    enableSorting: false,
+    manualFiltering: true,
+    enableGlobalFilter: false,
+    enableColumnFilters: true,
+    onColumnFiltersChange: setColumnFilters,
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
         navigate(`/marking/${row.original.id}`);

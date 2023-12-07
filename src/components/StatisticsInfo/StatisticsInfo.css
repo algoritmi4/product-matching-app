@@ -19,6 +19,10 @@
 .stat-info__info-form {
   display: flex;
   flex-direction: column;
+  border-top: 2px solid #7a7a7a;
+  border-bottom: 2px solid #7a7a7a;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 
 .stat-info__text-input-label {
@@ -30,7 +34,6 @@
   padding: 2px 5px;
   box-sizing: border-box;
   cursor: text;
-  margin: 10px 0 0;
 }
 
 .stat-info__text-input {
@@ -99,15 +102,19 @@
 
 .stat-info__total-matched {
   margin: 15px 0 0;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
   color: #364037;
+}
+
+.stat-info__dealer-info {
+  margin: 15px 0 0;
 }
 
 .stat-info__dealer-info-title {
   font-size: 18px;
   font-weight: 600;
-  margin: 50px 0 0;
+  margin: 0;
   color: #364037;
 }
 
@@ -138,4 +145,8 @@
   font-weight: 500;
   align-self: center;
   color: #364037;
+}
+
+.display-none {
+  display: none;
 }

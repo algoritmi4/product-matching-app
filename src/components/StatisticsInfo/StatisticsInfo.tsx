@@ -1,32 +1,25 @@
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import './StatisticsInfo.css';
 import { MarkingContext } from '../../contexts/MarkingContext';
-
-interface matchedCount {
-  matched: number;
-  not_matched: number;
-  deferred: number;
-  total_matching: number;
-  accuracy: number;
-}
-
-interface InputValues {
-  id: string;
-  startDate: string;
-  endDate: string;
-}
+import { Analytics } from '../../utils/Interfaces/StatisticsPage/Analytics.interface';
 
 function StatisticsInfo({
   statistics,
   dealerStatistics,
-  handleSubmitInfoForm
+  handleSubmitInfoForm,
+  selectedDealer
 }: {
-  statistics: matchedCount;
-  dealerStatistics: matchedCount;
-  handleSubmitInfoForm: (arg: InputValues) => void;
+  statistics: Analytics;
+  dealerStatistics: Analytics;
+  handleSubmitInfoForm: (arg: { id: string; startDate: string; endDate: string }) => void;
+  selectedDealer: string;
 }) {
   const context = useContext(MarkingContext);
-  const [inputValues, setInputValues] = useState<InputValues>({
+  const [inputValues, setInputValues] = useState<{
+    id: string;
+    startDate: string;
+    endDate: string;
+  }>({
     id: '',
     startDate: '',
     endDate: ''
@@ -94,14 +87,21 @@ function StatisticsInfo({
           Поиск
         </button>
       </form>
-      <p className="stat-info__total-matched">{`Всего сопоставлено: ${statistics.matched}`}</p>
-      <p className="stat-info__total-matched">{`Всего не сопоставлено: ${statistics.not_matched}`}</p>
-      <p className="stat-info__total-matched">{`Всего отложено: ${statistics.deferred}`}</p>
+      <p className="stat-info__total-matched">{`Кол-во сопоставленных: ${statistics.matched}`}</p>
+      <p className="stat-info__total-matched">{`Кол-во несопоставленных: ${statistics.not_matched}`}</p>
+      <p className="stat-info__total-matched">{`Кол-во отложенных: ${statistics.deferred}`}</p>
       <p className="stat-info__total-matched">{`Точность: ${statistics.accuracy}`}</p>
-      <h3 className="stat-info__dealer-info-title">Статистика по выбранному дилеру</h3>
-      <p className="stat-info__dealer-matched">{`Кол-во сопоставленных: ${dealerStatistics.matched}`}</p>
-      <p className="stat-info__dealer-matched">{`Кол-во несопоставленных: ${dealerStatistics.not_matched}`}</p>
-      <p className="stat-info__dealer-matched">{`Кол-во отложенных: ${dealerStatistics.deferred}`}</p>
+      {statistics.position.map((el, index) => (
+        <p
+          className="stat-info__total-matched"
+          key={index}>{`На ${el.position} позиции - ${el.percentage}%`}</p>
+      ))}
+      <div className={`stat-info__dealer-info ${selectedDealer === 'all' ? 'display-none' : ''}`}>
+        <h3 className="stat-info__dealer-info-title">Статистика по выбранному дилеру</h3>
+        <p className="stat-info__dealer-matched">{`Кол-во сопоставленных: ${dealerStatistics.matched}`}</p>
+        <p className="stat-info__dealer-matched">{`Кол-во несопоставленных: ${dealerStatistics.not_matched}`}</p>
+        <p className="stat-info__dealer-matched">{`Кол-во отложенных: ${dealerStatistics.deferred}`}</p>
+      </div>
     </div>
   );
 }

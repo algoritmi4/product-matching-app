@@ -1,5 +1,5 @@
 import './MainPage.css';
-import { MaterialReactTable } from 'material-react-table';
+import { MRT_ColumnFiltersState, MaterialReactTable } from 'material-react-table';
 import TableOptions from './TableOptions';
 import api from '../../utils/Api/api';
 import { FormEvent, useEffect, useState } from 'react';
@@ -23,6 +23,8 @@ function MainPage() {
   const [data, setData] = useState<IDealerProduct[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([]);
   const [isButtonsLoading, setIsButtonsLoading] = useState<isButtonsLoading>({
     dealers: false,
     dealerPrices: false,
@@ -35,31 +37,76 @@ function MainPage() {
     pagination,
     setPagination,
     isTableLoading,
-    handleSignOut
+    handleSignOut,
+    columnFilters,
+    setColumnFilters
   });
-
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
-  useEffect(() => {
-    handleDataLoad(30, 0, 0);
-  }, []);
+  useDidMountEffect(() => {
+    console.log(columnFilters);
+  }, [columnFilters]);
+
+  useDidMountEffect(() => {
+    const filterOptions = handleFilterOptions();
+
+    handleDataLoad({
+      pageSize: 30,
+      offset: 0,
+      pageIndex: 0,
+      firstRender: true,
+      filterOptions
+    });
+  }, [columnFilters]);
 
   useEffect(() => {
-    if (paginationSize > 10 && paginationSize >= data.length) {
+    if (paginationSize > 10 && paginationSize >= data.length && hasMore) {
       const pageIndex = pagination.pageIndex;
+      const filterOptions = handleFilterOptions();
 
-      handleDataLoad(pagination.pageSize + paginationSize - data.length, data.length, pageIndex);
+      handleDataLoad({
+        pageSize: pagination.pageSize + paginationSize - data.length,
+        offset: data.length,
+        pageIndex,
+        firstRender: false,
+        filterOptions
+      });
     }
   }, [pagination]);
 
-  function handleDataLoad(pageSize: number, offset: number, pageIndex: number) {
+  function handleFilterOptions() {
+    const filterOptions: any = {};
+
+    for (let i = 0; i < columnFilters.length; i++) {
+      const ids = columnFilters[i].id;
+
+      filterOptions[ids] = columnFilters[i].value;
+    }
+
+    return filterOptions;
+  }
+
+  function handleDataLoad({
+    pageSize,
+    offset,
+    pageIndex,
+    firstRender,
+    filterOptions
+  }: {
+    pageSize: number;
+    offset: number;
+    pageIndex: number;
+    firstRender: boolean;
+    filterOptions: any;
+  }) {
     setIsTableLoading(true);
     api
-      .getDealerProducts(pageSize, offset)
+      .getDealerProducts({ pageSize, offset, filterOptions })
       .then((res) => {
-        setData((state) => [...state, ...res.items]);
+        setData((state) => (firstRender ? [...res.items] : [...state, ...res.items]));
+        res.offset + res.limit > res.total ? setHasMore(false) : setHasMore(true);
         setTimeout(() => {
-          setPagination((state) => ({ ...state, pageIndex: pageIndex }));
+          setPagination((state) => ({ ...state, pageIndex }));
         }, 0);
       })
       .catch((err) => console.log(err))

@@ -29,7 +29,7 @@ export const INITIAL_MARKETING_DEALERPRICE: IDealerProduct[] = [
     product_name: '',
     date: '',
     dealer: { name: '', id: 0 },
-    mapped: null
+    productdealer: null
   }
 ];
 

@@ -40,12 +40,55 @@ class Api {
     }).then(this._getResponseData);
   }
 
-  getDealerProducts(pageSize: number, offset: number) {
-    return fetch(`${this._url}/api/v1/dealers/price?limit=${pageSize}&offset=${offset}`, {
-      method: 'GET',
-      headers: this._headers,
-      credentials: 'include'
-    }).then(this._getResponseData);
+  getDealerProducts({
+    pageSize,
+    offset,
+    filterOptions
+  }: {
+    pageSize: number;
+    offset: number;
+    filterOptions: any;
+  }) {
+    return fetch(
+      `${this._url}/api/v1/dealers/price?limit=${pageSize}&offset=${offset}&search_query=${
+        filterOptions.product_name ? filterOptions.product_name : ''
+      }${
+        filterOptions.date === undefined || filterOptions.date === 'Любая'
+          ? ''
+          : `&sort_by=${
+              filterOptions.date === 'По возрастанию'
+                ? 'ascending time'
+                : filterOptions.date === 'По убыванию'
+                  ? 'descending time'
+                  : ''
+            }`
+      }${
+        filterOptions.price === undefined || filterOptions.price === 'Любая'
+          ? ''
+          : `&sort_by=${
+              filterOptions.price === 'По возрастанию'
+                ? 'ascending price'
+                : filterOptions.price === 'По убыванию'
+                  ? 'descending price'
+                  : ''
+            }`
+      }&status=${
+        filterOptions.status === undefined || filterOptions.status === 'Все товары'
+          ? 'not processed'
+          : filterOptions.status === 'Сопоставленные'
+            ? 'matched'
+            : filterOptions.status === 'Не сопоставленные'
+              ? 'not matched'
+              : filterOptions.status === 'Отложенные'
+                ? 'deferred'
+                : ''
+      }`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then(this._getResponseData);
   }
 
   getMatchedUserProducts(status: string, offset: number) {

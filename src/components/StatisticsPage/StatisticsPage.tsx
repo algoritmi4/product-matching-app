@@ -1,41 +1,36 @@
 import './StatisticsPage.css';
-import DealerSelector from '../DealerSelector/DealerSelector';
-import MatchedItemsContainer from '../MatchedItemsContainer/MatchedItemsContainer';
-import { useNavigate } from 'react-router-dom';
-import ProductTypeSelector from '../ProductTypeSelector/ProductTypeSelector';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
-import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
-import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
 import api from '../../utils/Api/api';
-import { Preloader } from '../Preloader/Preloader';
 import StatisticsInfo from '../StatisticsInfo/StatisticsInfo';
 import { InputValues } from '../../utils/Interfaces/StatisticsPage/InputValues.interface';
 import { Analytics } from '../../utils/Interfaces/StatisticsPage/Analytics.interface';
 import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
+import StatisticsProductList from '../StatisticsProductList/StatisticsProductList';
+import StatisticsHeader from '../StatisticsHeader/StatisticsHeader';
 
 function StatisticsPage() {
-  const navigate = useNavigate();
   const [items, setItems] = useState<Items[]>([]);
   const [isPreloader, setIsPreloader] = useState<boolean>(false);
+  const [offset, setOffset] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [productType, setProductType] = useState<string>('matched');
+  const [selectedDealer, setSelectedDealer] = useState<string>('all');
   const [statistics, setStatistics] = useState<Analytics>({
     matched: 0,
     not_matched: 0,
     deferred: 0,
     total_matching: 0,
-    accuracy: 0
+    accuracy: 0,
+    position: []
   });
   const [dealerStatistics, setDealerStatistics] = useState<Analytics>({
     matched: 0,
     not_matched: 0,
     deferred: 0,
     total_matching: 0,
-    accuracy: 0
+    accuracy: 0,
+    position: []
   });
-  const [productType, setProductType] = useState<string>('matched');
-  const [selectedDealer, setSelectedDealer] = useState<string>('all');
-  const [offset, setOffset] = useState<number>(0);
-  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     handleUserStatistics();
@@ -97,7 +92,7 @@ function StatisticsPage() {
     startDate.setDate(startDate.getDate() - 30);
     const endDate = new Date();
     api
-      .getUserMatchedCount(endDate.toISOString().slice(0, -1), startDate.toISOString().slice(0, -1))
+      .getUserMatchedCount(endDate.toISOString(), startDate.toISOString())
       .then((res) => {
         setStatistics(res);
       })
@@ -109,8 +104,8 @@ function StatisticsPage() {
 
   function handleSubmitInfoForm(inputValues: InputValues) {
     setIsPreloader(true);
-    const startDate = new Date(inputValues.startDate).toISOString().slice(0, -1);
-    const endDate = new Date(inputValues.endDate).toISOString().slice(0, -1);
+    const startDate = new Date(inputValues.startDate).toISOString();
+    const endDate = new Date(inputValues.endDate).toISOString();
     api
       .getUserMatchedCountById({ id: inputValues.id, startDate, endDate })
       .then((res) => {
@@ -146,60 +141,29 @@ function StatisticsPage() {
 
   return (
     <section className="stat-page">
-      <div className="stat-page__header">
-        <DealerSelector
-          setSelectedDealer={setSelectedDealer}
-          setOffset={setOffset}
-          setIsPreloader={setIsPreloader}
-          handleDealerStatistics={handleDealerStatistics}
-          setHasMore={setHasMore}
-        />
-        <button
-          onClick={() => navigate('/')}
-          type="button"
-          className="stat-page__menu-button common-button">
-          На главную
-        </button>
-      </div>
-      <div className="stat-page__flex-table">
-        <ProductTypeSelector
-          setProductType={setProductType}
-          setOffset={setOffset}
-          setIsPreloader={setIsPreloader}
-          setHasMore={setHasMore}
-        />
-        {items.length === 0 ? (
-          <h4 className="stat-page__err-message">{`${
-            productType === 'matched' ? 'Сопоставленных' : 'Отложенных'
-          } товаров ещё нет в базе`}</h4>
-        ) : isPreloader ? (
-          <Preloader />
-        ) : (
-          <InfiniteScroll
-            className={`stat-page__infinite-scroll ${
-              productType === 'matched'
-                ? 'stat-page__infinite-scroll_type_matched'
-                : 'stat-page__infinite-scroll_type_deferred'
-            }`}
-            dataLength={items.length}
-            next={handleNext}
-            hasMore={hasMore}
-            loader={<ButtonPreloader />}
-            height={800}>
-            {items.map((el, index) =>
-              productType === 'matched' ? (
-                <MatchedItemsContainer key={index} data={el} />
-              ) : (
-                <DeferredItemsContainer key={index} data={el} />
-              )
-            )}
-          </InfiniteScroll>
-        )}
-      </div>
+      <StatisticsHeader
+        setSelectedDealer={setSelectedDealer}
+        setOffset={setOffset}
+        setIsPreloader={setIsPreloader}
+        handleDealerStatistics={handleDealerStatistics}
+        setHasMore={setHasMore}
+      />
+      <StatisticsProductList
+        items={items}
+        productType={productType}
+        setProductType={setProductType}
+        setOffset={setOffset}
+        setIsPreloader={setIsPreloader}
+        setHasMore={setHasMore}
+        isPreloader={isPreloader}
+        hasMore={hasMore}
+        handleNext={handleNext}
+      />
       <StatisticsInfo
         statistics={statistics}
         dealerStatistics={dealerStatistics}
         handleSubmitInfoForm={handleSubmitInfoForm}
+        selectedDealer={selectedDealer}
       />
     </section>
   );
