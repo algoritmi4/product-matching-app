@@ -25,9 +25,7 @@ export function MarkingHeader({
           onClick={handleBtnToMainClick}>
           На главную
         </button>
-        {/* <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector> */}
       </div>
-      {/* <h1 className="marking__dealer-name">{}</h1> */}
       <Selector matchCount={matchCount} setMatchCount={setMatchCount}></Selector>
     </div>
   );

@@ -27,7 +27,6 @@
   line-height: 30px;
   font-weight: 600;
   color: #7a7a7a;
-  /*disable selecting text*/
   -webkit-touch-callout: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
