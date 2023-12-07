@@ -1,5 +1,5 @@
 import './ErrorMesssagePopup.css';
-import { SetStateAction, Dispatch } from 'react';
+import { SetStateAction, Dispatch, useEffect } from 'react';
 
 export function ErrorMesssagePopup({
   requestError,
@@ -11,6 +11,14 @@ export function ErrorMesssagePopup({
   const handleCloseBtnClick = () => {
     setRequestError('');
   };
+
+  useEffect(() => {
+    if (requestError !== '') {
+      setTimeout(() => {
+        setRequestError('');
+      }, 5000);
+    }
+  }, [requestError]);
 
   return (
     <div className={`error-popup ${requestError !== '' && 'error-popup_show'}`}>
