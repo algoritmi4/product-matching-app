@@ -11,7 +11,7 @@ import { InputValues } from './Interfaces/StatisticsPage/InputValues.interface';
 
 export const API_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://hackathon-prosept.ddns.net/'
+    ? 'https://hackathon-prosept.ddns.net'
     : 'http://localhost:8001';
 
 export const HEADER = {
