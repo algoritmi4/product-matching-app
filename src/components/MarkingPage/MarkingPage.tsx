@@ -15,10 +15,12 @@ import { MarkingHeader } from '../MarkingHeader/MarkingHeader';
 
 export default function MarkingPage({
   matchCount,
-  setMatchCount
+  setMatchCount,
+  setRequestError
 }: {
   matchCount: number;
   setMatchCount: Dispatch<SetStateAction<number>>;
+  setRequestError: Dispatch<SetStateAction<string>>;
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [curProductId, setCurProductId] = useState('');
@@ -72,7 +74,8 @@ export default function MarkingPage({
           }
         })
         .catch((err) => {
-          console.log(err);
+          setRequestError(err.message);
+          console.log(err.message);
         });
 
       api
@@ -82,7 +85,8 @@ export default function MarkingPage({
           setMathProductList(data);
         })
         .catch((err) => {
-          console.log(err);
+          setRequestError(err.message);
+          console.log(err.message);
         })
         .finally(() => {
           setIsLoading(false);
@@ -111,6 +115,7 @@ export default function MarkingPage({
         setIsDenyed(true);
       })
       .catch((err) => {
+        setRequestError(err.message);
         console.log(err.message);
       })
       .finally(() => {
@@ -128,6 +133,7 @@ export default function MarkingPage({
         setIsMapped(true);
       })
       .catch((err) => {
+        setRequestError(err.message);
         console.log(err.message);
       })
       .finally(() => {
@@ -145,6 +151,7 @@ export default function MarkingPage({
         setIsDelayed(true);
       })
       .catch((err) => {
+        setRequestError(err.message);
         console.log(err.message);
       })
       .finally(() => {

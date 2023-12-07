@@ -20,11 +20,13 @@ import auth from '../../utils/Api/auth';
 export function LogInPopupForm({
   setLoggedIn,
   setUser,
-  setIsLoading
+  setIsLoading,
+  setRequestError
 }: {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
   setUser: Dispatch<SetStateAction<IUser>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setRequestError: Dispatch<SetStateAction<string>>;
 }) {
   const {
     register,
@@ -48,6 +50,7 @@ export function LogInPopupForm({
         navigate('/');
       })
       .catch((err) => {
+        setRequestError(err.message);
         console.log(err);
       })
       .finally(() => {
@@ -63,6 +66,7 @@ export function LogInPopupForm({
         getUser();
       })
       .catch((err) => {
+        setRequestError(err.message);
         setErrorText('Ошибка авторизации');
         console.log(err);
       })
@@ -83,6 +87,7 @@ export function LogInPopupForm({
         setLoggedIn(false);
       })
       .catch((err) => {
+        setRequestError(err.message);
         console.log(err);
       })
       .finally(() => {

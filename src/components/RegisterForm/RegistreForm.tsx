@@ -18,10 +18,12 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 export function RegisterForm({
   setLoggedIn,
-  setIsLoading
+  setIsLoading,
+  setRequestError
 }: {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setRequestError: Dispatch<SetStateAction<string>>;
 }) {
   const {
     register,
@@ -44,6 +46,7 @@ export function RegisterForm({
       .catch((err) => {
         setErrorText(`Ошибка при регистрации:
         ${err.detail}`);
+        setRequestError(err.message);
         console.log(err);
       })
       .finally(() => {
