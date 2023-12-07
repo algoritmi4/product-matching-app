@@ -16,7 +16,7 @@ export function ErrorMesssagePopup({
     if (requestError !== '') {
       setTimeout(() => {
         setRequestError('');
-      }, 5000);
+      }, 2000);
     }
   }, [requestError]);
 
