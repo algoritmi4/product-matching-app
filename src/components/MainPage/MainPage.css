@@ -6,6 +6,10 @@
   color: red;
 }
 
+.main__deferred {
+  color: orange;
+}
+
 .main-page__input-container {
   border-radius: 5px;
 }

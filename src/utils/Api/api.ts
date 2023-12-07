@@ -48,6 +48,8 @@ class Api {
   }: {
     pageSize: number;
     offset: number;
+    // this element can have 0-5 keys with different names
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterOptions: any;
   }) {
     return fetch(
@@ -83,7 +85,7 @@ class Api {
               : filterOptions.status === 'Отложенные'
                 ? 'deferred'
                 : ''
-      }`,
+      }&dealer_name=${filterOptions.dealer ? filterOptions.dealer : ''}`,
       {
         method: 'GET',
         headers: this._headers,

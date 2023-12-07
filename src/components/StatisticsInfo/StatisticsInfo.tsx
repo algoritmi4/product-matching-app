@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import './StatisticsInfo.css';
 import { MarkingContext } from '../../contexts/MarkingContext';
 import { Analytics } from '../../utils/Interfaces/StatisticsPage/Analytics.interface';
+import { INITIAL_STATISTICS_INPUTVALUES } from '../../utils/constants';
+import { InputValues } from '../../utils/Interfaces/StatisticsPage/InputValues.interface';
 
 function StatisticsInfo({
   statistics,
@@ -15,15 +17,7 @@ function StatisticsInfo({
   selectedDealer: string;
 }) {
   const context = useContext(MarkingContext);
-  const [inputValues, setInputValues] = useState<{
-    id: string;
-    startDate: string;
-    endDate: string;
-  }>({
-    id: '',
-    startDate: '',
-    endDate: ''
-  });
+  const [inputValues, setInputValues] = useState<InputValues>(INITIAL_STATISTICS_INPUTVALUES);
   const isFormReady =
     inputValues.id !== '' && inputValues.startDate !== '' && inputValues.endDate !== '';
 
@@ -101,6 +95,7 @@ function StatisticsInfo({
         <p className="stat-info__dealer-matched">{`Кол-во сопоставленных: ${dealerStatistics.matched}`}</p>
         <p className="stat-info__dealer-matched">{`Кол-во несопоставленных: ${dealerStatistics.not_matched}`}</p>
         <p className="stat-info__dealer-matched">{`Кол-во отложенных: ${dealerStatistics.deferred}`}</p>
+        <p className="stat-info__dealer-matched">{`Точность: ${dealerStatistics.accuracy}`}</p>
       </div>
     </div>
   );

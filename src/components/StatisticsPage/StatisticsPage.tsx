@@ -1,5 +1,5 @@
 import './StatisticsPage.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import api from '../../utils/Api/api';
 import StatisticsInfo from '../StatisticsInfo/StatisticsInfo';
 import { InputValues } from '../../utils/Interfaces/StatisticsPage/InputValues.interface';
@@ -7,30 +7,21 @@ import { Analytics } from '../../utils/Interfaces/StatisticsPage/Analytics.inter
 import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
 import StatisticsProductList from '../StatisticsProductList/StatisticsProductList';
 import StatisticsHeader from '../StatisticsHeader/StatisticsHeader';
+import { INITIAL_STATISTICS_ANALYTICS } from '../../utils/constants';
 
-function StatisticsPage() {
+function StatisticsPage({
+  setRequestError
+}: {
+  setRequestError: Dispatch<SetStateAction<string>>;
+}) {
   const [items, setItems] = useState<Items[]>([]);
   const [isPreloader, setIsPreloader] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [productType, setProductType] = useState<string>('matched');
   const [selectedDealer, setSelectedDealer] = useState<string>('all');
-  const [statistics, setStatistics] = useState<Analytics>({
-    matched: 0,
-    not_matched: 0,
-    deferred: 0,
-    total_matching: 0,
-    accuracy: 0,
-    position: []
-  });
-  const [dealerStatistics, setDealerStatistics] = useState<Analytics>({
-    matched: 0,
-    not_matched: 0,
-    deferred: 0,
-    total_matching: 0,
-    accuracy: 0,
-    position: []
-  });
+  const [statistics, setStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
+  const [dealerStatistics, setDealerStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
 
   useEffect(() => {
     handleUserStatistics();
@@ -55,7 +46,10 @@ function StatisticsPage() {
           setHasMore(false);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      })
       .finally(() => {
         setIsPreloader(false);
       });
@@ -72,7 +66,10 @@ function StatisticsPage() {
           setHasMore(false);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      })
       .finally(() => {
         setIsPreloader(false);
       });
@@ -96,7 +93,10 @@ function StatisticsPage() {
       .then((res) => {
         setStatistics(res);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      })
       .finally(() => {
         setIsPreloader(false);
       });
@@ -111,7 +111,10 @@ function StatisticsPage() {
       .then((res) => {
         setStatistics(res);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      })
       .finally(() => {
         setIsPreloader(false);
       });
@@ -132,7 +135,10 @@ function StatisticsPage() {
         .then((res) => {
           setDealerStatistics(res);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setRequestError(err.message);
+          console.log(err);
+        })
         .finally(() => {
           setIsPreloader(false);
         });

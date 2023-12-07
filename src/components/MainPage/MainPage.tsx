@@ -1,35 +1,24 @@
 import './MainPage.css';
 import { MRT_ColumnFiltersState, MaterialReactTable } from 'material-react-table';
-import TableOptions from './TableOptions';
+import TableOptions from '../TableOptions/TableOptions';
 import api from '../../utils/Api/api';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState, SetStateAction, Dispatch } from 'react';
 import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
-import useDidMountEffect from '../../customHooks/useDidMountEffect';
 import { useNavigate } from 'react-router-dom';
+import { Pagination } from '../../utils/Interfaces/MainPage/Pagination.interface';
+import { isButtonsLoading } from '../../utils/Interfaces/MainPage/IsButtonsLoading.interface';
+import { INITIAL_MAIN_ISBUTTONSLOADING, INITIAL_MAIN_PAGINATION } from '../../utils/constants';
 
-interface Pagination {
-  pageIndex: number;
-  pageSize: number;
-}
-
-interface isButtonsLoading {
-  dealers: boolean;
-  dealerPrices: boolean;
-  products: boolean;
-}
-
-function MainPage() {
+function MainPage({ setRequestError }: { setRequestError: Dispatch<SetStateAction<string>> }) {
   const navigate = useNavigate();
   const [data, setData] = useState<IDealerProduct[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({ pageIndex: 0, pageSize: 10 });
+  const [pagination, setPagination] = useState<Pagination>(INITIAL_MAIN_PAGINATION);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([]);
-  const [isButtonsLoading, setIsButtonsLoading] = useState<isButtonsLoading>({
-    dealers: false,
-    dealerPrices: false,
-    products: false
-  });
+  const [isButtonsLoading, setIsButtonsLoading] = useState<isButtonsLoading>(
+    INITIAL_MAIN_ISBUTTONSLOADING
+  );
   const { table } = TableOptions({
     handleSCVLoading,
     data,
@@ -43,11 +32,7 @@ function MainPage() {
   });
   const paginationSize = (pagination.pageIndex + 1) * pagination.pageSize;
 
-  useDidMountEffect(() => {
-    console.log(columnFilters);
-  }, [columnFilters]);
-
-  useDidMountEffect(() => {
+  useEffect(() => {
     const filterOptions = handleFilterOptions();
 
     handleDataLoad({
@@ -75,12 +60,14 @@ function MainPage() {
   }, [pagination]);
 
   function handleFilterOptions() {
+    // this element can have 0-5 keys with different names
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filterOptions: any = {};
 
     for (let i = 0; i < columnFilters.length; i++) {
-      const ids = columnFilters[i].id;
+      const id = columnFilters[i].id;
 
-      filterOptions[ids] = columnFilters[i].value;
+      filterOptions[id] = columnFilters[i].value;
     }
 
     return filterOptions;
@@ -97,6 +84,8 @@ function MainPage() {
     offset: number;
     pageIndex: number;
     firstRender: boolean;
+    // this element can have 0-5 keys with different names
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filterOptions: any;
   }) {
     setIsTableLoading(true);
@@ -109,7 +98,10 @@ function MainPage() {
           setPagination((state) => ({ ...state, pageIndex }));
         }, 0);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      })
       .finally(() => setIsTableLoading(false));
   }
 
@@ -133,13 +125,18 @@ function MainPage() {
 
         setIsButtonsLoading((state) => ({ ...state, [buttonId]: true }));
 
-        func(formData).finally(() =>
-          setIsButtonsLoading({
-            dealers: false,
-            dealerPrices: false,
-            products: false
+        func(formData)
+          .catch((err) => {
+            setRequestError(err.message);
+            console.log(err);
           })
-        );
+          .finally(() =>
+            setIsButtonsLoading({
+              dealers: false,
+              dealerPrices: false,
+              products: false
+            })
+          );
       };
     }
   }

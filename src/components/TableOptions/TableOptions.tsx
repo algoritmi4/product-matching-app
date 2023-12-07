@@ -10,11 +10,7 @@ import { Box, Button } from '@mui/material';
 import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import api from '../../utils/Api/api';
-
-interface Pagination {
-  pageIndex: number;
-  pageSize: number;
-}
+import { Pagination } from '../../utils/Interfaces/MainPage/Pagination.interface';
 
 function TableOptions({
   handleSCVLoading,
@@ -101,19 +97,19 @@ function TableOptions({
         Cell: ({ cell }) => {
           switch (cell.getValue()) {
             case 'not processed':
-              return <p className="main__marked">Не тронут</p>;
+              return <p className="main__need-marking">Нужно сопоставить</p>;
               break;
             case 'matched':
               return <p className="main__marked">Сопоставлен</p>;
               break;
             case 'not matched':
-              return <p className="main__marked">Не сопоставлен</p>;
+              return <p className="main__need-marking">Не сопоставлен</p>;
               break;
             case 'deferred':
-              return <p className="main__marked">Отложен</p>;
+              return <p className="main__deferred">Отложен</p>;
               break;
             default:
-              return <p className="main__marked">Отложен</p>;
+              return <p className="main__need-marking">Не сопоставлен</p>;
           }
         }
       }

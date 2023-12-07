@@ -58,7 +58,7 @@ export function LogInPopupForm({
       });
   }
 
-  function logIn(password: string, email: string, setLoggedIn: Dispatch<SetStateAction<boolean>>) {
+  function logIn(password: string, email: string) {
     setIsLoading(true);
     auth
       .login(password, email)
@@ -76,7 +76,7 @@ export function LogInPopupForm({
   }
 
   const onSubmit = (data: FieldValues) => {
-    logIn(data.password, data.email, setLoggedIn);
+    logIn(data.password, data.email);
   };
 
   const handleLogoutBtnClick = () => {

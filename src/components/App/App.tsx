@@ -62,7 +62,12 @@ function App() {
             <Preloader />
           ) : (
             <Routes>
-              <Route path="/" element={<ProtectedRoute element={<MainPage />} />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute element={<MainPage setRequestError={setRequestError} />} />
+                }
+              />
               <Route
                 path="/marking/:product_id"
                 element={
@@ -77,8 +82,12 @@ function App() {
                   />
                 }
               />
-              <Route path="/statistics" element={<ProtectedRoute element={<StatisticsPage />} />} />
-
+              <Route
+                path="/statistics"
+                element={
+                  <ProtectedRoute element={<StatisticsPage setRequestError={setRequestError} />} />
+                }
+              />
               <Route
                 path="/auth"
                 element={

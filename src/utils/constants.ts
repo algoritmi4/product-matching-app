@@ -4,6 +4,10 @@ import { IProduct } from './Interfaces/IProduct.interface';
 import { IRequestError } from './Interfaces/IRequestError.interface';
 import { IRequestErrorList } from './Interfaces/IRequestErrorList.interface';
 import { IUser } from './Interfaces/IUser.interface';
+import { isButtonsLoading } from './Interfaces/MainPage/IsButtonsLoading.interface';
+import { Pagination } from './Interfaces/MainPage/Pagination.interface';
+import { Analytics } from './Interfaces/StatisticsPage/Analytics.interface';
+import { InputValues } from './Interfaces/StatisticsPage/InputValues.interface';
 
 export const API_URL =
   process.env.NODE_ENV === 'production'
@@ -17,6 +21,29 @@ export const HEADER = {
 export const HEADER_AUTH = {
   Accept: 'application/json',
   'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+export const INITIAL_STATISTICS_ANALYTICS: Analytics = {
+  matched: 0,
+  not_matched: 0,
+  deferred: 0,
+  total_matching: 0,
+  accuracy: 0,
+  position: []
+};
+
+export const INITIAL_STATISTICS_INPUTVALUES: InputValues = {
+  id: '',
+  startDate: '',
+  endDate: ''
+};
+
+export const INITIAL_MAIN_PAGINATION: Pagination = { pageIndex: 0, pageSize: 10 };
+
+export const INITIAL_MAIN_ISBUTTONSLOADING: isButtonsLoading = {
+  dealers: false,
+  dealerPrices: false,
+  products: false
 };
 
 export const INITIAL_MARKETING_DEALER: IDealer[] = [
