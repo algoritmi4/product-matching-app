@@ -23,7 +23,7 @@ export function ErrorMesssagePopup({
   return (
     <div className={`error-popup ${requestError !== '' && 'error-popup_show'}`}>
       <p className="error-popup__message">{requestError}</p>
-      <button className="error-popup__close-btn" onClick={handleCloseBtnClick}>
+      <button className="error-popup__close-btn common-button" onClick={handleCloseBtnClick}>
         ✖
       </button>
     </div>
