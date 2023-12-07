@@ -1,5 +1,5 @@
 import './ErrorMesssagePopup.css';
-import { SetStateAction, Dispatch, useEffect } from 'react';
+import { SetStateAction, Dispatch } from 'react';
 
 export function ErrorMesssagePopup({
   requestError,
