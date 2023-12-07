@@ -20,8 +20,6 @@ export function SearchInFullList({
 
   const onSubmit = (data: FieldValues) => {
     const { pattern } = data;
-    console.log(fullList);
-
     setResultOfSearchList(
       fullList.filter((item) => item.name?.toLowerCase().indexOf(pattern.toLowerCase()) >= 0)
     );

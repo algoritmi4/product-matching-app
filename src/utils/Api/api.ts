@@ -1,4 +1,5 @@
 import { API_URL, HEADER } from '../constants';
+import { errorHandler } from '../functions/errorHandler';
 
 class Api {
   private _headers: HeadersInit;
@@ -9,11 +10,11 @@ class Api {
   }
 
   _getResponseData(res: Response) {
-    if (res.ok) {
-      return res.json();
+    if (!res.ok) {
+      return Promise.reject(errorHandler(res));
     }
 
-    return Promise.reject(res);
+    return res.json();
   }
 
   addProducts(formData: BodyInit) {

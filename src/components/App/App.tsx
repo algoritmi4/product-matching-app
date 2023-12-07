@@ -14,6 +14,7 @@ import { ProtectedRoute } from '../ProtectedRout/ProtectedRout';
 import { RegisterForm } from '../RegisterForm/RegistreForm';
 import { IUser } from '../../utils/Interfaces/IUser.interface';
 import { NotFoundPage } from '../NotFoundPage/NotFoundPage';
+import { ErrorMesssagePopup } from '../ErrorMesssagePopup/ErrorMesssagePopup';
 
 function App() {
   const [dealerList, setDealerList] = useState<IDealer[]>(INITIAL_MARKETING_DEALER);
@@ -21,6 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<IUser>(INIRIAL_USER);
+  const [requestError, setRequestError] = useState<string>('');
 
   useLayoutEffect(() => {
     api
@@ -30,7 +32,8 @@ function App() {
         setLoggedIn(true);
       })
       .catch((err) => {
-        console.log(err?.message);
+        setRequestError(err.message);
+        console.log(err.message);
       });
   }, []);
 
@@ -42,7 +45,8 @@ function App() {
         setDealerList(data?.items);
       })
       .catch((err) => {
-        console.log(err?.message);
+        setRequestError(err.message);
+        console.log(err.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -53,6 +57,7 @@ function App() {
     <div className="page">
       <div className="page__content">
         <MarkingContext.Provider value={{ dealerList, loggedIn, user }}>
+          <ErrorMesssagePopup requestError={requestError} setRequestError={setRequestError} />
           {isLoading ? (
             <Preloader />
           ) : (
@@ -62,7 +67,13 @@ function App() {
                 path="/marking/:product_id"
                 element={
                   <ProtectedRoute
-                    element={<MarkingPage matchCount={matchCount} setMatchCount={setMatchCount} />}
+                    element={
+                      <MarkingPage
+                        matchCount={matchCount}
+                        setMatchCount={setMatchCount}
+                        setRequestError={setRequestError}
+                      />
+                    }
                   />
                 }
               />
@@ -75,12 +86,19 @@ function App() {
                     setLoggedIn={setLoggedIn}
                     setUser={setUser}
                     setIsLoading={setIsLoading}
+                    setRequestError={setRequestError}
                   />
                 }
               />
               <Route
                 path="/register"
-                element={<RegisterForm setLoggedIn={setLoggedIn} setIsLoading={setIsLoading} />}
+                element={
+                  <RegisterForm
+                    setLoggedIn={setLoggedIn}
+                    setIsLoading={setIsLoading}
+                    setRequestError={setRequestError}
+                  />
+                }
               />
 
               <Route path="/*" element={<NotFoundPage />} />

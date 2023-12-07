@@ -13,7 +13,10 @@ class Auth {
       return await res.json();
     }
 
-    return Promise.reject(await res.json());
+    return Promise.reject({
+      code: res.status,
+      message: `Ошибка при запросе: ${res.status}`
+    });
   }
 
   _encode(parm: string): string {
