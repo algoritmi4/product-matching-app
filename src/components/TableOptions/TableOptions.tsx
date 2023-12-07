@@ -1,4 +1,4 @@
-import { FormEvent, useMemo } from 'react';
+import { FormEvent, useMemo, useContext } from 'react';
 import {
   useMaterialReactTable,
   type MRT_ColumnDef,
@@ -11,6 +11,11 @@ import { IDealerProduct } from '../../utils/Interfaces/IDealerProduct.interface'
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import api from '../../utils/Api/api';
 import { Pagination } from '../../utils/Interfaces/MainPage/Pagination.interface';
+import { MarkingContext } from '../../contexts/MarkingContext';
+import {
+  INITIAL_MAIN_DATEANDPRICESTATELIST,
+  INITIAL_MAIN_STATUSSTATELIST
+} from '../../utils/constants';
 
 function TableOptions({
   handleSCVLoading,
@@ -40,14 +45,8 @@ function TableOptions({
   columnFilters: MRT_ColumnFiltersState;
   setColumnFilters: (arg: MRT_Updater<MRT_ColumnFiltersState>) => void;
 }) {
+  const context = useContext(MarkingContext);
   const navigate = useNavigate();
-  const dateAndPriceStateList: string[] = ['Любая', 'По возрастанию', 'По убыванию'];
-  const statusStateList: string[] = [
-    'Все товары',
-    'Сопоставленные',
-    'Не сопоставленные',
-    'Отложенные'
-  ];
 
   const columns: MRT_ColumnDef<IDealerProduct>[] = useMemo(
     () => [
@@ -62,7 +61,7 @@ function TableOptions({
         header: 'Цена, руб',
         accessorKey: 'price',
         filterVariant: 'select',
-        filterSelectOptions: dateAndPriceStateList,
+        filterSelectOptions: INITIAL_MAIN_DATEANDPRICESTATELIST,
         size: 150,
         minSize: 40,
         maxSize: 350
@@ -71,6 +70,8 @@ function TableOptions({
         header: 'Дилер',
         accessorKey: 'dealer',
         accessorFn: (data) => data.dealer.name,
+        filterVariant: 'select',
+        filterSelectOptions: context.dealerList.map((dealerInfo) => dealerInfo.name),
         size: 250,
         minSize: 40,
         maxSize: 350
@@ -79,7 +80,7 @@ function TableOptions({
         header: 'Дата',
         accessorKey: 'date',
         filterVariant: 'select',
-        filterSelectOptions: dateAndPriceStateList,
+        filterSelectOptions: INITIAL_MAIN_DATEANDPRICESTATELIST,
         size: 150,
         minSize: 40,
         maxSize: 350
@@ -90,7 +91,7 @@ function TableOptions({
         accessorFn: (data) =>
           data.productdealer === null ? 'not processed' : data.productdealer?.status,
         filterVariant: 'select',
-        filterSelectOptions: statusStateList,
+        filterSelectOptions: INITIAL_MAIN_STATUSSTATELIST,
         size: 150,
         minSize: 40,
         maxSize: 1000,

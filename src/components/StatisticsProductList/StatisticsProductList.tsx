@@ -4,44 +4,52 @@ import './StatisticsProductList.css';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import MatchedItemsContainer from '../MatchedItemsContainer/MatchedItemsContainer';
 import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
-import { Preloader } from '../Preloader/Preloader';
 import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
+import UsersTypeSelector from '../UsersTypeSelector/UsersTypeSelector';
 
 function StatisticsProductList({
   items,
   productType,
   setProductType,
   setOffset,
-  setIsPreloader,
   setHasMore,
-  isPreloader,
   hasMore,
-  handleNext
+  handleNext,
+  setSelectedUserType
 }: {
   items: Items[];
   productType: string;
-  setIsPreloader: (arg: boolean) => void;
   setProductType: (arg: string) => void;
   setOffset: (arg: number) => void;
   setHasMore: (arg: boolean) => void;
-  isPreloader: boolean;
   hasMore: boolean;
   handleNext: () => void;
+  setSelectedUserType: (arg: string) => void;
 }) {
   return (
-    <div className="stat-page__flex-table">
-      <ProductTypeSelector
-        setProductType={setProductType}
-        setOffset={setOffset}
-        setIsPreloader={setIsPreloader}
-        setHasMore={setHasMore}
-      />
+    <div className="product-list">
+      <div className="product-list__selectors-box">
+        <ProductTypeSelector
+          setProductType={setProductType}
+          setOffset={setOffset}
+          setHasMore={setHasMore}
+        />
+        <UsersTypeSelector
+          setSelectedUserType={setSelectedUserType}
+          setOffset={setOffset}
+          setHasMore={setHasMore}
+        />
+      </div>
       {items.length === 0 ? (
         <h4 className="stat-page__err-message">{`${
-          productType === 'matched' ? 'Сопоставленных' : 'Отложенных'
+          productType === 'matched'
+            ? 'Сопоставленных'
+            : productType === 'not matched'
+              ? 'Не сопоставленных'
+              : productType === 'deferred'
+                ? 'Отложенных'
+                : ''
         } товаров ещё нет в базе`}</h4>
-      ) : isPreloader ? (
-        <Preloader />
       ) : (
         <InfiniteScroll
           className={`stat-page__infinite-scroll ${

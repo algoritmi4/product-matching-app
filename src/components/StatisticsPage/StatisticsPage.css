@@ -26,35 +26,3 @@
   font-weight: 600;
   cursor: pointer;
 }
-
-.stat-page__flex-table {
-  width: 70vw;
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  margin: 0 0 0 30px;
-  height: 800px;
-}
-
-.stat-page__infinite-scroll {
-  overflow-y: auto;
-  margin: 10px 0 0;
-  display: flex;
-}
-
-.stat-page__infinite-scroll_type_matched {
-  flex-direction: column;
-}
-
-.stat-page__infinite-scroll_type_deferred {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: flex-start;
-}
-
-.stat-page__err-message {
-  color: black;
-  font-size: 25px;
-  font-weight: 600;
-  align-self: center;
-}

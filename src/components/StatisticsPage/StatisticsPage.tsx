@@ -8,6 +8,7 @@ import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
 import StatisticsProductList from '../StatisticsProductList/StatisticsProductList';
 import StatisticsHeader from '../StatisticsHeader/StatisticsHeader';
 import { INITIAL_STATISTICS_ANALYTICS } from '../../utils/constants';
+import useDidMountEffect from '../../customHooks/useDidMountEffect';
 
 function StatisticsPage({
   setRequestError
@@ -15,32 +16,36 @@ function StatisticsPage({
   setRequestError: Dispatch<SetStateAction<string>>;
 }) {
   const [items, setItems] = useState<Items[]>([]);
-  const [isPreloader, setIsPreloader] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [productType, setProductType] = useState<string>('matched');
   const [selectedDealer, setSelectedDealer] = useState<string>('all');
+  const [selectedUserType, setSelectedUserType] = useState<string>('current');
   const [statistics, setStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
   const [dealerStatistics, setDealerStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
 
   useEffect(() => {
-    handleUserStatistics();
-  }, []);
-
-  useEffect(() => {
-    if (selectedDealer === 'all') {
-      getMatchedUserProducts();
+    if (selectedUserType === 'current') {
+      handleCurrentUserStatistics();
     } else {
-      getMatchedDealerProducts();
+      handleAllUsersStatistics();
     }
-  }, [selectedDealer, productType]);
+  }, [selectedUserType]);
 
-  function getMatchedUserProducts() {
-    setIsPreloader(true);
+  useDidMountEffect(() => {
+    if (selectedUserType === 'current') {
+      getCurrentUserProducts();
+    } else {
+      getAllUsersProducts();
+    }
+  }, [selectedDealer, productType, selectedUserType]);
+
+  function getCurrentUserProducts() {
     api
-      .getMatchedUserProducts(productType, offset)
+      .getCurrentUserProducts({ status: productType, offset, selectedDealer })
       .then((res) => {
-        setItems(offset === 0 ? res.items : (state) => [...state, ...res.items]);
+        setItems(res.offset === 0 ? res.items : (state) => [...state, ...res.items]);
+        console.log(res.items.length);
         setOffset((state) => state + 20);
         if (res.offset + res.limit >= res.total) {
           setHasMore(false);
@@ -49,42 +54,34 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
-      })
-      .finally(() => {
-        setIsPreloader(false);
       });
   }
 
-  function getMatchedDealerProducts() {
-    setIsPreloader(true);
+  function getAllUsersProducts() {
     api
-      .getMatchedDealerProducts(selectedDealer, productType, offset)
+      .getAllUsersProducts({ status: productType, offset, selectedDealer })
       .then((res) => {
-        setItems(offset === 0 ? res.items : (state) => [...state, ...res.items]);
+        setItems(res.offset === 0 ? res.items : (state) => [...state, ...res.items]);
         setOffset((state) => state + 20);
-        if (items.length + res.limit >= res.total) {
+        if (res.offset + res.limit >= res.total) {
           setHasMore(false);
         }
       })
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
-      })
-      .finally(() => {
-        setIsPreloader(false);
       });
   }
 
   function handleNext() {
-    if (selectedDealer === 'all') {
-      getMatchedUserProducts();
+    if (selectedUserType === 'current') {
+      getCurrentUserProducts();
     } else {
-      getMatchedDealerProducts();
+      getAllUsersProducts();
     }
   }
 
-  function handleUserStatistics() {
-    setIsPreloader(true);
+  function handleCurrentUserStatistics() {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     const endDate = new Date();
@@ -96,14 +93,10 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
-      })
-      .finally(() => {
-        setIsPreloader(false);
       });
   }
 
   function handleSubmitInfoForm(inputValues: InputValues) {
-    setIsPreloader(true);
     const startDate = new Date(inputValues.startDate).toISOString();
     const endDate = new Date(inputValues.endDate).toISOString();
     api
@@ -114,15 +107,29 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
-      })
-      .finally(() => {
-        setIsPreloader(false);
       });
   }
 
-  function handleDealerStatistics(dealerId: string) {
+  function handleAllUsersStatistics() {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 30);
+    const endDate = new Date();
+    api
+      .getAllUsersMatchedCount({
+        endDate: endDate.toISOString(),
+        startDate: startDate.toISOString()
+      })
+      .then((res) => {
+        setStatistics(res);
+      })
+      .catch((err) => {
+        setRequestError(err.message);
+        console.log(err);
+      });
+  }
+
+  function handleDealerStatistics(dealerId: number | string) {
     if (dealerId !== 'all') {
-      setIsPreloader(true);
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - 30);
       const endDate = new Date();
@@ -138,9 +145,6 @@ function StatisticsPage({
         .catch((err) => {
           setRequestError(err.message);
           console.log(err);
-        })
-        .finally(() => {
-          setIsPreloader(false);
         });
     }
   }
@@ -150,7 +154,6 @@ function StatisticsPage({
       <StatisticsHeader
         setSelectedDealer={setSelectedDealer}
         setOffset={setOffset}
-        setIsPreloader={setIsPreloader}
         handleDealerStatistics={handleDealerStatistics}
         setHasMore={setHasMore}
       />
@@ -159,11 +162,10 @@ function StatisticsPage({
         productType={productType}
         setProductType={setProductType}
         setOffset={setOffset}
-        setIsPreloader={setIsPreloader}
         setHasMore={setHasMore}
-        isPreloader={isPreloader}
         hasMore={hasMore}
         handleNext={handleNext}
+        setSelectedUserType={setSelectedUserType}
       />
       <StatisticsInfo
         statistics={statistics}

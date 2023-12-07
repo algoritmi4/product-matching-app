@@ -5,14 +5,12 @@ import './StatisticsHeader.css';
 function StatisticsHeader({
   setSelectedDealer,
   setOffset,
-  setIsPreloader,
   handleDealerStatistics,
   setHasMore
 }: {
   setSelectedDealer: (arg: string) => void;
   setOffset: (arg: number) => void;
-  setIsPreloader: (arg: boolean) => void;
-  handleDealerStatistics: (arg: string) => void;
+  handleDealerStatistics: (arg: number | string) => void;
   setHasMore: (arg: boolean) => void;
 }) {
   const navigate = useNavigate();
@@ -22,7 +20,6 @@ function StatisticsHeader({
       <DealerSelector
         setSelectedDealer={setSelectedDealer}
         setOffset={setOffset}
-        setIsPreloader={setIsPreloader}
         handleDealerStatistics={handleDealerStatistics}
         setHasMore={setHasMore}
       />

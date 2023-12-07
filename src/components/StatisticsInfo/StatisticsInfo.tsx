@@ -86,9 +86,9 @@ function StatisticsInfo({
       <p className="stat-info__total-matched">{`Кол-во отложенных: ${statistics.deferred}`}</p>
       <p className="stat-info__total-matched">{`Точность: ${statistics.accuracy}`}</p>
       {statistics.position.map((el, index) => (
-        <p
-          className="stat-info__total-matched"
-          key={index}>{`На ${el.position} позиции - ${el.percentage}%`}</p>
+        <p className="stat-info__total-matched" key={index}>{`На ${el.position} позиции - ${
+          String(el.percentage).length < 5 ? el.percentage : String(el.percentage).substring(0, 5)
+        }%`}</p>
       ))}
       <div className={`stat-info__dealer-info ${selectedDealer === 'all' ? 'display-none' : ''}`}>
         <h3 className="stat-info__dealer-info-title">Статистика по выбранному дилеру</h3>

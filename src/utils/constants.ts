@@ -46,6 +46,15 @@ export const INITIAL_MAIN_ISBUTTONSLOADING: isButtonsLoading = {
   products: false
 };
 
+export const INITIAL_MAIN_DATEANDPRICESTATELIST: string[] = ['По возрастанию', 'По убыванию'];
+
+export const INITIAL_MAIN_STATUSSTATELIST: string[] = [
+  'Нужно сопоставить',
+  'Сопоставленные',
+  'Не сопоставленные',
+  'Отложенные'
+];
+
 export const INITIAL_MARKETING_DEALER: IDealer[] = [
   {
     id: 0,
