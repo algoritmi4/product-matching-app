@@ -3,7 +3,11 @@ import { IDealerProduct } from './Interfaces/IDealerProduct.interface';
 import { IProduct } from './Interfaces/IProduct.interface';
 import { IUser } from './Interfaces/IUser.interface';
 
-export const API_URL = 'http://localhost:8001';
+export const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://hackathon-prosept.ddns.net/'
+    : 'http://localhost:3000';
+
 export const HEADER = {
   Accept: 'application/json',
   'Content-Type': 'application/json'
