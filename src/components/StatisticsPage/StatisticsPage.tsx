@@ -23,6 +23,8 @@ function StatisticsPage({
   const [selectedUserType, setSelectedUserType] = useState<string>('current');
   const [statistics, setStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
   const [dealerStatistics, setDealerStatistics] = useState<Analytics>(INITIAL_STATISTICS_ANALYTICS);
+  const [isProductListLoad, setIsProductListLoad] = useState<boolean>(false);
+  const [isStatisticsLoad, setIsStatisticsLoad] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedUserType === 'current') {
@@ -41,6 +43,7 @@ function StatisticsPage({
   }, [selectedDealer, productType, selectedUserType]);
 
   function getCurrentUserProducts() {
+    setIsProductListLoad(true);
     api
       .getCurrentUserProducts({ status: productType, offset, selectedDealer })
       .then((res) => {
@@ -54,10 +57,14 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
+      })
+      .finally(() => {
+        setIsProductListLoad(false);
       });
   }
 
   function getAllUsersProducts() {
+    setIsProductListLoad(true);
     api
       .getAllUsersProducts({ status: productType, offset, selectedDealer })
       .then((res) => {
@@ -70,6 +77,9 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
+      })
+      .finally(() => {
+        setIsProductListLoad(false);
       });
   }
 
@@ -82,6 +92,7 @@ function StatisticsPage({
   }
 
   function handleCurrentUserStatistics() {
+    setIsStatisticsLoad(true);
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     const endDate = new Date();
@@ -93,10 +104,14 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
+      })
+      .finally(() => {
+        setIsStatisticsLoad(false);
       });
   }
 
   function handleSubmitInfoForm(inputValues: InputValues) {
+    setIsStatisticsLoad(true);
     const startDate = new Date(inputValues.startDate).toISOString();
     const endDate = new Date(inputValues.endDate).toISOString();
     api
@@ -107,10 +122,14 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
+      })
+      .finally(() => {
+        setIsStatisticsLoad(false);
       });
   }
 
   function handleAllUsersStatistics() {
+    setIsStatisticsLoad(true);
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     const endDate = new Date();
@@ -125,11 +144,15 @@ function StatisticsPage({
       .catch((err) => {
         setRequestError(err.message);
         console.log(err);
+      })
+      .finally(() => {
+        setIsStatisticsLoad(false);
       });
   }
 
   function handleDealerStatistics(dealerId: number | string) {
     if (dealerId !== 'all') {
+      setIsStatisticsLoad(true);
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - 30);
       const endDate = new Date();
@@ -145,6 +168,9 @@ function StatisticsPage({
         .catch((err) => {
           setRequestError(err.message);
           console.log(err);
+        })
+        .finally(() => {
+          setIsStatisticsLoad(false);
         });
     }
   }
@@ -166,12 +192,14 @@ function StatisticsPage({
         hasMore={hasMore}
         handleNext={handleNext}
         setSelectedUserType={setSelectedUserType}
+        isProductListLoad={isProductListLoad}
       />
       <StatisticsInfo
         statistics={statistics}
         dealerStatistics={dealerStatistics}
         handleSubmitInfoForm={handleSubmitInfoForm}
         selectedDealer={selectedDealer}
+        isStatisticsLoad={isStatisticsLoad}
       />
     </section>
   );

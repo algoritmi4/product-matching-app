@@ -15,7 +15,8 @@ function StatisticsProductList({
   setHasMore,
   hasMore,
   handleNext,
-  setSelectedUserType
+  setSelectedUserType,
+  isProductListLoad
 }: {
   items: Items[];
   productType: string;
@@ -25,6 +26,7 @@ function StatisticsProductList({
   hasMore: boolean;
   handleNext: () => void;
   setSelectedUserType: (arg: string) => void;
+  isProductListLoad: boolean;
 }) {
   return (
     <div className="product-list">
@@ -41,7 +43,7 @@ function StatisticsProductList({
         />
       </div>
       {items.length === 0 ? (
-        <h4 className="stat-page__err-message">{`${
+        <h4 className="product-list__err-message">{`${
           productType === 'matched'
             ? 'Сопоставленных'
             : productType === 'not matched'
@@ -51,25 +53,28 @@ function StatisticsProductList({
                 : ''
         } товаров ещё нет в базе`}</h4>
       ) : (
-        <InfiniteScroll
-          className={`stat-page__infinite-scroll ${
-            productType === 'matched'
-              ? 'stat-page__infinite-scroll_type_matched'
-              : 'stat-page__infinite-scroll_type_deferred'
-          }`}
-          dataLength={items.length}
-          next={handleNext}
-          hasMore={hasMore}
-          loader={<ButtonPreloader />}
-          height={800}>
-          {items.map((el, index) =>
-            productType === 'matched' ? (
-              <MatchedItemsContainer key={index} data={el} />
-            ) : (
-              <DeferredItemsContainer key={index} data={el} />
-            )
-          )}
-        </InfiniteScroll>
+        <>
+          <InfiniteScroll
+            className={`product-list__infinite-scroll ${
+              productType === 'matched'
+                ? 'product-list__infinite-scroll_type_matched'
+                : 'product-list__infinite-scroll_type_deferred'
+            }`}
+            dataLength={items.length}
+            next={handleNext}
+            hasMore={hasMore}
+            loader={<ButtonPreloader />}
+            height={800}>
+            {items.map((el, index) =>
+              productType === 'matched' ? (
+                <MatchedItemsContainer key={index} data={el} />
+              ) : (
+                <DeferredItemsContainer key={index} data={el} />
+              )
+            )}
+            {isProductListLoad ? <div className="product-list__loading"></div> : <></>}
+          </InfiniteScroll>
+        </>
       )}
     </div>
   );

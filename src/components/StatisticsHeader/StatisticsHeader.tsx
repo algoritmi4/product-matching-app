@@ -16,7 +16,7 @@ function StatisticsHeader({
   const navigate = useNavigate();
 
   return (
-    <div className="stat-page__header">
+    <div className="stat-header">
       <DealerSelector
         setSelectedDealer={setSelectedDealer}
         setOffset={setOffset}
@@ -26,7 +26,7 @@ function StatisticsHeader({
       <button
         onClick={() => navigate('/')}
         type="button"
-        className="stat-page__menu-button common-button">
+        className="stat-header__menu-button common-button">
         На главную
       </button>
     </div>
