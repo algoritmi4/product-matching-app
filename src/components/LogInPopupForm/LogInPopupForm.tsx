@@ -153,7 +153,11 @@ export function LogInPopupForm({
                 className={`login-popup__submit-btn-background ${
                   !isValid ? 'login-popup__submit-btn_diabled' : ''
                 } `}>
-                <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
+                <button
+                  disabled={!isValid}
+                  className={`login-popup__submit-btn ${
+                    !isValid ? 'login-popup__submit-btn_diabled' : 'common-button'
+                  }`}>
                   Вход
                 </button>
               </div>

@@ -177,6 +177,8 @@ function TableOptions({
           color="error"
           sx={{ margin: '0 0 0 auto' }}
           onClick={() => handleSignOut()}>
+          {context.user.email}
+          <br />
           Выйти
         </Button>
         <Button variant="contained" color="inherit">
