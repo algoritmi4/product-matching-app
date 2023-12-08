@@ -29,10 +29,12 @@ function MatchedItemsContainer({ data }: { data: Items }) {
       <div className="match-items-cont__arrow-image"></div>
       <div className="match-items-cont__box">
         <h2 className="match-items-cont__box-title">Сопоставленный товар заказчика</h2>
-        <h3 className="match-items-cont__product-name">{`Название: ${data.product.name}`}</h3>
-        <p className="match-items-cont__product-price">{`Цена: ${data.product.cost}`}</p>
-        <p className="match-items-cont__product-min-price">{`Мин. рекомендованная цена: ${data.product.recommended_price}`}</p>
-        <p className="match-items-cont__product-article">{`Артикль: ${data.product.article}`}</p>
+        <h3 className="match-items-cont__product-name">{`Название: ${
+          data?.product?.name || ''
+        }`}</h3>
+        <p className="match-items-cont__product-price">{`Цена: ${data?.product?.cost}`}</p>
+        <p className="match-items-cont__product-min-price">{`Мин. рекомендованная цена: ${data?.product?.recommended_price}`}</p>
+        <p className="match-items-cont__product-article">{`Артикль: ${data?.product?.article}`}</p>
       </div>
     </div>
   );
