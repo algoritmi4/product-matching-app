@@ -53,10 +53,12 @@ class Api {
     filterOptions: any;
   }) {
     return fetch(
-      `${this._url}/api/v1/dealers/price?limit=${pageSize}&offset=${offset}&search_query=${
-        filterOptions.product_name ? filterOptions.product_name : ''
+      `${this._url}/api/v1/dealers/price?limit=${pageSize}&offset=${offset}${
+        filterOptions.product_name === undefined
+          ? ''
+          : `&product_name=${filterOptions.product_name}`
       }${
-        filterOptions.date === undefined || filterOptions.date === 'Любая'
+        filterOptions.date === undefined
           ? ''
           : `&sort_by=${
               filterOptions.date === 'По возрастанию'
@@ -66,7 +68,7 @@ class Api {
                   : ''
             }`
       }${
-        filterOptions.price === undefined || filterOptions.price === 'Любая'
+        filterOptions.price === undefined
           ? ''
           : `&sort_by=${
               filterOptions.price === 'По возрастанию'
@@ -75,17 +77,21 @@ class Api {
                   ? 'descending price'
                   : ''
             }`
-      }&status=${
-        filterOptions.status === undefined || filterOptions.status === 'Все товары'
-          ? 'not processed'
-          : filterOptions.status === 'Сопоставленные'
-            ? 'matched'
-            : filterOptions.status === 'Не сопоставленные'
-              ? 'not matched'
-              : filterOptions.status === 'Отложенные'
-                ? 'deferred'
-                : ''
-      }&dealer_name=${filterOptions.dealer ? filterOptions.dealer : ''}`,
+      }${
+        filterOptions.status === undefined
+          ? ''
+          : `&status=${
+              filterOptions.status === 'Нужно сопоставить'
+                ? 'not processed'
+                : filterOptions.status === 'Сопоставленные'
+                  ? 'matched'
+                  : filterOptions.status === 'Не сопоставленные'
+                    ? 'not matched'
+                    : filterOptions.status === 'Отложенные'
+                      ? 'deferred'
+                      : ''
+            }`
+      }&dealer_name=${filterOptions.dealer === undefined ? '' : filterOptions.dealer}`,
       {
         method: 'GET',
         headers: this._headers,
@@ -94,9 +100,19 @@ class Api {
     ).then(this._getResponseData);
   }
 
-  getMatchedUserProducts(status: string, offset: number) {
+  getCurrentUserProducts({
+    status,
+    offset,
+    selectedDealer
+  }: {
+    status: string;
+    offset: number;
+    selectedDealer: string;
+  }) {
     return fetch(
-      `${this._url}/api/v1/matching/user/me/?limit=20&status=${status}&offset=${offset}`,
+      `${this._url}/api/v1/matching/user/me/?limit=20&status=${status}&offset=${offset}${
+        selectedDealer === 'all' ? '' : `&dealer_name=${selectedDealer}`
+      }`,
       {
         method: 'GET',
         headers: this._headers,
@@ -105,9 +121,19 @@ class Api {
     ).then(this._getResponseData);
   }
 
-  getMatchedDealerProducts(dealerId: string, status: string, offset: number) {
+  getAllUsersProducts({
+    status,
+    offset,
+    selectedDealer
+  }: {
+    status: string;
+    offset: number;
+    selectedDealer: string;
+  }) {
     return fetch(
-      `${this._url}/api/v1/matching/dealer/${dealerId}?limit=20&status=${status}&offset=${offset}`,
+      `${this._url}/api/v1/matching/all?limit=20&status=${status}&offset=${offset}${
+        selectedDealer === 'all' ? '' : `&dealer_name=${selectedDealer}`
+      }`,
       {
         method: 'GET',
         headers: this._headers,
@@ -153,12 +179,23 @@ class Api {
     endDate,
     startDate
   }: {
-    dealerId: string;
+    dealerId: number | string;
     endDate: string;
     startDate: string;
   }) {
     return fetch(
       `${this._url}/api/v1/analytics/matched-count/dealer/${dealerId}?start_date=${startDate}&end_date=${endDate}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+        credentials: 'include'
+      }
+    ).then(this._getResponseData);
+  }
+
+  getAllUsersMatchedCount({ endDate, startDate }: { endDate: string; startDate: string }) {
+    return fetch(
+      `${this._url}/api/v1/analytics/matched-count?start_date=${startDate}&end_date=${endDate}`,
       {
         method: 'GET',
         headers: this._headers,

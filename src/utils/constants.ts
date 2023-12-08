@@ -11,7 +11,7 @@ import { InputValues } from './Interfaces/StatisticsPage/InputValues.interface';
 
 export const API_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://hackathon-prosept.ddns.net/'
+    ? 'https://hackathon-prosept.ddns.net'
     : 'http://localhost:8001';
 
 export const HEADER = {
@@ -45,6 +45,15 @@ export const INITIAL_MAIN_ISBUTTONSLOADING: isButtonsLoading = {
   dealerPrices: false,
   products: false
 };
+
+export const INITIAL_MAIN_DATEANDPRICESTATELIST: string[] = ['По возрастанию', 'По убыванию'];
+
+export const INITIAL_MAIN_STATUSSTATELIST: string[] = [
+  'Нужно сопоставить',
+  'Сопоставленные',
+  'Не сопоставленные',
+  'Отложенные'
+];
 
 export const INITIAL_MARKETING_DEALER: IDealer[] = [
   {

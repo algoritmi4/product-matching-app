@@ -4,64 +4,77 @@ import './StatisticsProductList.css';
 import ButtonPreloader from '../ButtonPreloader/ButtonPreloader';
 import MatchedItemsContainer from '../MatchedItemsContainer/MatchedItemsContainer';
 import DeferredItemsContainer from '../DeferredItemsContainer/DeferredItemsContainer';
-import { Preloader } from '../Preloader/Preloader';
 import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
+import UsersTypeSelector from '../UsersTypeSelector/UsersTypeSelector';
 
 function StatisticsProductList({
   items,
   productType,
   setProductType,
   setOffset,
-  setIsPreloader,
   setHasMore,
-  isPreloader,
   hasMore,
-  handleNext
+  handleNext,
+  setSelectedUserType,
+  isProductListLoad
 }: {
   items: Items[];
   productType: string;
-  setIsPreloader: (arg: boolean) => void;
   setProductType: (arg: string) => void;
   setOffset: (arg: number) => void;
   setHasMore: (arg: boolean) => void;
-  isPreloader: boolean;
   hasMore: boolean;
   handleNext: () => void;
+  setSelectedUserType: (arg: string) => void;
+  isProductListLoad: boolean;
 }) {
   return (
-    <div className="stat-page__flex-table">
-      <ProductTypeSelector
-        setProductType={setProductType}
-        setOffset={setOffset}
-        setIsPreloader={setIsPreloader}
-        setHasMore={setHasMore}
-      />
+    <div className="product-list">
+      <div className="product-list__selectors-box">
+        <ProductTypeSelector
+          setProductType={setProductType}
+          setOffset={setOffset}
+          setHasMore={setHasMore}
+        />
+        <UsersTypeSelector
+          setSelectedUserType={setSelectedUserType}
+          setOffset={setOffset}
+          setHasMore={setHasMore}
+        />
+      </div>
       {items.length === 0 ? (
-        <h4 className="stat-page__err-message">{`${
-          productType === 'matched' ? 'Сопоставленных' : 'Отложенных'
+        <h4 className="product-list__err-message">{`${
+          productType === 'matched'
+            ? 'Сопоставленных'
+            : productType === 'not matched'
+              ? 'Не сопоставленных'
+              : productType === 'deferred'
+                ? 'Отложенных'
+                : ''
         } товаров ещё нет в базе`}</h4>
-      ) : isPreloader ? (
-        <Preloader />
       ) : (
-        <InfiniteScroll
-          className={`stat-page__infinite-scroll ${
-            productType === 'matched'
-              ? 'stat-page__infinite-scroll_type_matched'
-              : 'stat-page__infinite-scroll_type_deferred'
-          }`}
-          dataLength={items.length}
-          next={handleNext}
-          hasMore={hasMore}
-          loader={<ButtonPreloader />}
-          height={800}>
-          {items.map((el, index) =>
-            productType === 'matched' ? (
-              <MatchedItemsContainer key={index} data={el} />
-            ) : (
-              <DeferredItemsContainer key={index} data={el} />
-            )
-          )}
-        </InfiniteScroll>
+        <>
+          <InfiniteScroll
+            className={`product-list__infinite-scroll ${
+              productType === 'matched'
+                ? 'product-list__infinite-scroll_type_matched'
+                : 'product-list__infinite-scroll_type_deferred'
+            }`}
+            dataLength={items.length}
+            next={handleNext}
+            hasMore={hasMore}
+            loader={<ButtonPreloader />}
+            height={800}>
+            {items.map((el, index) =>
+              productType === 'matched' ? (
+                <MatchedItemsContainer key={index} data={el} />
+              ) : (
+                <DeferredItemsContainer key={index} data={el} />
+              )
+            )}
+            {isProductListLoad ? <div className="product-list__loading"></div> : <></>}
+          </InfiniteScroll>
+        </>
       )}
     </div>
   );
