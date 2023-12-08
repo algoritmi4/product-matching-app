@@ -176,10 +176,18 @@ function TableOptions({
           variant="contained"
           color="error"
           sx={{ margin: '0 0 0 auto' }}
-          onClick={() => handleSignOut()}>
-          {context.user.email}
-          <br />
-          Выйти
+          onClick={() => handleSignOut()}
+          style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <div
+            style={{
+              maxWidth: '200px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>
+            {context.user.email}
+          </div>
+          <div>Выйти</div>
         </Button>
         <Button variant="contained" color="inherit">
           {isButtonsLoading.dealers ? (
