@@ -121,7 +121,11 @@ export function RegisterForm({
           )}
 
           <div className="login-popup__btn-container">
-            <button disabled={!isValid} className={`login-popup__submit-btn common-button`}>
+            <button
+              disabled={!isValid}
+              className={`login-popup__submit-btn ${
+                !isValid ? 'login-popup__submit-btn_diabled' : 'common-button'
+              }`}>
               Регистрация
             </button>
             <button
