@@ -8,7 +8,6 @@ import { Items } from '../../utils/Interfaces/StatisticsPage/Items.interface';
 import StatisticsProductList from '../StatisticsProductList/StatisticsProductList';
 import StatisticsHeader from '../StatisticsHeader/StatisticsHeader';
 import { INITIAL_STATISTICS_ANALYTICS } from '../../utils/constants';
-import useDidMountEffect from '../../customHooks/useDidMountEffect';
 
 function StatisticsPage({
   setRequestError
@@ -34,7 +33,7 @@ function StatisticsPage({
     }
   }, [selectedUserType]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (selectedUserType === 'current') {
       getCurrentUserProducts();
     } else {
